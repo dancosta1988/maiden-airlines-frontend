@@ -2,21 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { ServerComponent } from './server/server.component';
-import { ServersComponent } from './servers/servers.component';
 import { MenuComponent } from './menu/menu.component';
+import { AirplanesComponent } from './airplanes/airplanes.component';
+import { AirportsComponent } from './airports/airports.component';
+import { AirportComponent } from './airports/airport/airport.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ServerComponent,
-    ServersComponent,
-    MenuComponent
+    MenuComponent,
+    AirplanesComponent,
+    AirportsComponent,
+    AirportComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent,MenuComponent,ServersComponent]
+  bootstrap: [AppComponent,MenuComponent]
 })
 export class AppModule { }

@@ -1,0 +1,183 @@
+<h2>List of Airports</h2>
+  <p>Airports are listed below. As a operator you can add, edit or delete new airports.</p>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#new_airportModal">Create New Airport</button>            
+
+<!-- Modal Insert-->
+<div class="modal fade" id="new_airportModal" tabindex="3" role="dialog" aria-labelledby="new_airportModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form action="/insertAirport" method="POST">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_airportModalLabel">Create New Airport</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="airportName">Airport Name:</label>
+            <input type="text" class="form-control" id="aiportName" name="aiportName">
+          </div>
+          <div class="form-group">
+            <label for="aiportShortName">Short Name:</label>
+            <input type="text" class="form-control" id="airportShortName" name="airportShortName">
+          </div>
+          <div class="form-group">
+            <label for="cityList">Select City:</label>
+            <select class="form-control" id="cityList">
+              <option>Barcelona</option>
+              <option>Faro</option>
+              <option>Lisbon</option>
+              <option>Madrid</option> 
+              <option>Oporto</option>
+              <option>Paris</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="countryList">Select Country:</label>
+            <select class="form-control" id="countryList">
+              <option>France</option>
+              <option>Germany</option>
+              <option>Portugal</option>
+              <option>Spain</option>
+            </select>
+          </div> 
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create Airport</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_airportModal" tabindex="3" role="dialog" aria-labelledby="edit_airportModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form action="/updateAirport" method="POST">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_airportModalLabel">Edit Existing Airport</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="form-group">
+              <label for="edit_airportName">Airport Name:</label>
+              <input type="text" class="form-control" id="edit_aiportName" name="aiportName">
+            </div>
+            <div class="form-group">
+              <label for="aiportShortName">Short Name:</label>
+              <input type="text" class="form-control" id="edit_airportShortName" name="airportShortName">
+            </div>
+            <div class="form-group">
+              <label for="edit_cityList">Select City:</label>
+              <select class="form-control" id="cityList">
+                <option>Barcelona</option>
+                <option>Faro</option>
+                <option>Lisbon</option>
+                <option>Madrid</option> 
+                <option>Oporto</option>
+                <option>Paris</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="edit_countryList">Select Country:</label>
+              <select class="form-control" id="countryList">
+                <option>France</option>
+                <option>Germany</option>
+                <option>Portugal</option>
+                <option>Spain</option>
+              </select>
+            </div> 
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Edit Airport</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_airportModal" tabindex="3" role="dialog" aria-labelledby="delete_airportModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form action="/deleteAirport" method="POST">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_airportModalLabel">Delete Airport</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="form-group">
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Airport. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete Airport</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Airport ID</th>
+        <th>Name</th>
+        <th>Short Name</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let airport of airports">
+        <td>{{airport.id}}</td>
+        <td>{{airport.name}}</td>
+        <td>{{airport.shortname}}</td>
+        <td>{{airport.city}}</td>
+        <td>{{airport.country}}</td>
+        <td>
+            <button class="btn btn-info" data-toggle="modal" data-target="#edit_airportModal">Edit</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#delete_airportModal">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>International Airport of Frankfurt</td>
+        <td>FRA</td>
+        <td>Frankfurt</td>
+        <td>Germany</td>
+        <td>
+            <button class="btn btn-info" data-toggle="modal" data-target="#edit_airportModal">Edit</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#delete_airportModal">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Lisbon Airport</td>
+        <td>LIS</td>
+        <td>Lisbon</td>
+        <td>Portugal</td>
+        <td>
+            <button class="btn btn-info" data-toggle="modal" data-target="#edit_airportModal">Edit</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#delete_airportModal">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
