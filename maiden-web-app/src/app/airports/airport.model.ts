@@ -12,4 +12,5 @@ export class Airport{
         this.city = city;
         this.country = country;
     }
+
 }

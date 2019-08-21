@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { AirplanesComponent } from './airplanes/airplanes.component';
 import { AirportsComponent } from './airports/airports.component';
-import { AirportComponent } from './airports/airport/airport.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,10 +13,12 @@ import { AirportComponent } from './airports/airport/airport.component';
     MenuComponent,
     AirplanesComponent,
     AirportsComponent,
-    AirportComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent,MenuComponent]

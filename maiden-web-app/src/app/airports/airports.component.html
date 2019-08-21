@@ -1,14 +1,15 @@
 <h2>List of Airports</h2>
   <p>Airports are listed below. As a operator you can add, edit or delete new airports.</p>
+  <hr>
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#new_airportModal">Create New Airport</button>            
-
+  <hr>
 <!-- Modal Insert-->
 <div class="modal fade" id="new_airportModal" tabindex="3" role="dialog" aria-labelledby="new_airportModalLabel" aria-hidden="true" >
   <div class="modal-dialog" role="document">
       <div class="modal-content">
-      <form action="/insertAirport" method="POST">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateAirport()">
       <div class="modal-header">
-          <h5 class="modal-title" id="new_airportModalLabel">Create New Airport</h5>
+          <h5 class="modal-title" id="new_airportModalLabel" >Create New Airport</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
@@ -17,15 +18,19 @@
         
           <div class="form-group">
             <label for="airportName">Airport Name:</label>
-            <input type="text" class="form-control" id="aiportName" name="aiportName">
+            <input type="text" class="form-control" id="airportName"  formControlName="airportName" name="airportName">
+            <span *ngIf="!insertForm.get('airportName').valid && insertForm.get('airportName').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
           </div>
           <div class="form-group">
-            <label for="aiportShortName">Short Name:</label>
-            <input type="text" class="form-control" id="airportShortName" name="airportShortName">
+            <label for="airportShortName">Short Name:</label>
+            <input type="text" class="form-control" id="airportShortName"  formControlName="airportShortName" name="airportShortName">
+            <span *ngIf="!insertForm.get('airportShortName').valid && insertForm.get('airportShortName').touched"
+              class="help-block alert-warning">Please enter a valid short name!</span>
           </div>
           <div class="form-group">
             <label for="cityList">Select City:</label>
-            <select class="form-control" id="cityList">
+            <select class="form-control" id="cityList"  formControlName="airportCity" name="airportCity">
               <option>Barcelona</option>
               <option>Faro</option>
               <option>Lisbon</option>
@@ -33,20 +38,24 @@
               <option>Oporto</option>
               <option>Paris</option>
             </select>
+            <span *ngIf="!insertForm.get('airportCity').valid && insertForm.get('airportCity').touched"
+              class="help-block alert-warning">Please enter a valid city!</span>
           </div>
           <div class="form-group">
             <label for="countryList">Select Country:</label>
-            <select class="form-control" id="countryList">
+            <select class="form-control" id="countryList"  formControlName="airportCountry" name="airportCountry">
               <option>France</option>
               <option>Germany</option>
               <option>Portugal</option>
               <option>Spain</option>
             </select>
+            <span *ngIf="!insertForm.get('airportCountry').valid && insertForm.get('airportCountry').touched"
+              class="help-block alert-warning">Please enter a valid Country!</span>
           </div> 
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Create Airport</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_airportModal').modal('hide')">Create Airport</button>
       </div>
       </form>
       </div>
@@ -57,7 +66,7 @@
 <div class="modal fade" id="edit_airportModal" tabindex="3" role="dialog" aria-labelledby="edit_airportModalLabel" aria-hidden="true" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <form action="/updateAirport" method="POST">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateAirport()">
         <div class="modal-header">
             <h5 class="modal-title" id="edit_airportModalLabel">Edit Existing Airport</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -65,18 +74,24 @@
             </button>
         </div>
         <div class="modal-body">
-          
             <div class="form-group">
-              <label for="edit_airportName">Airport Name:</label>
-              <input type="text" class="form-control" id="edit_aiportName" name="aiportName">
+              <input type="hidden" class="form-control"  formControlName="airportId" name="airportId" value=""/>
             </div>
             <div class="form-group">
-              <label for="aiportShortName">Short Name:</label>
-              <input type="text" class="form-control" id="edit_airportShortName" name="airportShortName">
+              <label for="edit_airportName">Airport Name:</label>
+              <input type="text" class="form-control" id="edit_airportName" formControlName="airportName"  name="airportName">
+              <span *ngIf="!editForm.get('airportName').valid && insertForm.get('airportName').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+            <div class="form-group">
+              <label for="airportShortName">Short Name:</label>
+              <input type="text" class="form-control" id="edit_airportShortName"   formControlName="airportShortName" name="airportShortName">
+              <span *ngIf="!editForm.get('airportShortName').valid && insertForm.get('airportShortName').touched"
+              class="help-block alert-warning">Please enter a valid short name!</span>
             </div>
             <div class="form-group">
               <label for="edit_cityList">Select City:</label>
-              <select class="form-control" id="cityList">
+              <select class="form-control" id="cityList"  formControlName="airportCity" name="airportCity">
                 <option>Barcelona</option>
                 <option>Faro</option>
                 <option>Lisbon</option>
@@ -84,20 +99,24 @@
                 <option>Oporto</option>
                 <option>Paris</option>
               </select>
+              <span *ngIf="!editForm.get('airportCity').valid && insertForm.get('airportCity').touched"
+              class="help-block alert-warning">Please enter a valid City!</span>
             </div>
             <div class="form-group">
-              <label for="edit_countryList">Select Country:</label>
-              <select class="form-control" id="countryList">
+              <label for="edit_countryList" >Select Country:</label>
+              <select class="form-control" id="countryList" formControlName="airportCountry"  name="airportCountry">
                 <option>France</option>
                 <option>Germany</option>
                 <option>Portugal</option>
                 <option>Spain</option>
               </select>
-            </div> 
+            </div>
+            <span *ngIf="!editForm.get('airportCountry').valid && insertForm.get('airportCountry').touched"
+              class="help-block alert-warning">Please enter a valid Country!</span> 
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Edit Airport</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_airportModal').modal('hide')">Edit Airport</button>
         </div>
         </form>
         </div>
@@ -108,7 +127,7 @@
 <div class="modal fade" id="delete_airportModal" tabindex="3" role="dialog" aria-labelledby="delete_airportModalLabel" aria-hidden="true" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <form action="/deleteAirport" method="POST">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteAirport()">
         <div class="modal-header">
             <h5 class="modal-title" id="delete_airportModalLabel">Delete Airport</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -116,8 +135,8 @@
             </button>
         </div>
         <div class="modal-body">
-          
             <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="airportId" name="airportId" value=""/>
                 <div class="alert alert-warning">
                     <strong>Warning!</strong> You are about to delete an Airport. Are you sure?
                   </div>
@@ -125,14 +144,19 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger">Delete Airport</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_airportModal').modal('hide')">Delete Airport</button>
         </div>
         </form>
         </div>
     </div>
   </div>  
-
-<table class="table table-striped">
+  <div *ngIf="airports.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Airports found!</strong> Add new airports using the Create button
+  </div>
+  <div *ngIf="isFetching" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+<table class="table table-striped" *ngIf="airports.length >= 1">
     <thead>
       <tr>
         <th>Airport ID</th>
@@ -147,34 +171,12 @@
       <tr *ngFor="let airport of airports">
         <td>{{airport.id}}</td>
         <td>{{airport.name}}</td>
-        <td>{{airport.shortname}}</td>
+        <td>{{airport.shortName}}</td>
         <td>{{airport.city}}</td>
         <td>{{airport.country}}</td>
-        <td>
-            <button class="btn btn-info" data-toggle="modal" data-target="#edit_airportModal">Edit</button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#delete_airportModal">Delete</button>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>International Airport of Frankfurt</td>
-        <td>FRA</td>
-        <td>Frankfurt</td>
-        <td>Germany</td>
-        <td>
-            <button class="btn btn-info" data-toggle="modal" data-target="#edit_airportModal">Edit</button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#delete_airportModal">Delete</button>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Lisbon Airport</td>
-        <td>LIS</td>
-        <td>Lisbon</td>
-        <td>Portugal</td>
-        <td>
-            <button class="btn btn-info" data-toggle="modal" data-target="#edit_airportModal">Edit</button>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#delete_airportModal">Delete</button>
+        <td class="row">
+            <button class="btn btn-info col-6" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(airport.id)" >Edit</button>
+            <button class="btn btn-danger col-6" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(airport.id)">Delete</button>
         </td>
       </tr>
     </tbody>
