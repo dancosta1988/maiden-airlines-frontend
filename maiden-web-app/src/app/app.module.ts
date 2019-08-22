@@ -7,6 +7,7 @@ import { AirplanesComponent } from './airplanes/airplanes.component';
 import { AirportsComponent } from './airports/airports.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FlightsComponent } from './flights/flights.component';
+import { OperatorViewComponent } from './operator-view/operator-view.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FlightsComponent } from './flights/flights.component';
     AirplanesComponent,
     AirportsComponent,
     FlightsComponent,
+    OperatorViewComponent,
   ],
   imports: [
     BrowserModule,
