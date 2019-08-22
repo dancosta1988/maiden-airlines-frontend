@@ -153,9 +153,14 @@
   <div *ngIf="airports.length < 1 && !isFetching" class="alert alert-warning">
     <strong>No Airports found!</strong> Add new airports using the Create button
   </div>
-  <div *ngIf="isFetching" class="alert alert-info">
+  <div *ngIf="isFetching && !error" class="alert alert-info">
     <strong>Loading...</strong>
   </div>
+  <div *ngIf="error" class="alert alert-danger">
+      <h3>Error occurred using the webservices!</h3>
+      <strong>{{ error }}</strong><br>
+      Please contact the coding monkeys.
+    </div>
 <table class="table table-striped" *ngIf="airports.length >= 1">
     <thead>
       <tr>
@@ -174,9 +179,9 @@
         <td>{{airport.shortName}}</td>
         <td>{{airport.city}}</td>
         <td>{{airport.country}}</td>
-        <td class="row">
-            <button class="btn btn-info col-6" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(airport.id)" >Edit</button>
-            <button class="btn btn-danger col-6" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(airport.id)">Delete</button>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(airport.id)" >Edit</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(airport.id)">Delete</button>
         </td>
       </tr>
     </tbody>

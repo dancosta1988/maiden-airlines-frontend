@@ -19,8 +19,10 @@ export class AirportsComponent implements OnInit {
 
   //public airports: Airport[] = [];
   public isFetching = false;
+  public error = "";
   public currentlySelected = -1;
-   public airports: Airport[] = [
+
+  public airports: Airport[] = [
     new Airport(1, "Aiport 1", "A1", "Lisbon", "Portugal"),
     new Airport(2, "Aiport 2", "A2", "Lisbon", "Portugal"),
     new Airport(3, "Aiport 3", "A3", "Oporto", "Portugal"),
@@ -121,6 +123,9 @@ export class AirportsComponent implements OnInit {
     this.airportsService.fetchAirports().subscribe(aiports =>{
       this.isFetching = false;
       this.airports = this.airports;
+    },
+    error =>{
+        this.error = error.message;
     });
     
   }

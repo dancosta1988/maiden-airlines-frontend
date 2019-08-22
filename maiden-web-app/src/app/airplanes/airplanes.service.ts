@@ -1,36 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Airport } from './airport.model';
+import { Airplane } from './airplane.model';
 import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({providedIn: 'root'})
-export class AirportsService {
+export class AirplanesService {
 
     constructor(private http: HttpClient){}
 
-    createAndStoreAirport(name: string, short_name: string, city: string, country: string){
-        const postData: Airport = { id: null, name: name, shortName: short_name, city: city, country: country};
-        this.http.post('http://192.168.56.1:8080/Airport/insertAirport', 
+    createAndStoreAirplane(id: number, model: string, cargo: number, seats: number){
+        const postData: Airplane = { id: null, model: model, cargoholdCapacity: cargo, numberOfSeats: seats};
+        this.http.post('http://192.168.0.189:8080/Airport/insertAirplane', 
         postData
         ).subscribe(responseData => {
             console.log(responseData);
         });
     }
 
-    updateAirport(id: number, name: string, short_name: string, city: string, country: string){
+    updateAirplane(id: number, model: string, cargo: number, seats: number){
         //...
     }
 
-    deleteAirport(id: number){
+    deleteAirplane(id: number){
         //...
     }
 
-    fetchAirports(){
-        return this.http.get<{[key: string]: Airport}>('http://192.168.56.1:8080/SOAP%20Process/ServiceAirport.serviceagent/Airport',{
+    fetchAirplanes(){
+        return this.http.get<{[key: string]: Airplane}>('http://192.168.0.189:8080/SOAP%20Process/ServiceAirport.serviceagent/Airplane',{
             headers: new HttpHeaders({'Access-Control-Allow-Origin': "http://localhost:4200"})
         })
-        .pipe(map((responseData: { [key: number]: Airport}) =>{
-            const airportsArray: Airport[] = [];
+        .pipe(map((responseData: { [key: number]: Airplane}) =>{
+            const airportsArray: Airplane[] = [];
             for (const key in responseData){
                 if(responseData.hasOwnProperty(key)){
                 airportsArray.push({ ... responseData[key]});

@@ -1,30 +1,177 @@
-<h2>Striped Rows</h2>
-  <p>The .table-striped class adds zebra-stripes to a table:</p>            
-  <table class="table table-striped">
+<h2>List of Airplanes</h2>
+  <p>Airplanes are listed below. As an operator you can add, edit or delete new airplanes.</p>
+  <hr>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#new_airplaneModal">Create New Airplane</button>            
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_airplaneModal" tabindex="3" role="dialog" aria-labelledby="new_airplaneModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateAirplane()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_airplaneModalLabel" >Create New Airplane</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="airplaneId">Airplane Id:</label>
+            <input type="text" class="form-control" id="airplaneId"  formControlName="airplaneId" name="airplaneId">
+            <span *ngIf="!insertForm.get('airplaneId').valid && insertForm.get('airplaneId').touched"
+              class="help-block alert-warning">Please enter a valid identification!</span>
+          </div>
+          <div class="form-group">
+            <label for="modelList">Select Airplane Model:</label>
+            <select class="form-control" id="modelList"  formControlName="airplaneModel" name="airplaneModel">
+              <option>Airbus A380</option>
+              <option>Airbus A220</option>
+              <option>Airbus A350</option>
+              <option>Airbus A319</option> 
+              <option>Boeing 747</option>
+              <option>Boeing 797</option>
+            </select>
+            <span *ngIf="!insertForm.get('airplaneModel').valid && insertForm.get('airplaneModel').touched"
+              class="help-block alert-warning">Please enter a valid airplane model!</span>
+          </div>
+          <div class="form-group">
+              <label for="airplaneModel">Cargohold Capacity:</label>
+              <input type="text" class="form-control" id="airplaneCargoholdCapacity"  formControlName="airplaneCargoholdCapacity" name="airplaneCargoholdCapacity">
+              <span *ngIf="!insertForm.get('airplaneCargoholdCapacity').valid && insertForm.get('airplaneCargoholdCapacity').touched"
+                class="help-block alert-warning">Please enter a valid capacity!</span>
+          </div>
+          <div class="form-group">
+                <label for="airplaneModel">Number of Seats:</label>
+                <input type="text" class="form-control" id="airplaneSeats"  formControlName="airplaneSeats" name="airplaneSeats">
+                <span *ngIf="!insertForm.get('airplaneSeats').valid && insertForm.get('airplaneSeats').touched"
+                  class="help-block alert-warning">Please enter a valid seat capacity!</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_airplaneModal').modal('hide')">Create Airplane</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_airplaneModal" tabindex="3" role="dialog" aria-labelledby="edit_airplaneModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateAirplane()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_airplaneModalLabel">Edit Existing Airplane</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="airplaneId">Airplane Id:</label>
+                <input type="text" class="form-control" id="airplaneId"  formControlName="airplaneId" name="airplaneId">
+                <span *ngIf="!editForm.get('airplaneId').valid && editForm.get('airplaneId').touched"
+                  class="help-block alert-warning">Please enter a valid identification!</span>
+              </div>
+              <div class="form-group">
+                <label for="modelList">Select Airplane Model:</label>
+                <select class="form-control" id="modelList"  formControlName="airplaneModel" name="airplaneModel">
+                  <option>Airbus A380</option>
+                  <option>Airbus A220</option>
+                  <option>Airbus A350</option>
+                  <option>Airbus A319</option> 
+                  <option>Boeing 747</option>
+                  <option>Boeing 797</option>
+                </select>
+                <span *ngIf="!editForm.get('airplaneModel').valid && editForm.get('airplaneModel').touched"
+                  class="help-block alert-warning">Please enter a valid airplane model!</span>
+              </div>
+              <div class="form-group">
+                  <label for="airplaneModel">Cargohold Capacity:</label>
+                  <input type="text" class="form-control" id="airplaneCargoholdCapacity"  formControlName="airplaneCargoholdCapacity" name="airplaneCargoholdCapacity">
+                  <span *ngIf="!editForm.get('airplaneCargoholdCapacity').valid && editForm.get('airplaneCargoholdCapacity').touched"
+                    class="help-block alert-warning">Please enter a valid capacity!</span>
+              </div>
+              <div class="form-group">
+                    <label for="airplaneModel">Number of Seats:</label>
+                    <input type="text" class="form-control" id="airplaneSeats"  formControlName="airplaneSeats" name="airplaneSeats">
+                    <span *ngIf="!editForm.get('airplaneSeats').valid && editForm.get('airplaneSeats').touched"
+                      class="help-block alert-warning">Please enter a valid seat capacity!</span>
+              </div>
+            <span *ngIf="!editForm.get('airplaneSeats').valid && editForm.get('airplaneSeats').touched"
+              class="help-block alert-warning">Please enter a valid number of Seats!</span>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_airplaneModal').modal('hide')">Edit Airplane</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_airplaneModal" tabindex="3" role="dialog" aria-labelledby="delete_airplaneModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteAirplane()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_airplaneModalLabel">Delete Airplane</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="airplaneId" name="airplaneId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Airplane. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_airplaneModal').modal('hide')">Delete Airplane</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="airplanes.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Airplanes found!</strong> Add new airplanes using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+      <h3>Error occurred using the webservices!</h3>
+      <strong>{{ error }}</strong><br>
+      Please contact the coding monkeys.
+    </div>
+<table class="table table-striped" *ngIf="airplanes.length >= 1">
     <thead>
       <tr>
         <th>Airplane ID</th>
         <th>Model</th>
-        <th>Seat Capacity</th>
         <th>Cargohold Capacity</th>
-        <th>Cargohold Capacity</th>
+        <th>Number of Seats</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
+      <tr *ngFor="let airplane of airplanes">
+        <td>{{airplane.id}}</td>
+        <td>{{airplane.model}}</td>
+        <td>{{airplane.cargoholdCapacity}}</td>
+        <td>{{airplane.numberOfSeats}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airplaneModal" (click)="populateEditForm(airplane.id)" >Edit</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airplaneModal" (click)="populateDeleteForm(airplane.id)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
+
+
