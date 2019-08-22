@@ -6,6 +6,7 @@ import { MenuComponent } from './menu/menu.component';
 import { AirplanesComponent } from './airplanes/airplanes.component';
 import { AirportsComponent } from './airports/airports.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FlightsComponent } from './flights/flights.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
     MenuComponent,
     AirplanesComponent,
     AirportsComponent,
+    FlightsComponent,
   ],
   imports: [
     BrowserModule,

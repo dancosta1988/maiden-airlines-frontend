@@ -1,0 +1,241 @@
+<h2>List of Flights</h2>
+  <p>Flights are listed below. As an operator you can add, edit or delete flights.</p>
+  <hr>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#new_flightModal">Create New Flight</button>            
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_flightModal" tabindex="3" role="dialog" aria-labelledby="new_flightModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateFlight()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_flightModalLabel" >Create New Flight</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="form-group">
+            <label for="flightNumber">Flight Number (ex.: MDN001):</label>
+            <input type="text" class="form-control" id="flightNumber"  formControlName="flightNumber" name="flightNumber">
+            <span *ngIf="!insertForm.get('flightNumber').valid && insertForm.get('flightNumber').touched"
+              class="help-block alert-warning">Please enter a valid flight number!</span>
+          </div>
+          <div class="form-group">
+            <label for="flightDepartureDate">Select Departure Date:</label>
+            <input class="form-control" type="datetime-local" id="flightDepartureDate" formControlName="flightDepartureDate" name="flightDepartureDate" />
+            <span *ngIf="!insertForm.get('flightDepartureDate').valid && insertForm.get('flightDepartureDate').touched"
+              class="help-block alert-warning">Please enter a valid date!</span>
+          </div>
+          <div class="form-group">
+                <label for="flightDepartureAirport">Select Departure Airport:</label>
+                <select class="form-control" id="flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
+                  <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                </select>
+                <span *ngIf="!editForm.get('flightDepartureAirport').valid && editForm.get('flightDepartureAirport').touched"
+                  class="help-block alert-warning">Please enter a valid departure airport!</span>
+          </div>
+          <div class="form-group">
+                <label for="flightArrivalDate">Select Arrival Date:</label>
+                <input class="form-control" type="datetime-local" id="flightArrivalDate" formControlName="flightArrivalDate" name="flightArrivalDate" />
+                <span *ngIf="!insertForm.get('flightArrivalDate').valid && insertForm.get('flightArrivalDate').touched"
+                  class="help-block alert-warning">Please enter a valid date!</span>
+            </div>
+            <div class="form-group">
+                <label for="flightArrivalAirport">Select Arrival Airport:</label>
+                <select class="form-control" id="flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
+                    <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                </select>
+                <span *ngIf="!insertForm.get('flightArrivalAirport').valid && insertForm.get('flightArrivalAirport').touched"
+                    class="help-block alert-warning">Please enter a valid arrival airport!</span>
+            </div>
+            <div class="form-group">
+                    <label for="flightAirplane">Select Airplane:</label>
+                    <select class="form-control" id="flightAirplane"  formControlName="flightAirplane" name="flightAirplane">
+                        <option *ngFor="let airplane of airplanes" value={{airplane.id}}>{{airplane.id}}_{{airplane.model}}</option>
+                    </select>
+                    <span *ngIf="!insertForm.get('flightArrivalAirport').valid && insertForm.get('flightArrivalAirport').touched"
+                        class="help-block alert-warning">Please enter a valid arrival airport!</span>
+            </div>
+          <div class="form-group">
+                <label for="flightGate">Gate:</label>
+                <input type="text" class="form-control" id="flightGate"  formControlName="flightGate" name="flightGate">
+                <span *ngIf="!insertForm.get('flightGate').valid && insertForm.get('flightGate').touched"
+                  class="help-block alert-warning">Please enter a valid Gate!</span>
+          </div>
+          <div class="form-group">
+                <label for="flightStatus">Select Flight Status:</label>
+                <select class="form-control" id="flightStatus"  formControlName="flightStatus" name="flightStatus">
+                  <option value="active">Active</option>
+                  <option value="delayed">Delayed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+                <span *ngIf="!insertForm.get('flightStatus').valid && insertForm.get('flightStatus').touched"
+                  class="help-block alert-warning">Please enter a valid status!</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_flightModal').modal('hide')">Create Flight</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_flightModal" tabindex="3" role="dialog" aria-labelledby="edit_flightModalLabel" aria-hidden="true" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <form [formGroup] = "editForm" (ngSubmit)="onCreateFlight()">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_flightModalLabel" >Create New Flight</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              
+                <div class="form-group">
+                  <label for="flightNumber">Flight Number (ex.: MDN001):</label>
+                  <input type="text" class="form-control" id="flightNumber"  formControlName="flightNumber" name="flightNumber">
+                  <span *ngIf="!editForm.get('flightNumber').valid && editForm.get('flightNumber').touched"
+                    class="help-block alert-warning">Please enter a valid flight number!</span>
+                </div>
+                <div class="form-group">
+                  <label for="flightDepartureDate">Select Departure Date:</label>
+                  <input class="form-control" type="datetime-local" id="flightDepartureDate" formControlName="flightDepartureDate" name="flightDepartureDate" />
+                  <span *ngIf="!editForm.get('flightDepartureDate').valid && editForm.get('flightDepartureDate').touched"
+                    class="help-block alert-warning">Please enter a valid date!</span>
+                </div>
+                <div class="form-group">
+                      <label for="flightDepartureAirport">Select Departure Airport:</label>
+                      <select class="form-control" id="flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
+                        <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                      </select>
+                      <span *ngIf="!editForm.get('flightDepartureAirport').valid && editForm.get('flightDepartureAirport').touched"
+                        class="help-block alert-warning">Please enter a valid departure airport!</span>
+                </div>
+                <div class="form-group">
+                      <label for="flightArrivalDate">Select Arrival Date:</label>
+                      <input class="form-control" type="datetime-local" id="flightArrivalDate" formControlName="flightArrivalDate" name="flightArrivalDate" />
+                      <span *ngIf="!editForm.get('flightArrivalDate').valid && editForm.get('flightArrivalDate').touched"
+                        class="help-block alert-warning">Please enter a valid date!</span>
+                  </div>
+                  <div class="form-group">
+                      <label for="flightArrivalAirport">Select Arrival Airport:</label>
+                      <select class="form-control" id="flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
+                          <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                      </select>
+                      <span *ngIf="!editForm.get('flightArrivalAirport').valid && editForm.get('flightArrivalAirport').touched"
+                          class="help-block alert-warning">Please enter a valid arrival airport!</span>
+                  </div>
+                  <div class="form-group">
+                        <label for="flightAirplane">Select Airplane:</label>
+                        <select class="form-control" id="flightAirplane"  formControlName="flightAirplane" name="flightAirplane">
+                            <option *ngFor="let airplane of airplanes" value={{airplane.id}}>{{airplane.id}}_{{airplane.model}}</option>
+                        </select>
+                        <span *ngIf="!editForm.get('flightArrivalAirport').valid && editForm.get('flightArrivalAirport').touched"
+                            class="help-block alert-warning">Please enter a valid arrival airport!</span>
+                </div>
+                <div class="form-group">
+                      <label for="flightGate">Gate:</label>
+                      <input type="text" class="form-control" id="flightGate"  formControlName="flightGate" name="flightGate">
+                      <span *ngIf="!editForm.get('flightGate').valid && editForm.get('flightGate').touched"
+                        class="help-block alert-warning">Please enter a valid Gate!</span>
+                </div>
+                <div class="form-group">
+                        <label for="flightStatus">Select Flight Status:</label>
+                        <select class="form-control" id="flightStatus"  formControlName="flightStatus" name="flightStatus">
+                          <option value="active">Active</option>
+                          <option value="delayed">Delayed</option>
+                          <option value="cancelled">Cancelled</option>
+                        </select>
+                        <span *ngIf="!editForm.get('flightStatus').valid && editForm.get('flightStatus').touched"
+                          class="help-block alert-warning">Please enter a valid status!</span>
+                  </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_flightModal').modal('hide')">Create Flight</button>
+            </div>
+            </form>
+            </div>
+        </div>
+      </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_flightModal" tabindex="3" role="dialog" aria-labelledby="delete_flightModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteFlight()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_flightModalLabel">Delete Flight</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="flightId" name="flightId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete a Flight. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_flightModal').modal('hide')">Delete Flight</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="flights.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Flights found!</strong> Add new flights using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+      <h3>Error occurred using the webservices!</h3>
+      <strong>{{ error }}</strong><br>
+      Please contact the coding monkeys.
+    </div>
+<table class="table table-striped" *ngIf="flights.length >= 1" >
+    <thead>
+      <tr>
+        <th>Flight Number</th>
+        <th>Departure Date</th>
+        <th>Departure Airport</th>
+        <th>Arrival Date</th>
+        <th>Arrival Airport</th>
+        <th>Airplane</th>
+        <th>Gate</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let flight of flights">
+        <td>{{flight.flight_number}}</td>
+        <td>{{flight.departure_date}}</td>
+        <td>{{flight.departure_airport.shortName}}, {{flight.departure_airport.city}}</td>
+        <td>{{flight.arrival_date}}</td>
+        <td>{{flight.arrival_airport.shortName}}, {{flight.arrival_airport.city}}</td>
+        <td>{{flight.airplane.id}}</td>
+        <td>{{flight.gate}}</td>
+        <td *ngIf="flight.status === 'active'" class= "bg-success text-white">{{flight.status}}</td>
+        <td *ngIf="flight.status === 'delayed'" class= "bg-warning text-dark">{{flight.status}}</td>
+        <td *ngIf="flight.status === 'cancelled'" class= "bg-danger text-dark">{{flight.status}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(flight.id)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(flight.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
