@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_flightModal').modal('hide')">Create Flight</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_flightModal').modal('hide')">Edit Flight</button>
             </div>
             </form>
             </div>
@@ -218,7 +218,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let flight of flights">
+      <tr *ngFor="let flight of flights; index as i;">
         <td>{{flight.flight_number}}</td>
         <td>{{flight.departure_date}}</td>
         <td>{{flight.departure_airport.shortName}}, {{flight.departure_airport.city}}</td>
@@ -230,8 +230,8 @@
         <td *ngIf="flight.status === 'delayed'" class= "bg-warning text-dark">{{flight.status}}</td>
         <td *ngIf="flight.status === 'cancelled'" class= "bg-danger text-dark">{{flight.status}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(flight.id)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(flight.id)">Delete</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>
     </tbody>

@@ -57,28 +57,21 @@ export class AirportsComponent implements OnInit {
 
   }
 
-  select(id: number){
-   this.currentlySelected = id; 
-  }
-
-  populateEditForm(id: number){
-    console.log("editing airport id " + id);
-    this.airports.forEach(element => {
-      if(element.id == id){
+  populateEditForm(index: number){
+    console.log("editing airport id " + this.airports[index].id);
+    
         this.editForm.setValue({
-          airportId: element.id,
-          airportName: element.name,
-          airportShortName: element.shortName,
-          airportCity: element.city,
-          airportCountry: element.country
-        });
-      }
+          airportId: index,
+          airportName: this.airports[index].name,
+          airportShortName: this.airports[index].shortName,
+          airportCity: this.airports[index].city,
+          airportCountry: this.airports[index].country
     });
   }
 
-  populateDeleteForm(id: number){
+  populateDeleteForm(index: number){
     this.deleteForm.setValue({
-      airportId : id
+      airportId : index
     });
   }
 
@@ -97,7 +90,7 @@ export class AirportsComponent implements OnInit {
     console.log("onUpdateAiport");
     //send http request
     this.airportsService.updateAirport(
-        this.editForm.value.airportId,
+        this.airports[this.editForm.value.airportId].id,
         this.editForm.value.airportName, 
         this.editForm.value.airportShortName, 
         this.editForm.value.airportCity, 
@@ -107,10 +100,10 @@ export class AirportsComponent implements OnInit {
   onDeleteAirport(){
     console.log("onDeleteAiport");
     //get id from the deleteForm
-    let id = this.deleteForm.value.airportId;
-    console.log("deleting airport id: " + id);
+    let index = this.deleteForm.value.airportId;
+    console.log("deleting airport id: " + this.airports[index].id);
     //send http request
-    this.airportsService.deleteAirport(id);
+    this.airportsService.deleteAirport(this.airports[index].id);
 
   }
 
@@ -120,9 +113,9 @@ export class AirportsComponent implements OnInit {
 
   private fetchAirports(){
     this.isFetching = true;
-    this.airportsService.fetchAirports().subscribe(aiports =>{
+    this.airportsService.fetchAirports().subscribe(airports =>{
       this.isFetching = false;
-      this.airports = this.airports;
+      this.airports = airports;
     },
     error =>{
         this.error = error.message;

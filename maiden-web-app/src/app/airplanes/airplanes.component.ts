@@ -54,23 +54,22 @@ export class AirplanesComponent implements OnInit {
 
   }
 
-  populateEditForm(id: number){
-    console.log("editing airplane id " + id);
-    this.airplanes.forEach(element => {
-      if(element.id == id){
+  populateEditForm(index: number){
+    console.log("editing airplane id " + this.airplanes[index].id);
+    
+    
         this.editForm.setValue({
-          airplaneId: element.id,
-          airplaneModel: element.model,
-          airplaneCargoholdCapacity: element.cargoholdCapacity,
-          airplaneSeats: element.numberOfSeats,
+          airplaneId: this.airplanes[index].id,
+          airplaneModel: this.airplanes[index].model,
+          airplaneCargoholdCapacity: this.airplanes[index].cargoholdCapacity,
+          airplaneSeats: this.airplanes[index].numberOfSeats,
         });
-      }
-    });
+
   }
 
-  populateDeleteForm(id: number){
+  populateDeleteForm(index: number){
     this.deleteForm.setValue({
-      airplaneId : id
+      airplaneId : index
     });
   }
 
@@ -78,7 +77,7 @@ export class AirplanesComponent implements OnInit {
     console.log("onCreateAirplane");
     //send http request
     this.airplanesService.createAndStoreAirplane(
-      this.insertForm.value.airplaneId,
+      this.airplanes[this.insertForm.value.airplaneId].id,
       this.insertForm.value.airplaneModel, 
       this.insertForm.value.airplaneCargoholdCapacity, 
       this.insertForm.value.airplaneSeats);
@@ -89,7 +88,7 @@ export class AirplanesComponent implements OnInit {
     console.log("onUpdateAirplane");
     //send http request
     this.airplanesService.updateAirplane(
-      this.insertForm.value.airplaneId,
+      this.insertForm.value.airplaneId.id,
       this.insertForm.value.airplaneModel, 
       this.insertForm.value.airplaneCargoholdCapacity, 
       this.insertForm.value.airplaneSeats);
@@ -98,10 +97,10 @@ export class AirplanesComponent implements OnInit {
   onDeleteAirplane(){
     console.log("onDeleteAirplane");
     //get id from the deleteForm
-    let id = this.deleteForm.value.airplaneId;
-    console.log("deleting airplane id: " + id);
+    let index = this.deleteForm.value.airplaneId;
+    console.log("deleting airplane id: " + this.airplanes[index].id);
     //send http request
-    this.airplanesService.deleteAirplane(id);
+    this.airplanesService.deleteAirplane(this.airplanes[index].id);
 
   }
 
@@ -111,9 +110,9 @@ export class AirplanesComponent implements OnInit {
 
   private fetchairplanes(){
     this.isFetching = true;
-    this.airplanesService.fetchAirplanes().subscribe(aiports =>{
+    this.airplanesService.fetchAirplanes().subscribe(airplanes =>{
       this.isFetching = false;
-      this.airplanes = this.airplanes;
+      this.airplanes = airplanes;
     },
     error =>{
         this.error = error.message;

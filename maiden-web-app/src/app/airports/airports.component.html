@@ -173,15 +173,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let airport of airports">
+      <tr *ngFor="let airport of airports; index as i;">
         <td>{{airport.id}}</td>
         <td>{{airport.name}}</td>
         <td>{{airport.shortName}}</td>
         <td>{{airport.city}}</td>
         <td>{{airport.country}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(airport.id)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(airport.id)">Delete</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>
     </tbody>
