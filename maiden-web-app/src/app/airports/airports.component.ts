@@ -23,10 +23,10 @@ export class AirportsComponent implements OnInit {
   public currentlySelected = -1;
 
   public airports: Airport[] = [
-    new Airport(1, "Aiport 1", "A1", "Lisbon", "Portugal"),
+    /*new Airport(1, "Aiport 1", "A1", "Lisbon", "Portugal"),
     new Airport(2, "Aiport 2", "A2", "Lisbon", "Portugal"),
     new Airport(3, "Aiport 3", "A3", "Oporto", "Portugal"),
-    new Airport(4, "Aiport 4", "A4", "Madrid", "Spain")
+    new Airport(4, "Aiport 4", "A4", "Madrid", "Spain")*/
   ]
 
    
@@ -85,7 +85,6 @@ export class AirportsComponent implements OnInit {
       this.insertForm.value.airportCountry);
   }
 
-  
   onUpdateAirport(){
     console.log("onUpdateAiport");
     //send http request
@@ -113,14 +112,16 @@ export class AirportsComponent implements OnInit {
 
   private fetchAirports(){
     this.isFetching = true;
-    this.airportsService.fetchAirports().subscribe(airports =>{
-      this.isFetching = false;
-      this.airports = airports;
-    },
-    error =>{
-        this.error = error.message;
-    });
-    
+    this.airportsService.fetchAirports().subscribe(data =>{
+        this.isFetching = false;
+        for (var i = 0, len = data.length; i < len; i++) {
+          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
+        }
+      },
+      error =>{
+          this.error = error.message;
+      });
+      
   }
 
   

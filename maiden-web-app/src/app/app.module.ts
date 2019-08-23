@@ -8,6 +8,7 @@ import { AirportsComponent } from './airports/airports.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FlightsComponent } from './flights/flights.component';
 import { OperatorViewComponent } from './operator-view/operator-view.component';
+import { ConstantsService } from './common/services/constants.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { OperatorViewComponent } from './operator-view/operator-view.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ConstantsService],
   bootstrap: [AppComponent,MenuComponent]
 })
 export class AppModule { }

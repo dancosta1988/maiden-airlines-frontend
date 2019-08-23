@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Flight } from './flight.model';
-import { map } from 'rxjs/internal/operators/map';
 import { Airport } from '../airports/airport.model';
 import { Airplane } from '../airplanes/airplane.model';
+import { ConstantsService } from '../common/services/constants.service';
 
 @Injectable({providedIn: 'root'})
 export class FlightsService {
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private constants: ConstantsService){}
 
     createAndStoreFlight(
         flight_number: string,
@@ -27,7 +27,7 @@ export class FlightsService {
             airplane: airplane,
             gate: gate,
             status: status };
-        this.http.post('http://192.168.56.1:8080/Airport/insertFlight', 
+        this.http.post(this.constants.webServicesUrl+'/insertFlight', 
         postData
         ).subscribe(responseData => {
             console.log(responseData);
@@ -52,17 +52,6 @@ export class FlightsService {
     }
 
     fetchFlights(){
-        return this.http.get<{[key: string]: Flight}>('http://192.168.56.1:8080/SOAP%20Process/ServiceAirport.serviceagent/Flight',{
-            headers: new HttpHeaders({'Access-Control-Allow-Origin': "http://localhost:4200"})
-        })
-        .pipe(map((responseData: { [key: number]: Flight}) =>{
-            const flightsArray: Flight[] = [];
-            for (const key in responseData){
-                if(responseData.hasOwnProperty(key)){
-                flightsArray.push({ ... responseData[key]});
-                }
-            }
-            return flightsArray;
-        }));
+        return this.http.get<Flight[]>(this.constants.webServicesUrl+'/Flights');
     }
 }
