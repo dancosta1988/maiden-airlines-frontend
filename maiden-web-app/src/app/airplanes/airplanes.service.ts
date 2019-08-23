@@ -18,17 +18,25 @@ export class AirplanesService {
     }
 
     updateAirplane(id: number, model: string, cargo: number, seats: number){
-        //...
+        const postData: Airplane = { id: id, model: model, cargoholdCapacity: cargo, numberOfSeats: seats};
+        this.http.post('http://192.168.0.189:8080/Airport/insertAirplane', 
+        postData
+        ).subscribe(responseData => {
+            console.log(responseData);
+        });
     }
 
     deleteAirplane(id: number){
-        //...
+        const postData: Airplane = { id: null, model: null, cargoholdCapacity: null, numberOfSeats: null};
+        this.http.post('http://192.168.0.189:8080/Airport/insertAirplane', 
+        postData
+        ).subscribe(responseData => {
+            console.log(responseData);
+        });
     }
 
     fetchAirplanes(){
-        return this.http.get<{[key: string]: Airplane}>('http://192.168.0.189:8080/SOAP%20Process/ServiceAirport.serviceagent/Airplane',{
-            headers: new HttpHeaders({'Access-Control-Allow-Origin': "http://localhost:4200"})
-        })
+        return this.http.get<{[key: string]: Airplane}>('http://192.168.0.189:8080/SOAP%20Process/ServiceAirport.serviceagent/Airplane')
         .pipe(map((responseData: { [key: number]: Airplane}) =>{
             const airportsArray: Airplane[] = [];
             for (const key in responseData){

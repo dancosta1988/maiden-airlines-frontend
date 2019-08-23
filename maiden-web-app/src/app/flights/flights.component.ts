@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Airplane } from '../airplanes/airplane.model';
 import { Airport } from '../airports/airport.model';
 import { Flight } from './flight.model';
+import { HttpClient } from '@angular/common/http';
+import { FlightsService } from './flights.service';
 
 @Component({
   selector: 'app-flights',
@@ -40,9 +42,11 @@ export class FlightsComponent implements OnInit {
   ]
   
 
-  constructor() { }
+  constructor(private http: HttpClient, private flightsService: FlightsService) { }
 
   ngOnInit() {
+    //fetch
+    this.fetchFlights();
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
@@ -74,51 +78,67 @@ export class FlightsComponent implements OnInit {
 
   }
 
-  populateEditForm(id: number){
-    console.log("editing flight id " + id);
-    this.flights.forEach(element => {
-      if(element.id == id){
+  populateEditForm(index: number){
+    console.log("editing flight id " + this.flights[index].id);
+    
         this.editForm.setValue({
-          'flightId' : element.id,
-          'flightNumber' : element.flight_number,
-          'flightDepartureDate' : element.departure_date,
-          'flightDepartureAirport' : element.departure_airport.id,
-          'flightArrivalDate' : element.arrival_date,
-          'flightArrivalAirport' : element.arrival_airport.id,
-          'flightAirplane' : element.airplane.id,
-          'flightGate' : element.gate,
-          'flightStatus' : element.status
+          'flightId' : index,
+          'flightNumber' : this.flights[index].flight_number,
+          'flightDepartureDate' : this.flights[index].departure_date,
+          'flightDepartureAirport' : this.flights[index].departure_airport.id,
+          'flightArrivalDate' : this.flights[index].arrival_date,
+          'flightArrivalAirport' : this.flights[index].arrival_airport.id,
+          'flightAirplane' : this.flights[index].airplane.id,
+          'flightGate' : this.flights[index].gate,
+          'flightStatus' : this.flights[index].status
         });
-      }
-    });
   }
 
-  populateDeleteForm(id: number){
+  populateDeleteForm(index: number){
     this.deleteForm.setValue({
-      airportId : id
+      airportId : index
     });
   }
 
   onCreateAirport(){
     console.log("onCreateFlight");
     //send http request
-    
+    this.flightsService.createAndStoreFlight(
+      this.insertForm.value.flightNumber,
+      this.insertForm.value.departure_date,
+      this.insertForm.value.departure_airport,
+      this.insertForm.value.arrival_date,
+      this.insertForm.value.arrival_airport,
+      this.insertForm.value.airplane,
+      this.insertForm.value.gate,
+      this.insertForm.value.status
+    );
   }
 
   
   onUpdateAirport(){
-    console.log("onUpdateAiport");
+    console.log("onUpdateFlight");
     //send http request
-    
+    this.flightsService.updateFlight(
+      this.flights[this.insertForm.value.flightId].id,
+      this.insertForm.value.flightNumber,
+      this.insertForm.value.departure_date,
+      this.insertForm.value.departure_airport,
+      this.insertForm.value.arrival_date,
+      this.insertForm.value.arrival_airport,
+      this.insertForm.value.airplane,
+      this.insertForm.value.gate,
+      this.insertForm.value.status
+    );
   }
 
-  onDeleteAirport(){
-    console.log("onDeleteAiport");
+  onDeleteFlight(){
+    console.log("onDeleteFlight");
     //get id from the deleteForm
-    let id = this.deleteForm.value.airportId;
-    console.log("deleting airport id: " + id);
+    let index = this.deleteForm.value.flighttId;
+    console.log("deleting flight id: " + this.flights[index].id);
     //send http request
-    
+    this.flightsService.deleteFlight(this.flights[index].id)
 
   }
 
@@ -128,7 +148,13 @@ export class FlightsComponent implements OnInit {
 
   private fetchFlights(){
     this.isFetching = true;
-    //...
+    this.flightsService.fetchFlights().subscribe(flights =>{
+      this.isFetching = false;
+      this.flights = flights;
+    },
+    error =>{
+        this.error = error.message;
+    });
     
   }
 
