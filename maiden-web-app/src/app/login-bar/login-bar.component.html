@@ -1,0 +1,147 @@
+<!-- Modal Signup-->
+<div class="modal fade" id="signupModal" tabindex="3" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true" >
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <form [formGroup] = "signupForm" (ngSubmit)="onSignUp()">
+    <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel" >Signup to Maiden Airlines</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        
+        <div class="form-group">
+            <label for="signupName">Your first name:</label>
+            <input type="text" class="form-control" id="signupFirstName"  formControlName="signupFirstName" name="signupFirstName">
+            <span *ngIf="!signupForm.get('signupFirstName').valid && signupForm.get('signupFirstName').touched"
+            class="help-block alert-warning">Please enter a valid first name!</span>
+        </div>
+        <div class="form-group">
+                <label for="signupName">Your last name:</label>
+                <input type="text" class="form-control" id="signupLastName"  formControlName="signupLastName" name="signupLastName">
+                <span *ngIf="!signupForm.get('signupLastName').valid && signupForm.get('signupLastName').touched"
+                class="help-block alert-warning">Please enter a valid last name!</span>
+        </div>
+        <div class="form-group">
+                <label for="signupVAT">Your VAT number:</label>
+                <input type="text" class="form-control" id="signupVAT"  formControlName="signupVAT" name="signupVAT">
+                <span *ngIf="!signupForm.get('signupVAT').valid && signupForm.get('signupVAT').touched"
+                class="help-block alert-warning">Please enter a valid VAT!</span>
+        </div>
+        <div class="form-group">
+            <label for="signupDOB">Date of Birth:</label>
+            <input class="form-control" type="date-local" id="signupDOB" formControlName="signupDOB" name="signupDOB" />
+            <span *ngIf="!signupForm.get('signupDOB').valid && signupForm.get('signupDOB').touched"
+            class="help-block alert-warning">Please enter a valid date!</span>
+        </div>
+        <div class="form-group">
+                <label for="signupGender">Select Gender:</label><br>
+                <input type="radio" name="signupGender" id="signupGender1" formControlName="signupGender" value="male" checked> Male<br>
+                <input type="radio" name="signupGender" id="signupGender2" formControlName="signupGender" value="female"> Female<br>
+                <span *ngIf="!signuptForm.get('signupGender').valid && signuptForm.get('signupGender').touched"
+                class="help-block alert-warning">Please enter Gender!</span>
+        </div>
+        <div class="form-group">
+            <label for="signupName">Your contact number:</label>
+            <input type="text" class="form-control" id="signupContact"  formControlName="signupContact" name="signupContact">
+            <span *ngIf="!signupForm.get('signupContact').valid && signupForm.get('signupContact').touched"
+            class="help-block alert-warning">Please enter a valid contact!</span>
+        </div>
+        <div class="form-group">
+                <label for="signupGender">Select Contact Type:</label><br>
+                <input type="radio" name="signupContactType" id="ContactType1" formControlName="ContactType" value="house_phone" checked> Household phone<br>
+                <input type="radio" name="signupContactType" id="ContactType2" formControlName="ContactType" value="mobile_phone"> Mobile phone<br>
+                <span *ngIf="!signuptForm.get('signupContactType').valid && signuptForm.get('signupContactType').touched"
+                class="help-block alert-warning">Please enter a valid contact type!</span>
+        </div>
+        <hr>
+        <div class="form-group">
+                <label for="signupName">Type you email:</label>
+                <input type="text" class="form-control" id="signupEmail"  formControlName="signupEmail" name="signupEmail">
+                <span *ngIf="!signupForm.get('signupEmail').valid && signupForm.get('signupEmail').touched"
+                class="help-block alert-warning">Please enter a valid email!</span>
+        </div>
+        <div class="form-group">
+                <label for="signupName">Choose a password:</label>
+                <input type="password" class="form-control" id="signupPassword"  formControlName="signupPassword" name="signupPassword">
+                <span *ngIf="!signupForm.get('signupPassword').valid && signupForm.get('signupPassword').touched"
+                class="help-block alert-warning">Please enter a valid password (alphanumeric and special characters allowed)!</span>
+        </div>
+        <div class="form-group">
+                <label for="signupName">Confirm password:</label>
+                <input type="password" class="form-control" id="signupConfirmPassword"  formControlName="signupConfirmPassword" name="signupConfirmPassword">
+                <span *ngIf="!signupForm.get('signupConfirmPassword').valid && signupForm.get('signupConfirmPassword').touched"
+                class="help-block alert-warning">Please enter a valid password (alphanumeric and special characters allowed)!</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!signuptForm.valid" onclick="$('#signupModal').modal('hide')">Register</button>
+    </div>
+    </form>
+    </div>
+</div>
+</div>
+
+<!-- Modal Signup-->
+<div class="modal fade" id="loginModal" tabindex="3" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "loginForm" (ngSubmit)="onSignUp()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel" >Signup to Maiden Airlines</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                    <label for="loginName">Type your username (email):</label>
+                    <input type="text" class="form-control" id="loginEmail"  formControlName="loginEmail" name="loginEmail">
+                    <span *ngIf="!loginForm.get('loginEmail').valid && loginForm.get('loginEmail').touched"
+                    class="help-block alert-warning">Please enter a valid email!</span>
+            </div>
+            <div class="form-group">
+                    <label for="loginName">Type your password:</label>
+                    <input type="password" class="form-control" id="loginPassword"  formControlName="loginPassword" name="loginPassword">
+                    <span *ngIf="!loginForm.get('loginPassword').valid && loginForm.get('loginPassword').touched"
+                    class="help-block alert-warning">Please enter a valid password (alphanumeric and special characters allowed)!</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!logintForm.valid" onclick="$('#loginModal').modal('hide')">Login</button>
+        </div>
+        </form>
+        </div>
+    </div>
+    </div>  
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark white-text">
+        <div class="d-flex flex-grow-1">
+            <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
+            <a class="navbar-brand d-none d-lg-inline-block" href="#">
+                Maiden Airlines
+            </a>
+            <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
+                <img src="assets/maiden-logo.png" alt="logo">
+            </a>
+            <div class="w-100 text-right">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item nav-active" data-toggle="modal" data-target="#signupModal">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item" data-toggle="modal" data-target="#loginModal">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
