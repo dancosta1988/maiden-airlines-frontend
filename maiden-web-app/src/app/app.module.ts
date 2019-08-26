@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlightsComponent } from './flights/flights.component';
 import { OperatorViewComponent } from './operator-view/operator-view.component';
 import { ConstantsService } from './common/services/constants.service';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { LoginBarComponent } from './login-bar/login-bar.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { ConstantsService } from './common/services/constants.service';
     AirportsComponent,
     FlightsComponent,
     OperatorViewComponent,
+    FooterComponent,
+    HeaderComponent,
+    LoginBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +32,6 @@ import { ConstantsService } from './common/services/constants.service';
     ReactiveFormsModule
   ],
   providers: [ConstantsService],
-  bootstrap: [AppComponent,MenuComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

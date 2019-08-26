@@ -18,19 +18,19 @@
         
           <div class="form-group">
             <label for="flightNumber">Flight Number (ex.: MDN001):</label>
-            <input type="text" class="form-control" id="flightNumber"  formControlName="flightNumber" name="flightNumber">
+            <input type="text" class="form-control" id="insert_flightNumber"  formControlName="flightNumber" name="flightNumber">
             <span *ngIf="!insertForm.get('flightNumber').valid && insertForm.get('flightNumber').touched"
               class="help-block alert-warning">Please enter a valid flight number!</span>
           </div>
           <div class="form-group">
             <label for="flightDepartureDate">Select Departure Date:</label>
-            <input class="form-control" type="datetime-local" id="flightDepartureDate" formControlName="flightDepartureDate" name="flightDepartureDate" />
+            <input class="form-control" type="datetime-local" id="insert_flightDepartureDate" formControlName="flightDepartureDate" name="flightDepartureDate" />
             <span *ngIf="!insertForm.get('flightDepartureDate').valid && insertForm.get('flightDepartureDate').touched"
               class="help-block alert-warning">Please enter a valid date!</span>
           </div>
           <div class="form-group">
                 <label for="flightDepartureAirport">Select Departure Airport:</label>
-                <select class="form-control" id="flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
+                <select class="form-control" id="insert_flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
                   <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
                 </select>
                 <span *ngIf="!editForm.get('flightDepartureAirport').valid && editForm.get('flightDepartureAirport').touched"
@@ -38,13 +38,13 @@
           </div>
           <div class="form-group">
                 <label for="flightArrivalDate">Select Arrival Date:</label>
-                <input class="form-control" type="datetime-local" id="flightArrivalDate" formControlName="flightArrivalDate" name="flightArrivalDate" />
+                <input class="form-control" type="datetime-local" id="insert_flightArrivalDate" formControlName="flightArrivalDate" name="flightArrivalDate" />
                 <span *ngIf="!insertForm.get('flightArrivalDate').valid && insertForm.get('flightArrivalDate').touched"
                   class="help-block alert-warning">Please enter a valid date!</span>
             </div>
             <div class="form-group">
                 <label for="flightArrivalAirport">Select Arrival Airport:</label>
-                <select class="form-control" id="flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
+                <select class="form-control" id="insert_flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
                     <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
                 </select>
                 <span *ngIf="!insertForm.get('flightArrivalAirport').valid && insertForm.get('flightArrivalAirport').touched"
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                     <label for="flightAirplane">Select Airplane:</label>
-                    <select class="form-control" id="flightAirplane"  formControlName="flightAirplane" name="flightAirplane">
+                    <select class="form-control" id="insert_flightAirplane"  formControlName="flightAirplane" name="flightAirplane">
                         <option *ngFor="let airplane of airplanes" value={{airplane.id}}>{{airplane.id}}_{{airplane.model}}</option>
                     </select>
                     <span *ngIf="!insertForm.get('flightArrivalAirport').valid && insertForm.get('flightArrivalAirport').touched"
@@ -60,13 +60,13 @@
             </div>
           <div class="form-group">
                 <label for="flightGate">Gate:</label>
-                <input type="text" class="form-control" id="flightGate"  formControlName="flightGate" name="flightGate">
+                <input type="text" class="form-control" id="insert_flightGate"  formControlName="flightGate" name="flightGate">
                 <span *ngIf="!insertForm.get('flightGate').valid && insertForm.get('flightGate').touched"
                   class="help-block alert-warning">Please enter a valid Gate!</span>
           </div>
           <div class="form-group">
                 <label for="flightStatus">Select Flight Status:</label>
-                <select class="form-control" id="flightStatus"  formControlName="flightStatus" name="flightStatus">
+                <select class="form-control" id="insert_flightStatus"  formControlName="flightStatus" name="flightStatus">
                   <option value="active">Active</option>
                   <option value="delayed">Delayed</option>
                   <option value="cancelled">Cancelled</option>
@@ -99,19 +99,19 @@
               
                 <div class="form-group">
                   <label for="flightNumber">Flight Number (ex.: MDN001):</label>
-                  <input type="text" class="form-control" id="flightNumber"  formControlName="flightNumber" name="flightNumber">
+                  <input type="text" class="form-control" id="edit_flightNumber"  formControlName="flightNumber" name="flightNumber">
                   <span *ngIf="!editForm.get('flightNumber').valid && editForm.get('flightNumber').touched"
                     class="help-block alert-warning">Please enter a valid flight number!</span>
                 </div>
                 <div class="form-group">
                   <label for="flightDepartureDate">Select Departure Date:</label>
-                  <input class="form-control" type="datetime-local" id="flightDepartureDate" formControlName="flightDepartureDate" name="flightDepartureDate" />
+                  <input class="form-control" type="datetime-local" id="edit_flightDepartureDate" formControlName="flightDepartureDate" name="flightDepartureDate" />
                   <span *ngIf="!editForm.get('flightDepartureDate').valid && editForm.get('flightDepartureDate').touched"
                     class="help-block alert-warning">Please enter a valid date!</span>
                 </div>
                 <div class="form-group">
                       <label for="flightDepartureAirport">Select Departure Airport:</label>
-                      <select class="form-control" id="flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
+                      <select class="form-control" id="edit_flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
                         <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
                       </select>
                       <span *ngIf="!editForm.get('flightDepartureAirport').valid && editForm.get('flightDepartureAirport').touched"
@@ -119,13 +119,13 @@
                 </div>
                 <div class="form-group">
                       <label for="flightArrivalDate">Select Arrival Date:</label>
-                      <input class="form-control" type="datetime-local" id="flightArrivalDate" formControlName="flightArrivalDate" name="flightArrivalDate" />
+                      <input class="form-control" type="datetime-local" id="edit_flightArrivalDate" formControlName="flightArrivalDate" name="flightArrivalDate" />
                       <span *ngIf="!editForm.get('flightArrivalDate').valid && editForm.get('flightArrivalDate').touched"
                         class="help-block alert-warning">Please enter a valid date!</span>
                   </div>
                   <div class="form-group">
                       <label for="flightArrivalAirport">Select Arrival Airport:</label>
-                      <select class="form-control" id="flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
+                      <select class="form-control" id="edit_flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
                           <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
                       </select>
                       <span *ngIf="!editForm.get('flightArrivalAirport').valid && editForm.get('flightArrivalAirport').touched"
@@ -133,7 +133,7 @@
                   </div>
                   <div class="form-group">
                         <label for="flightAirplane">Select Airplane:</label>
-                        <select class="form-control" id="flightAirplane"  formControlName="flightAirplane" name="flightAirplane">
+                        <select class="form-control" id="edit_flightAirplane"  formControlName="flightAirplane" name="flightAirplane">
                             <option *ngFor="let airplane of airplanes" value={{airplane.id}}>{{airplane.id}}_{{airplane.model}}</option>
                         </select>
                         <span *ngIf="!editForm.get('flightArrivalAirport').valid && editForm.get('flightArrivalAirport').touched"
@@ -141,13 +141,13 @@
                 </div>
                 <div class="form-group">
                       <label for="flightGate">Gate:</label>
-                      <input type="text" class="form-control" id="flightGate"  formControlName="flightGate" name="flightGate">
+                      <input type="text" class="form-control" id="edit_flightGate"  formControlName="flightGate" name="flightGate">
                       <span *ngIf="!editForm.get('flightGate').valid && editForm.get('flightGate').touched"
                         class="help-block alert-warning">Please enter a valid Gate!</span>
                 </div>
                 <div class="form-group">
                         <label for="flightStatus">Select Flight Status:</label>
-                        <select class="form-control" id="flightStatus"  formControlName="flightStatus" name="flightStatus">
+                        <select class="form-control" id="edit_flightStatus"  formControlName="flightStatus" name="flightStatus">
                           <option value="active">Active</option>
                           <option value="delayed">Delayed</option>
                           <option value="cancelled">Cancelled</option>
@@ -203,7 +203,7 @@
       <strong>{{ error }}</strong><br>
       Please contact the coding monkeys.
     </div>
-<table class="table table-striped" *ngIf="flights.length >= 1" >
+<table class="table table-striped bg-light" *ngIf="flights.length >= 1" >
     <thead>
       <tr>
         <th>Flight Number</th>

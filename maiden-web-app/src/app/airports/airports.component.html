@@ -18,19 +18,19 @@
         
           <div class="form-group">
             <label for="airportName">Airport Name:</label>
-            <input type="text" class="form-control" id="airportName"  formControlName="airportName" name="airportName">
+            <input type="text" class="form-control" id="insert_airportName"  formControlName="airportName" name="airportName">
             <span *ngIf="!insertForm.get('airportName').valid && insertForm.get('airportName').touched"
               class="help-block alert-warning">Please enter a valid name!</span>
           </div>
           <div class="form-group">
             <label for="airportShortName">Short Name:</label>
-            <input type="text" class="form-control" id="airportShortName"  formControlName="airportShortName" name="airportShortName">
+            <input type="text" class="form-control" id="insert_airportShortName"  formControlName="airportShortName" name="airportShortName">
             <span *ngIf="!insertForm.get('airportShortName').valid && insertForm.get('airportShortName').touched"
               class="help-block alert-warning">Please enter a valid short name!</span>
           </div>
           <div class="form-group">
             <label for="cityList">Select City:</label>
-            <select class="form-control" id="cityList"  formControlName="airportCity" name="airportCity">
+            <select class="form-control" id="insert_cityList"  formControlName="airportCity" name="airportCity">
               <option>Barcelona</option>
               <option>Faro</option>
               <option>Lisbon</option>
@@ -43,7 +43,7 @@
           </div>
           <div class="form-group">
             <label for="countryList">Select Country:</label>
-            <select class="form-control" id="countryList"  formControlName="airportCountry" name="airportCountry">
+            <select class="form-control" id="insert_countryList"  formControlName="airportCountry" name="airportCountry">
               <option>France</option>
               <option>Germany</option>
               <option>Portugal</option>
@@ -91,7 +91,7 @@
             </div>
             <div class="form-group">
               <label for="edit_cityList">Select City:</label>
-              <select class="form-control" id="cityList"  formControlName="airportCity" name="airportCity">
+              <select class="form-control" id="edit_cityList"  formControlName="airportCity" name="airportCity">
                 <option>Barcelona</option>
                 <option>Faro</option>
                 <option>Lisbon</option>
@@ -104,7 +104,7 @@
             </div>
             <div class="form-group">
               <label for="edit_countryList" >Select Country:</label>
-              <select class="form-control" id="countryList" formControlName="airportCountry"  name="airportCountry">
+              <select class="form-control" id="edit_countryList" formControlName="airportCountry"  name="airportCountry">
                 <option>France</option>
                 <option>Germany</option>
                 <option>Portugal</option>
