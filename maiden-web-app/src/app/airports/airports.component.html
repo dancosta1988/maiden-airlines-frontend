@@ -160,7 +160,14 @@
       <h3>Error occurred using the webservices!</h3>
       <strong>{{ error }}</strong><br>
       Please contact the coding monkeys.
-    </div>
+      <br>
+      <button class="btn btn-info float-right" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong><br>
+      <button class="btn btn-info float-right" (click)="onSuccessClose()">Close</button>
+  </div>
 <table class="table table-striped" *ngIf="airports.length >= 1">
     <thead>
       <tr>

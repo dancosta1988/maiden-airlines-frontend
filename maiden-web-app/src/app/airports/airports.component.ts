@@ -20,6 +20,7 @@ export class AirportsComponent implements OnInit {
   //public airports: Airport[] = [];
   public isFetching = false;
   public error = "";
+  public success = "";
   public currentlySelected = -1;
 
   public airports: Airport[] = [
@@ -82,7 +83,15 @@ export class AirportsComponent implements OnInit {
       this.insertForm.value.airportName, 
       this.insertForm.value.airportShortName, 
       this.insertForm.value.airportCity, 
-      this.insertForm.value.airportCountry);
+      this.insertForm.value.airportCountry).subscribe(responseData => {
+        console.log(responseData);
+        this.success = "New Airport Inserted.";
+        this.fetchAirports();
+    },
+    error =>{
+        this.error = error.message;
+    });
+    
   }
 
   onUpdateAirport(){
@@ -93,7 +102,14 @@ export class AirportsComponent implements OnInit {
         this.editForm.value.airportName, 
         this.editForm.value.airportShortName, 
         this.editForm.value.airportCity, 
-        this.editForm.value.airportCountry);
+        this.editForm.value.airportCountry).subscribe(responseData => {
+          console.log(responseData);
+          this.success = "Airport Updated.";
+          this.fetchAirports();
+      },
+      error =>{
+          this.error = error.message;
+      });
   }
 
   onDeleteAirport(){
@@ -102,8 +118,14 @@ export class AirportsComponent implements OnInit {
     let index = this.deleteForm.value.airportId;
     console.log("deleting airport id: " + this.airports[index].id);
     //send http request
-    this.airportsService.deleteAirport(this.airports[index].id);
-
+    this.airportsService.deleteAirport(this.airports[index].id).subscribe(responseData => {
+      console.log(responseData);
+      this.success = "Airport Deleted.";
+      this.fetchAirports();
+  },
+  error =>{
+      this.error = error.message;
+  });
   }
 
   onFetchAirports(){
@@ -112,8 +134,11 @@ export class AirportsComponent implements OnInit {
 
   private fetchAirports(){
     this.isFetching = true;
+    console.log("Fetching airports...");
     this.airportsService.fetchAirports().subscribe(data =>{
         this.isFetching = false;
+        console.log(data);
+        this.airports = [];
         for (var i = 0, len = data.length; i < len; i++) {
           this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
         }
@@ -124,6 +149,13 @@ export class AirportsComponent implements OnInit {
       
   }
 
+  onErrorClose(){
+    this.error = null;
+  }
+
+  onSuccessClose(){
+    this.success = null;
+  }
   
 
 }
