@@ -19,12 +19,14 @@ export class AirplanesComponent implements OnInit {
   //public airplanes: airplane[] = [];
   public isFetching = false;
   public error = "";
+  public success = "";
   
-  public airplanes: Airplane[] = [
+  public airplanes: Airplane[] = [/*
     new Airplane(1001, "Airbus A380", 500, 320),
     new Airplane(1002, "Airbus A380", 500, 320),
     new Airplane(1039, "Boeing 747", 250, 120),
     new Airplane(9288, "Boeing 747", 250, 120)
+    */
   ]
 
    
@@ -61,8 +63,8 @@ export class AirplanesComponent implements OnInit {
         this.editForm.setValue({
           airplaneId: this.airplanes[index].id,
           airplaneModel: this.airplanes[index].model,
-          airplaneCargoholdCapacity: this.airplanes[index].cargoholdCapacity,
-          airplaneSeats: this.airplanes[index].numberOfSeats,
+          airplaneCargoholdCapacity: this.airplanes[index].cargoHoldCapacity,
+          airplaneSeats: this.airplanes[index].numberSeats,
         });
 
   }
@@ -77,10 +79,17 @@ export class AirplanesComponent implements OnInit {
     console.log("onCreateAirplane");
     //send http request
     this.airplanesService.createAndStoreAirplane(
-      this.airplanes[this.insertForm.value.airplaneId].id,
+      this.insertForm.value.airplaneId,
       this.insertForm.value.airplaneModel, 
       this.insertForm.value.airplaneCargoholdCapacity, 
-      this.insertForm.value.airplaneSeats);
+      this.insertForm.value.airplaneSeats).subscribe(responseData => {
+        console.log(responseData);
+        this.success = "Airplane inserted!";
+        this.fetchairplanes();
+      },
+      error =>{
+          this.error = error.message;
+      });
   }
 
   
@@ -88,10 +97,17 @@ export class AirplanesComponent implements OnInit {
     console.log("onUpdateAirplane");
     //send http request
     this.airplanesService.updateAirplane(
-      this.insertForm.value.airplaneId.id,
-      this.insertForm.value.airplaneModel, 
-      this.insertForm.value.airplaneCargoholdCapacity, 
-      this.insertForm.value.airplaneSeats);
+      this.editForm.value.airplaneId,
+      this.editForm.value.airplaneModel, 
+      this.editForm.value.airplaneCargoholdCapacity, 
+      this.editForm.value.airplaneSeats).subscribe(responseData => {
+        console.log(responseData);
+        this.success = "Airplane updated!";
+        this.fetchairplanes();
+      },
+      error =>{
+          this.error = error.message;
+      });
   }
 
   onDeleteAirplane(){
@@ -100,7 +116,14 @@ export class AirplanesComponent implements OnInit {
     let index = this.deleteForm.value.airplaneId;
     console.log("deleting airplane id: " + this.airplanes[index].id);
     //send http request
-    this.airplanesService.deleteAirplane(this.airplanes[index].id);
+    this.airplanesService.deleteAirplane(this.airplanes[index].id).subscribe(responseData => {
+      console.log(responseData);
+      this.success = "Airplane Deleted!";
+      this.fetchairplanes();
+    },
+    error =>{
+        this.error = error.message;
+    });
 
   }
 
@@ -112,7 +135,10 @@ export class AirplanesComponent implements OnInit {
     this.isFetching = true;
     this.airplanesService.fetchAirplanes().subscribe(airplanes =>{
       this.isFetching = false;
-      this.airplanes = airplanes;
+      this.airplanes = [];
+        for (var i = 0, len = airplanes.length; i < len; i++) {
+          this.airplanes.push(new Airplane(airplanes[i].id, airplanes[i].model, airplanes[i].cargoHoldCapacity, airplanes[i].numberSeats));
+        }
     },
     error =>{
         this.error = error.message;
@@ -120,6 +146,13 @@ export class AirplanesComponent implements OnInit {
     
   }
 
+  onErrorClose(){
+    this.error = null;
+  }
+
+  onSuccessClose(){
+    this.success = null;
+  }
   
 
 }

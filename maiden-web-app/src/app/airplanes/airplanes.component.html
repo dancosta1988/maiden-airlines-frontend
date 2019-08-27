@@ -149,7 +149,14 @@
       <h3>Error occurred using the webservices!</h3>
       <strong>{{ error }}</strong><br>
       Please contact the coding monkeys.
-    </div>
+      <br>
+      <button class="btn btn-info float-right" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong><br>
+      <button class="btn btn-info float-right" (click)="onSuccessClose()">Close</button>
+  </div>
 <table class="table table-striped" *ngIf="airplanes.length >= 1">
     <thead>
       <tr>
@@ -164,8 +171,8 @@
       <tr *ngFor="let airplane of airplanes; index as i">
         <td>{{airplane.id}}</td>
         <td>{{airplane.model}}</td>
-        <td>{{airplane.cargoholdCapacity}}</td>
-        <td>{{airplane.numberOfSeats}}</td>
+        <td>{{airplane.cargoHoldCapacity}}</td>
+        <td>{{airplane.numberSeats}}</td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airplaneModal" (click)="populateEditForm(i)" >Edit</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airplaneModal" (click)="populateDeleteForm(i)">Delete</button>

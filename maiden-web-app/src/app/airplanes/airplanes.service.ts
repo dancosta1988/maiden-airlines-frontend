@@ -9,30 +9,18 @@ export class AirplanesService {
     constructor(private http: HttpClient, private constants:ConstantsService){}
 
     createAndStoreAirplane(id: number, model: string, cargo: number, seats: number){
-        const postData: Airplane = { id: null, model: model, cargoholdCapacity: cargo, numberOfSeats: seats};
-        this.http.post(this.constants.webServicesUrl+'/insertAirplane', 
-        postData
-        ).subscribe(responseData => {
-            console.log(responseData);
-        });
+        //const postData: Airplane = { id: null, model: model, cargoholdCapacity: cargo, numberOfSeats: seats};
+        return this.http.post(this.constants.webServicesUrl+'/AirplaneCreate?cargoHoldCapacity='+cargo+'&model='+model+'&numberSeats='+seats+'&id='+id, null);
     }
 
     updateAirplane(id: number, model: string, cargo: number, seats: number){
-        const postData: Airplane = { id: id, model: model, cargoholdCapacity: cargo, numberOfSeats: seats};
-        this.http.post(this.constants.webServicesUrl+'/insertAirplane', 
-        postData
-        ).subscribe(responseData => {
-            console.log(responseData);
-        });
+        //const postData: Airplane = { id: id, model: model, cargoholdCapacity: cargo, numberOfSeats: seats};
+        return this.http.post(this.constants.webServicesUrl+'/AirplaneUpdate?cargoHoldCapacity='+cargo+'&model='+model+'&numberSeats='+seats+'&id='+id, null);
     }
 
     deleteAirplane(id: number){
-        const postData: Airplane = { id: null, model: null, cargoholdCapacity: null, numberOfSeats: null};
-        this.http.post(this.constants.webServicesUrl+'/insertAirplane', 
-        postData
-        ).subscribe(responseData => {
-            console.log(responseData);
-        });
+        //const postData: Airplane = { id: null, model: null, cargoholdCapacity: null, numberOfSeats: null};
+        return this.http.post(this.constants.webServicesUrl+'/AirplaneDelete?id='+id, null);
     }
 
     fetchAirplanes(){
