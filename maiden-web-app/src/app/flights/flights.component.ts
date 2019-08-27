@@ -19,6 +19,7 @@ export class FlightsComponent implements OnInit {
   
   public isFetching = false;
   public error = "";
+  public success = "";
 
   public airplanes: Airplane[] = [
     new Airplane(1001, "Airbus A380", 500, 320),
@@ -46,7 +47,7 @@ export class FlightsComponent implements OnInit {
 
   ngOnInit() {
     //fetch
-    this.fetchFlights();
+    //this.fetchFlights();
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
@@ -156,6 +157,14 @@ export class FlightsComponent implements OnInit {
         this.error = error.message;
     });
     
+  }
+
+  onErrorClose(){
+    this.error = null;
+  }
+
+  onSuccessClose(){
+    this.success = null;
   }
 
 }
