@@ -23,7 +23,7 @@ import { LoginBarComponent } from './login-bar/login-bar.component';
     OperatorViewComponent,
     FooterComponent,
     HeaderComponent,
-    LoginBarComponent,
+    LoginBarComponent
   ],
   imports: [
     BrowserModule,
