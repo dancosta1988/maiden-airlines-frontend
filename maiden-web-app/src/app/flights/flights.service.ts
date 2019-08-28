@@ -13,45 +13,37 @@ export class FlightsService {
     createAndStoreFlight(
         flight_number: string,
         departure_date: string,
-        departure_airport: Airport,
+        departure_airport: number,
         arrival_date: string,
-        arrival_airport: Airport,
-        airplane: Airplane,
+        arrival_airport: number,
+        airplane: number,
         gate: number,
-        status: string){
-        const postData: Flight = { id: null, flight_number: flight_number,
-            departure_date: departure_date,
-            departure_airport: departure_airport,
-            arrival_date: arrival_date,
-            arrival_airport: arrival_airport,
-            airplane: airplane,
-            gate: gate,
-            status: status };
-        this.http.post(this.constants.webServicesUrl+'/insertFlight', 
-        postData
-        ).subscribe(responseData => {
-            console.log(responseData);
-        });
+        status: string,
+        price: number){
+        
+        return this.http.post(this.constants.webServicesUrl+'/FlightCreate?flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&airplane='+airplane+'&gate='+gate+'&status='+status+'&price='+price,null);
     }
 
     updateFlight(
-        flight_id : number,
+        id : number,
         flight_number: string,
         departure_date: string,
-        departure_airport: Airport,
+        departure_airport: number,
         arrival_date: string,
-        arrival_airport: Airport,
-        airplane: Airplane,
+        arrival_airport: number,
+        airplane: number,
         gate: number,
-        status: string){
-        //...
+        status: string,
+        price: number){
+        
+        return this.http.post(this.constants.webServicesUrl+'/FlightUpdate?id='+id+'&flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&airplane='+airplane+'&gate='+gate+'&status='+price+'&status='+price,null);
     }
 
     deleteFlight(id: number){
-        //...
+        return this.http.post(this.constants.webServicesUrl+'/FlightDelete?id='+id,null);
     }
 
     fetchFlights(){
-        return this.http.get<Flight[]>(this.constants.webServicesUrl+'/Flights');
+        return this.http.get<{id: number, flightNumber: string, departureAirport: number, departureDate: string, arrivalAirport: number, arrivalDate: string, idairplane: number, gate : number, status: string, price: number}[]>(this.constants.webServicesUrl+'/Flights');
     }
 }

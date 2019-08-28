@@ -31,7 +31,7 @@
           <div class="form-group">
                 <label for="flightDepartureAirport">Select Departure Airport:</label>
                 <select class="form-control" id="insert_flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
-                  <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                  <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
                 </select>
                 <span *ngIf="!editForm.get('flightDepartureAirport').valid && editForm.get('flightDepartureAirport').touched"
                   class="help-block alert-warning">Please enter a valid departure airport!</span>
@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="flightArrivalAirport">Select Arrival Airport:</label>
                 <select class="form-control" id="insert_flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
-                    <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                    <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
                 </select>
                 <span *ngIf="!insertForm.get('flightArrivalAirport').valid && insertForm.get('flightArrivalAirport').touched"
                     class="help-block alert-warning">Please enter a valid arrival airport!</span>
@@ -74,6 +74,12 @@
                 <span *ngIf="!insertForm.get('flightStatus').valid && insertForm.get('flightStatus').touched"
                   class="help-block alert-warning">Please enter a valid status!</span>
           </div>
+          <div class="form-group">
+              <label for="flightStatus">Define Base Price:</label>
+              <input type="text" class="form-control" id="insert_flightPrice"  formControlName="flightPrice" name="flightPrice">
+              <span *ngIf="!insertForm.get('flightPrice').valid && insertForm.get('flightPrice').touched"
+                class="help-block alert-warning">Please enter a valid price! (ex.: 100.00)</span>
+        </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,7 +118,7 @@
                 <div class="form-group">
                       <label for="flightDepartureAirport">Select Departure Airport:</label>
                       <select class="form-control" id="edit_flightDepartureAirport"  formControlName="flightDepartureAirport" name="flightDepartureAirport">
-                        <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                        <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
                       </select>
                       <span *ngIf="!editForm.get('flightDepartureAirport').valid && editForm.get('flightDepartureAirport').touched"
                         class="help-block alert-warning">Please enter a valid departure airport!</span>
@@ -126,7 +132,7 @@
                   <div class="form-group">
                       <label for="flightArrivalAirport">Select Arrival Airport:</label>
                       <select class="form-control" id="edit_flightArrivalAirport"  formControlName="flightArrivalAirport" name="flightArrivalAirport">
-                          <option *ngFor="let airport of airports" value={{airport.id}}>{{airport.name}}</option>
+                          <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
                       </select>
                       <span *ngIf="!editForm.get('flightArrivalAirport').valid && editForm.get('flightArrivalAirport').touched"
                           class="help-block alert-warning">Please enter a valid arrival airport!</span>
@@ -155,6 +161,12 @@
                         <span *ngIf="!editForm.get('flightStatus').valid && editForm.get('flightStatus').touched"
                           class="help-block alert-warning">Please enter a valid status!</span>
                   </div>
+                  <div class="form-group">
+                      <label for="flightStatus">Define Base Price:</label>
+                      <input type="text" class="form-control" id="edit_flightPrice"  formControlName="flightPrice" name="flightPrice">
+                      <span *ngIf="!editForm.get('flightPrice').valid && editForm.get('flightPrice').touched"
+                        class="help-block alert-warning">Please enter a valid price! (ex.: 100.00)</span>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -221,6 +233,7 @@
         <th>Airplane</th>
         <th>Gate</th>
         <th>Status</th>
+        <th>Base Price</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -228,11 +241,12 @@
       <tr *ngFor="let flight of flights; index as i;">
         <td>{{flight.flight_number}}</td>
         <td>{{flight.departure_date}}</td>
-        <td>{{flight.departure_airport.shortName}}, {{flight.departure_airport.city}}</td>
+        <td>{{flight.departure_airport.shortName}}, {{flight.departure_airport.city}} </td>
         <td>{{flight.arrival_date}}</td>
         <td>{{flight.arrival_airport.shortName}}, {{flight.arrival_airport.city}}</td>
-        <td>{{flight.airplane.id}}</td>
+        <td>{{flight.airplane.id}}, {{flight.airplane.model}} </td>
         <td>{{flight.gate}}</td>
+        <td>{{flight.price}}</td>
         <td *ngIf="flight.status === 'active'" class= "bg-success text-white">{{flight.status}}</td>
         <td *ngIf="flight.status === 'delayed'" class= "bg-warning text-dark">{{flight.status}}</td>
         <td *ngIf="flight.status === 'cancelled'" class= "bg-danger text-dark">{{flight.status}}</td>

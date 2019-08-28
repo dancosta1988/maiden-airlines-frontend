@@ -8,9 +8,10 @@ export class Flight{
     public departure_airport: Airport;
     public arrival_date: string;
     public arrival_airport: Airport;
-    public airplane: Airplane;
+    public idairplane: Airplane;
     public gate: number;
     public status: string;
+    public price: number;
 
     constructor ( id: number,
          flight_number: string,
@@ -18,9 +19,10 @@ export class Flight{
          departure_airport: Airport,
          arrival_date: string,
          arrival_airport: Airport,
-         airplane: Airplane,
+         idairplane: Airplane,
          gate: number,
-         status: string){
+         status: string,
+         price: number){
         
          this.id = id;
          this.flight_number = flight_number;
@@ -28,9 +30,10 @@ export class Flight{
          this.departure_airport = departure_airport;
          this.arrival_date = arrival_date;
          this.arrival_airport = arrival_airport;
-         this.airplane = airplane;
+         this.idairplane = idairplane;
          this.gate = gate;
          this.status = status;
+         this.price = price;
     }
 
 }
