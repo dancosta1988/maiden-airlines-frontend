@@ -71,7 +71,7 @@
         <div class="modal-body">
             <div class="form-group">
                 <label for="airplaneId">Airplane Id:</label>
-                <input type="text" class="form-control" id="edit_airplaneId"  formControlName="airplaneId" name="airplaneId">
+                <input type="text" class="form-control" id="edit_airplaneId"  formControlName="airplaneId" name="airplaneId" disabled>
                 <span *ngIf="!editForm.get('airplaneId').valid && editForm.get('airplaneId').touched"
                   class="help-block alert-warning">Please enter a valid identification!</span>
               </div>
