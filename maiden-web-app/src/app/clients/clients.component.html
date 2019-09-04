@@ -1,0 +1,249 @@
+<h2>List of Clients</h2>
+  <p>Client are listed below. As an operator you can add, edit or delete new Clients.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_clientModal">Create New Client</button>
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchclients();">Refresh List</button>            
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_clientModal" tabindex="3" client="dialog" aria-labelledby="new_clientModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" client="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateClient()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_clientModalLabel" >Create New Client</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_clientFirstName">First Name:</label>
+              <input type="text" class="form-control" id="insert_clientFirstName"  formControlName="clientFirstName" name="clientFirstName">
+              <span *ngIf="!insertForm.get('clientFirstName').valid && insertForm.get('clientFirstName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_clientLastName">Last Name:</label>
+            <input type="text" class="form-control" id="insert_clientLastName"  formControlName="clientLastName" name="clientLastName">
+            <span *ngIf="!insertForm.get('clientLastName').valid && insertForm.get('clientLastName').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
+        </div>
+        <div class="form-group">
+          <label for="insert_clientDateOfBirth">Date of Birth:</label>
+          <input type="date" class="form-control" id="insert_clientDateOfBirth"  formControlName="clientDateOfBirth" name="clientDateOfBirth">
+          <span *ngIf="!insertForm.get('clientDateOfBirth').valid && insertForm.get('clientDateOfBirth').touched"
+            class="help-block alert-warning">Please enter a date!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientGender">Select Gender:</label><br>
+            <input type="radio" name="clientGender" id="insert_clientGender1" formControlName="clientGender" value="Male" checked> Male<br>
+            <input type="radio" name="clientGender" id="insert_clientGender2" formControlName="clientGender" value="Female"> Female<br>
+            <span *ngIf="!insertForm.get('clientGender').valid && insertForm.get('clientGender').touched"
+            class="help-block alert-warning">Please enter Gender!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientAddress">Address:</label>
+            <input type="text" class="form-control" id="insert_clientAddress"  formControlName="clientAddress" name="clientAddress">
+            <span *ngIf="!insertForm.get('clientAddress').valid && insertForm.get('clientAddress').touched"
+              class="help-block alert-warning">Please enter a valid Address!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientContactNumber">Identification Number:</label>
+            <input type="text" class="form-control" id="insert_clientContactNumber"  formControlName="clientContactNumber" name="clientContactNumber">
+            <span *ngIf="!insertForm.get('clientContactNumber').valid && insertForm.get('clientContactNumber').touched"
+              class="help-block alert-warning">Please enter a valid Contact Number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientNumberID">Contact Number:</label>
+            <input type="text" class="form-control" id="insert_clientNumberID"  formControlName="clientNumberID" name="clientNumberID">
+            <span *ngIf="!insertForm.get('clientNumberID').valid && insertForm.get('clientNumberID').touched"
+              class="help-block alert-warning">Please enter a valid Contact Number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientType">Select Client Type:</label>
+            <select class="form-control" id="insert_clientType"  formControlName="clientType" name="clientType">
+              <option *ngFor="let type of types; index as i;" value={{i}}>{{type.name}}</option>
+            </select>
+            <span *ngIf="!editForm.get('clientType').valid && editForm.get('clientType').touched"
+              class="help-block alert-warning">Please enter a valid Client type!</span>
+        </div>
+        <hr>
+        <div class="form-group">
+                <label for="clientEmail">Client email:</label>
+                <input type="text" class="form-control" id="clientEmail"  formControlName="clientEmail" name="clientEmail">
+                <span *ngIf="!insertForm.get('clientEmail').valid && insertForm.get('clientEmail').touched"
+                class="help-block alert-warning">Please enter a valid email!</span>
+        </div>
+        <div class="form-group">
+          <label for="clientPassword">Password:</label>
+          <input type="password" class="form-control" id="clientPassword"  formControlName="clientPassword" name="clientPassword">
+          <span *ngIf="!insertForm.get('clientPassword').valid && insertForm.get('clientPassword').touched"
+          class="help-block alert-warning">Please enter a valid password!</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_clientModal').modal('hide')">Create Client</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_clientModal" tabindex="3" client="dialog" aria-labelledby="edit_clientModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" client="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateClient()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_clientModalLabel">Edit Existing Client</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_clientId"  formControlWelcomeBonus="clientId" name="clientId">
+            </div>
+            <div class="form-group">
+                <label for="edit_clientFirstName">First Name:</label>
+                <input type="text" class="form-control" id="edit_clientFirstName"  formControlName="clientFirstName" name="clientFirstName">
+                <span *ngIf="!editForm.get('clientFirstName').valid && editForm.get('clientFirstName').touched"
+                  class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_clientLastName">Last Name:</label>
+              <input type="text" class="form-control" id="edit_clientLastName"  formControlName="clientLastName" name="clientLastName">
+              <span *ngIf="!editForm.get('clientLastName').valid && editForm.get('clientLastName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="edit_clientDateOfBirth">Date of Birth:</label>
+            <input type="date" class="form-control" id="edit_clientDateOfBirth"  formControlName="clientDateOfBirth" name="clientDateOfBirth">
+            <span *ngIf="!editForm.get('clientDateOfBirth').valid && editForm.get('clientDateOfBirth').touched"
+              class="help-block alert-warning">Please enter a date!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientGender">Select Gender:</label><br>
+              <input type="radio" name="clientGender" id="edit_clientGender1" formControlName="clientGender" value="Male" checked> Male<br>
+              <input type="radio" name="clientGender" id="edit_clientGender2" formControlName="clientGender" value="Female"> Female<br>
+              <span *ngIf="!editForm.get('clientGender').valid && editForm.get('clientGender').touched"
+              class="help-block alert-warning">Please enter Gender!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientAddress">Address:</label>
+              <input type="text" class="form-control" id="edit_clientAddress"  formControlName="clientAddress" name="clientAddress">
+              <span *ngIf="!editForm.get('clientAddress').valid && editForm.get('clientAddress').touched"
+                class="help-block alert-warning">Please enter a valid Address!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientNumberID">Identification Number:</label>
+              <input type="text" class="form-control" id="edit_clientNumberID"  formControlName="clientNumberID" name="clientNumberID">
+              <span *ngIf="!editForm.get('clientNumberID').valid && editForm.get('clientNumberID').touched"
+                class="help-block alert-warning">Please enter a valid ID Number!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientContactNumber">Contact Number:</label>
+              <input type="text" class="form-control" id="edit_clientContactNumber"  formControlName="clientContactNumber" name="clientContactNumber">
+              <span *ngIf="!editForm.get('clientContactNumber').valid && editForm.get('clientContactNumber').touched"
+                class="help-block alert-warning">Please enter a valid Contact Number!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientType">Select Client Type:</label>
+              <select class="form-control" id="edit_clientType"  formControlName="clientType" name="clientType">
+                <option *ngFor="let type of types; index as i;" value={{i}}>{{type.name}}</option>
+              </select>
+              <span *ngIf="!editForm.get('clientType').valid && editForm.get('clientType').touched"
+                class="help-block alert-warning">Please enter a valid Client type!</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_clientModal').modal('hide')">Edit Client</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_clientModal" tabindex="3" client="dialog" aria-labelledby="delete_clientModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" client="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteClient()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_clientModalLabel">Delete Client</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="clientId" name="clientId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Client Type. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_clientModal').modal('hide')">Delete Client</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="clients.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Client Types found!</strong> Add new Client Types using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong>
+      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="clients.length >= 1 && !error && fetchedClientTypes">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th>Date Of Birth</th>
+        <th>ID Number</th>
+        <th>Contact Number</th>
+        <th>Email</th>
+        <th>Client Type</th>
+        <th>Current Miles</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients; index as i">
+        <td>{{client.firstName}} {{client.lastName}} </td>
+        <td>{{client.address}}</td>
+        <td>{{client.gender}}</td>
+        <td>{{client.dateOfBirth  | date : "dd-MM-y"}}</td>
+        <td>{{client.numberID}}</td>
+        <td>{{client.contactNumber}}</td>
+        <td>{{client.email}}</td>
+        <td>{{client.type.name}}</td>
+        <td>{{client.miles}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_clientModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_clientModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
