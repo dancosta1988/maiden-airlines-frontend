@@ -5,12 +5,36 @@
               <img width="20px" alt="flights logo" src="assets/flights.png"/> Manage Flights</a>
         </li>
         <li class="nav-item">
-                <a class="nav-link" id="airports" data-toggle="tab" href="#airports_content" role="tab" aria-controls="airports_content" aria-selected="true">
+                <a class="nav-link" id="airports" data-toggle="tab" href="#airports_content" role="tab" aria-controls="airports_content" >
                     <img width="20px" alt="Airports logo" src="assets/airports.png"/> Manage Airports</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="airplanes" data-toggle="tab" href="#airplanes_content" role="tab" aria-controls="airplanes_content" aria-selected="true">
+            <a class="nav-link" id="airplanes" data-toggle="tab" href="#airplanes_content" role="tab" aria-controls="airplanes_content" >
                 <img width="20px" alt="Airplanes logo" src="assets/airplanes.png"/> Manage Airplanes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="employees" data-toggle="tab" href="#employees_content" role="tab" aria-controls="employees_content" >
+                <img width="20px" alt="Employees logo" src="assets/employees.png"/> Manage Backoffice</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="roles" data-toggle="tab" href="#roles_content" role="tab" aria-controls="roles_content" >
+                <img width="20px" alt="Roles logo" src="assets/roles.png"/> Manage Backoffice Roles</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="clients" data-toggle="tab" href="#clients_content" role="tab" aria-controls="clients_content" >
+                <img width="20px" alt="Clients logo" src="assets/clients.png"/> Manage Clients </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="clientTypes" data-toggle="tab" href="#types_content" role="tab" aria-controls="types_content" >
+                <img width="20px" alt="Client types logo" src="assets/types.png"/> Manage Client Types</a>
+        </li>
+        <li class="nav-item">
+                <a class="nav-link" id="booking" data-toggle="tab" href="#booking_content" role="tab" aria-controls="booking_content" >
+                    <img width="20px" alt="Booking logo" src="assets/booking.png"/> Manage Bookings </a>
+        </li>
+        <li class="nav-item">
+                <a class="nav-link" id="booking" data-toggle="tab" href="#bookingTypes_content" role="tab" aria-controls="bookingTypes_content" >
+                    <img width="20px" alt="Booking Types logo" src="assets/bookingTypes.png"/> Manage Booking Types </a>
         </li>
       </ul>
 
@@ -26,6 +50,30 @@
         <div class="tab-pane fade" id="airplanes_content" role="tabpanel" aria-labelledby="airplanes-tab">
             <br>
             <app-airplanes></app-airplanes>
+        </div>
+        <div class="tab-pane fade" id="employees_content" role="tabpanel" aria-labelledby="employees-tab">
+            <br>
+            <app-backoffice-operators></app-backoffice-operators>
+        </div>
+        <div class="tab-pane fade" id="roles_content" role="tabpanel" aria-labelledby="roles-tab">
+            <br>
+            <app-backoffice-roles></app-backoffice-roles>
+        </div>
+        <div class="tab-pane fade" id="types_content" role="tabpanel" aria-labelledby="types-tab">
+            <br>
+            <app-client-types></app-client-types>
+        </div>
+        <div class="tab-pane fade" id="clients_content" role="tabpanel" aria-labelledby="clients-tab">
+            <br>
+            <app-clients></app-clients>
+        </div>
+        <div class="tab-pane fade" id="booking_content" role="tabpanel" aria-labelledby="booking-tab">
+                <br>
+                <app-booking></app-booking>
+        </div>
+        <div class="tab-pane fade" id="bookingTypes_content" role="tabpanel" aria-labelledby="bookingTypes-tab">
+                <br>
+                <app-booking-types></app-booking-types>
         </div>
       </div>
 

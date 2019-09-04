@@ -7,13 +7,26 @@
             <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
                 <img src="assets/maiden-logo.png" alt="logo">
             </a>
-            <div class="w-100 text-right">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            
+            <div class="collapse navbar-collapse flex-grow-1 text-left" >
+                <ul class="navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item">
+                        <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/home'>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/booking'>Book a Flight</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/contacts'>Contacts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/operator'>Operator</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+        
+        <div class="collapse navbar-collapse flex-grow-1 text-right" >
             <ul class="navbar-nav ml-auto flex-nowrap">
                 <li class="nav-item">
                     <a href="#" class="nav-link m-2 menu-item nav-active" data-toggle="modal" data-target="#signupModal">Sign up</a>
