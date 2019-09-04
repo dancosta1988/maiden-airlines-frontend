@@ -44,7 +44,7 @@ export class AirplanesComponent implements OnInit {
     });
 
     this.editForm = new FormGroup({
-      'airplaneId' : new FormControl(null),
+      'airplaneId' : new FormControl({disabled : true}),
       'airplaneModel' : new FormControl(null,Validators.required),
       'airplaneCargoholdCapacity' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
       'airplaneSeats' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")])
