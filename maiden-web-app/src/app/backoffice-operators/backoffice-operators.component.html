@@ -1,0 +1,172 @@
+<h2>List of Employees</h2>
+  <p>Employees are listed below. As an operator you can add, edit or delete new employees.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_employeeModal">Create New Employee</button>            
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchemployees();">Refresh List</button>
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_employeeModal" tabindex="3" employee="dialog" aria-labelledby="new_employeeModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" employee="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateEmployee()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_employeeModalLabel" >Create New Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_employeeName">Employee Name:</label>
+              <input type="text" class="form-control" id="insert_employeeName"  formControlName="employeeName" name="employeeName">
+              <span *ngIf="!insertForm.get('employeeName').valid && insertForm.get('employeeName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_employeeRole">Select Role:</label>
+            <select class="form-control" id="insert_employeeRole"  formControlName="employeeRole" name="employeeRole">
+                <option *ngFor="let role of roles; index as i;" value={{i}}>{{role.name}}</option>
+            </select>
+            <span *ngIf="!insertForm.get('employeeRole').valid && insertForm.get('employeeRole').touched"
+                class="help-block alert-warning">Please enter a valid Role!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_employeeUserName">Employee Username:</label>
+            <input type="text" class="form-control" id="insert_employeeUserName"  formControlName="employeeUserName" name="employeeUserName">
+            <span *ngIf="!insertForm.get('employeeUserName').valid && insertForm.get('employeeUserName').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_employeePassword">Employee Password:</label>
+            <input type="password" class="form-control" id="insert_employeePassword"  formControlName="employeePassword" name="employeePassword">
+            <span *ngIf="!insertForm.get('employeePassword').valid && insertForm.get('employeePassword').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_employeeModal').modal('hide')">Create Employee</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_employeeModal" tabindex="3" employee="dialog" aria-labelledby="edit_employeeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" employee="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateEmployee()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_employeeModalLabel">Edit Existing Employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_employeeId"  formControlName="employeeId" name="employeeId">
+            </div>
+            <div class="form-group">
+                <label for="edit_employeeName">Employee Name:</label>
+                <input type="text" class="form-control" id="edit_employeeName"  formControlName="employeeName" name="employeeName">
+                <span *ngIf="!editForm.get('employeeName').valid && editForm.get('employeeName').touched"
+                  class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_employeeRole">Select Role:</label>
+              <select class="form-control" id="edit_employeeRole"  formControlName="employeeRole" name="employeeRole">
+                  <option *ngFor="let role of roles; index as i;" value={{i}}>{{role.name}}</option>
+              </select>
+              <span *ngIf="!editForm.get('employeeRole').valid && editForm.get('employeeRole').touched"
+                  class="help-block alert-warning">Please enter a valid Role!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_employeeUserName">Employee Username:</label>
+              <input type="text" class="form-control" id="edit_employeeUserName"  formControlName="employeeUserName" name="employeeUserName">
+              <span *ngIf="!editForm.get('employeeUserName').valid && editForm.get('employeeUserName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_employeePassword">Employee Password:</label>
+              <input type="password" class="form-control" id="edit_employeePassword"  formControlName="employeePassword" name="employeePassword">
+              <span *ngIf="!editForm.get('employeePassword').valid && editForm.get('employeePassword').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_employeeModal').modal('hide')">Edit Employee</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_employeeModal" tabindex="3" employee="dialog" aria-labelledby="delete_employeeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" employee="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteEmployee()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_employeeModalLabel">Delete Employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="employeeId" name="employeeId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Employee. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_employeeModal').modal('hide')">Delete Employee</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="employees.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Employees found!</strong> Add new employees using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+      <h3>Error occurred using the webservices!</h3>
+      <strong>{{ error }}</strong><br>
+      Please contact the coding monkeys.
+      <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong>
+      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="employees.length >= 1">
+    <thead>
+      <tr>
+        <th>Employee Name</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees; index as i">
+        <td>{{employee.name}}</td>
+        <td>{{employee.role.name}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_employeeModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_employeeModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
