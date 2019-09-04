@@ -1,0 +1,142 @@
+<!-- <h2>List of Bookings</h2>
+  <p>Bookings are listed below. As an operator you can add, edit or delete new bookings.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_bookingModal">Create New Booking</button>            
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchbookings();">Refresh List</button>
+  <hr>
+
+<div class="modal fade" id="new_bookingModal" tabindex="3" booking="dialog" aria-labelledby="new_bookingModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" booking="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateBooking()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_bookingModalLabel" >Create New Booking</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_bookingName">Booking Name:</label>
+              <input type="text" class="form-control" id="insert_bookingName"  formControlName="bookingName" name="bookingName">
+              <span *ngIf="!insertForm.get('bookingName').valid && insertForm.get('bookingName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_bookingModal').modal('hide')">Create Booking</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+
+<div class="modal fade" id="edit_bookingModal" tabindex="3" booking="dialog" aria-labelledby="edit_bookingModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" booking="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateBooking()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_bookingModalLabel">Edit Existing Booking</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_bookingId"  formControlName="bookingId" name="bookingId">
+            </div>
+            <div class="form-group">
+                <label for="edit_bookingName">Booking Name:</label>
+                <input type="text" class="form-control" id="edit_bookingName"  formControlName="bookingName" name="bookingName">
+                <span *ngIf="!editForm.get('bookingName').valid && editForm.get('bookingName').touched"
+                    class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_bookingModal').modal('hide')">Edit Booking</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+
+<div class="modal fade" id="delete_bookingModal" tabindex="3" booking="dialog" aria-labelledby="delete_bookingModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" booking="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteBooking()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_bookingModalLabel">Delete Booking</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="bookingId" name="bookingId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Booking. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_bookingModal').modal('hide')">Delete Booking</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="bookings.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Bookings found!</strong> Add new bookings using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+    <h3>Success! </h3>
+    <strong>{{ success }}</strong>
+    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="bookings.length >= 1">
+    <thead>
+      <tr>
+        <th>Booking Number</th>
+        <th>Passenger Name</th>
+        <th>Flight Number</th>
+        <th>Departure Date</th>
+        <th>Check-in Status</th>
+        <th>Seat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings; index as i">
+        <td>{{booking.id}}</td>
+        <td>{{booking.passenger.name}}</td>
+        <td>{{booking.flight.departure_flight}}</td>
+        <td>{{booking.flight.departure_date}}</td>
+        <td>{{booking.checkin}}</td>
+        <td>{{booking.seat}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_bookingModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_bookingModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+
+
+ -->
