@@ -1,0 +1,185 @@
+<h2>List of ClientTypes</h2>
+  <p>Client Types are listed below. As an operator you can add, edit or delete new Types.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_clientTypeModal">Create New ClientType</button>
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchclientTypes();">Refresh List</button>
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_clientTypeModal" tabindex="3" clientType="dialog" aria-labelledby="new_clientTypeModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" clientType="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateClientType()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_clientTypeModalLabel" >Create New Client Type</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_clientTypeName">Type Name:</label>
+              <input type="text" class="form-control" id="insert_clientTypeName"  formControlName="clientTypeName" name="clientTypeName">
+              <span *ngIf="!insertForm.get('clientTypeName').valid && insertForm.get('clientTypeName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_clientTypeAnnualFee">Annual Fee:</label>
+            <input type="text" class="form-control" id="insert_clientTypeAnnualFee"  formControlName="clientTypeAnnualFee" name="clientTypeAnnualFee">
+            <span *ngIf="!insertForm.get('clientTypeAnnualFee').valid && insertForm.get('clientTypeAnnualFee').touched"
+              class="help-block alert-warning">Please enter fee!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientTypeMonthlyMiles">Monthly Miles:</label>
+            <input type="text" class="form-control" id="insert_clientTypeMonthlyMiles"  formControlName="clientTypeMonthlyMiles" name="clientTypeMonthlyMiles">
+            <span *ngIf="!insertForm.get('clientTypeMonthlyMiles').valid && insertForm.get('clientTypeMonthlyMiles').touched"
+              class="help-block alert-warning">Please enter a valid number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientTypeWelcomeBonus">Welcome Bonus:</label>
+            <input type="text" class="form-control" id="insert_clientTypeWelcomeBonus"  formControlName="clientTypeWelcomeBonus" name="clientTypeWelcomeBonus">
+            <span *ngIf="!insertForm.get('clientTypeWelcomeBonus').valid && insertForm.get('clientTypeWelcomeBonus').touched"
+                class="help-block alert-warning">Please enter a valid number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_clientTypeBonusMiles">Bonus Miles:</label>
+            <input type="text" class="form-control" id="insert_clientTypeBonusMiles"  formControlName="clientTypeBonusMiles" name="clientTypeBonusMiles">
+            <span *ngIf="!insertForm.get('clientTypeBonusMiles').valid && insertForm.get('clientTypeBonusMiles').touched"
+              class="help-block alert-warning">Please enter a valid number!</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_clientTypeModal').modal('hide')">Create ClientType</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_clientTypeModal" tabindex="3" clientType="dialog" aria-labelledby="edit_clientTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" clientType="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateClientType()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_clientTypeModalLabel">Edit Existing ClientType</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_clientTypeId"  formControlWelcomeBonus="clientTypeId" name="clientTypeId">
+            </div>
+            <div class="form-group">
+                <label for="edit_clientTypeName">Type Name:</label>
+                <input type="text" class="form-control" id="edit_clientTypeName"  formControlName="clientTypeName" name="clientTypeName">
+                <span *ngIf="!editForm.get('clientTypeName').valid && editForm.get('clientTypeName').touched"
+                  class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_clientTypeAnnualFee">Annual Fee:</label>
+              <input type="text" class="form-control" id="edit_clientTypeAnnualFee"  formControlName="clientTypeAnnualFee" name="clientTypeAnnualFee">
+              <span *ngIf="!editForm.get('clientTypeAnnualFee').valid && editForm.get('clientTypeAnnualFee').touched"
+                class="help-block alert-warning">Please enter fee!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientTypeMonthlyMiles">Monthly Miles:</label>
+              <input type="text" class="form-control" id="edit_clientTypeMonthlyMiles"  formControlName="clientTypeMonthlyMiles" name="clientTypeMonthlyMiles">
+              <span *ngIf="!editForm.get('clientTypeMonthlyMiles').valid && editForm.get('clientTypeMonthlyMiles').touched"
+                class="help-block alert-warning">Please enter a valid number!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientTypeWelcomeBonus">Welcome Bonus:</label>
+              <input type="text" class="form-control" id="edit_clientTypeWelcomeBonus"  formControlName="clientTypeWelcomeBonus" name="clientTypeWelcomeBonus">
+              <span *ngIf="!editForm.get('clientTypeWelcomeBonus').valid && editForm.get('clientTypeWelcomeBonus').touched"
+                  class="help-block alert-warning">Please enter a valid number!</span>
+          </div>
+          <div class="form-group">
+              <label for="edit_clientTypeBonusMiles">Bonus Miles:</label>
+              <input type="text" class="form-control" id="edit_clientTypeBonusMiles"  formControlName="clientTypeBonusMiles" name="clientTypeBonusMiles">
+              <span *ngIf="!editForm.get('clientTypeBonusMiles').valid && editForm.get('clientTypeBonusMiles').touched"
+                class="help-block alert-warning">Please enter a valid number!</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_clientTypeModal').modal('hide')">Edit ClientType</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_clientTypeModal" tabindex="3" clientType="dialog" aria-labelledby="delete_clientTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" clientType="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteClientType()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_clientTypeModalLabel">Delete ClientType</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="clientTypeId" name="clientTypeId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Client Type. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_clientTypeModal').modal('hide')">Delete ClientType</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="clientTypes.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Client Types found!</strong> Add new Client Types using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+    <h3>Success! </h3>
+    <strong>{{ success }}</strong>
+    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="clientTypes.length >= 1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Annual Fee</th>
+        <th>Monthly Miles</th>
+        <th>Welcome Bonus</th>
+        <th>Bonus Miles (%)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let clientType of clientTypes; index as i">
+        <td>{{clientType.name}}</td>
+        <td>{{clientType.annualFee}}</td>
+        <td>{{clientType.monthlyMiles}}</td>
+        <td>{{clientType.welcomeBonus}}</td>
+        <td>{{clientType.bonusMiles}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_clientTypeModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_clientTypeModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
