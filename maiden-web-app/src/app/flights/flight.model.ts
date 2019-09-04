@@ -8,7 +8,7 @@ export class Flight{
     public departure_airport: Airport;
     public arrival_date: string;
     public arrival_airport: Airport;
-    public idairplane: Airplane;
+    public airplane: Airplane;
     public gate: number;
     public status: string;
     public price: number;
@@ -19,7 +19,7 @@ export class Flight{
          departure_airport: Airport,
          arrival_date: string,
          arrival_airport: Airport,
-         idairplane: Airplane,
+         airplane: Airplane,
          gate: number,
          status: string,
          price: number){
@@ -30,7 +30,7 @@ export class Flight{
          this.departure_airport = departure_airport;
          this.arrival_date = arrival_date;
          this.arrival_airport = arrival_airport;
-         this.idairplane = idairplane;
+         this.airplane = airplane;
          this.gate = gate;
          this.status = status;
          this.price = price;

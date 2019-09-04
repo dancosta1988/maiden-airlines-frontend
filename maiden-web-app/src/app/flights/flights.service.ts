@@ -17,11 +17,9 @@ export class FlightsService {
         arrival_date: string,
         arrival_airport: number,
         airplane: number,
-        gate: number,
-        status: string,
         price: number){
         
-        return this.http.post(this.constants.webServicesUrl+'/FlightCreate?flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&airplane='+airplane+'&gate='+gate+'&status='+status+'&price='+price,null);
+        return this.http.post(this.constants.webServicesUrl+'/FlightCreate?flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&idAirplane='+airplane+'&price='+price,null);
     }
 
     updateFlight(
@@ -36,7 +34,7 @@ export class FlightsService {
         status: string,
         price: number){
         
-        return this.http.post(this.constants.webServicesUrl+'/FlightUpdate?id='+id+'&flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&airplane='+airplane+'&gate='+gate+'&status='+price+'&status='+price,null);
+        return this.http.post(this.constants.webServicesUrl+'/FlightUpdate?id='+id+'&flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&idAirplane='+airplane+'&price='+price+'&gate='+gate+'&status='+status,null);
     }
 
     deleteFlight(id: number){
