@@ -1,0 +1,199 @@
+<h2>List of Booking Types</h2>
+  <p>Booking Types are listed below. As an operator you can add, edit or delete new Types.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_bookingTypeModal">Create New Booking Type</button>
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchbookingTypes();">Refresh List</button>
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_bookingTypeModal" tabindex="3" bookingType="dialog" aria-labelledby="new_bookingTypeModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" bookingType="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateBookingType()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_bookingTypeModalLabel" >Create New Booking Type</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_bookingTypeName">Type Name:</label>
+              <input type="text" class="form-control" id="insert_bookingTypeName"  formControlName="bookingTypeName" name="bookingTypeName">
+              <span *ngIf="!insertForm.get('bookingTypeName').valid && insertForm.get('bookingTypeName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+              <label  for="insert_bookingTypeCancel">Can Cancel: </label>
+              <input type="radio" class="radio radio-success radio-inline mr-2" id="insert_bookingTypeCancel1" formControlName="bookingTypeCancel" value=true>Yes
+              <input type="radio" class="radio radio-danger radio-inline mr-2" id="insert_bookingTypeCancel2" formControlName="bookingTypeCancel" value=false checked>No           
+              <span *ngIf="!insertForm.get('bookingTypeCancel').valid && insertForm.get('bookingTypeCancel').touched"
+                class="help-block alert-warning">Please select a valid option!</span>
+          </div>
+          <div class="form-group">
+              <label  for="insert_bookingTypeChangeDate">Can Change Date: </label>
+              <input type="radio" class="radio radio-success radio-inline mr-2" id="insert_bookingTypeChangeDate1" formControlName="bookingTypeChangeDate" value=true>Yes
+              <input type="radio" class="radio radio-danger radio-inline mr-2" id="insert_bookingTypeChangeDate2" formControlName="bookingTypeChangeDate" value=false checked>No     
+              <span *ngIf="!insertForm.get('bookingTypeChangeDate').valid && insertForm.get('bookingTypeChangeDate').touched"
+                class="help-block alert-warning">Please select a valid option!</span>
+          </div>
+          <div class="form-group">
+              <label  for="insert_bookingTypeHandBaggage">Can have hand baggage: </label>
+              <input type="radio" class="radio radio-success radio-inline mr-2" id="insert_bookingTypeHandBaggage1" formControlName="bookingTypeHandBaggage" value=true>Yes                     
+              <input type="radio" class="radio radio-danger radio-inline mr-2" id="insert_bookingTypeHandBaggage2" formControlName="bookingTypeHandBaggage" value=false checked>No                     
+              <span *ngIf="!insertForm.get('bookingTypeHandBaggage').valid && insertForm.get('bookingTypeHandBaggage').touched"
+                class="help-block alert-warning">Please select a valid option!</span>
+          </div>
+          <div class="form-group">
+              <label for="insert_bookingTypeCheckedBaggage">Can have checked baggage: </label>
+              <input type="radio" class="radio radio-success radio-inline" id="insert_bookingTypeCheckedBaggage1" formControlName="bookingTypeCheckedBaggage" value=true>Yes    
+              <input type="radio" class="radio radio-danger radio-inline" id="insert_bookingTypeCheckedBaggage2" formControlName="bookingTypeCheckedBaggage" value=false checked>No     
+              <span *ngIf="!insertForm.get('bookingTypeCheckedBaggage').valid && insertForm.get('bookingTypeCheckedBaggage').touched"
+                class="help-block alert-warning">Please select a valid option!</span>
+          </div>
+        <div class="form-group">
+            <label for="insert_bookingTypeCost">Additional Cost:</label>
+            <input type="text" class="form-control" id="insert_bookingTypeCost"  formControlName="bookingTypeCost" name="bookingTypeCost">
+            <span *ngIf="!insertForm.get('bookingTypeCost').valid && insertForm.get('bookingTypeCost').touched"
+              class="help-block alert-warning">Please enter a valid number!</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_bookingTypeModal').modal('hide')">Create BookingType</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_bookingTypeModal" tabindex="3" bookingType="dialog" aria-labelledby="edit_bookingTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" bookingType="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateBookingType()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_bookingTypeModalLabel">Edit Existing BookingType</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_bookingTypeId"  formControlWelcomeBonus="bookingTypeId" name="bookingTypeId">
+            </div>
+            <div class="form-group">
+                    <label for="edit_bookingTypeName">Type Name:</label>
+                    <input type="text" class="form-control" id="edit_bookingTypeName"  formControlName="bookingTypeName" name="bookingTypeName">
+                    <span *ngIf="!editForm.get('bookingTypeName').valid && editForm.get('bookingTypeName').touched"
+                      class="help-block alert-warning">Please enter a valid name!</span>
+                </div>
+                <div class="form-group">
+                    <label  for="edit_bookingTypeCancel">Can Cancel: </label>
+                    <input type="radio" class="radio radio-success radio-inline mr-2" id="edit_bookingTypeCancel1" formControlName="bookingTypeCancel" value=true>Yes
+                    <input type="radio" class="radio radio-danger radio-inline mr-2" id="edit_bookingTypeCancel2" formControlName="bookingTypeCancel" value=false>No           
+                </div>
+                <div class="form-group">
+                    <label  for="edit_bookingTypeChangeDate">Can Change Date: </label>
+                    <input type="radio" class="radio radio-success radio-inline mr-2" id="edit_bookingTypeChangeDate1" formControlName="bookingTypeChangeDate" value=true>Yes
+                    <input type="radio" class="radio radio-danger radio-inline mr-2" id="edit_bookingTypeChangeDate2" formControlName="bookingTypeChangeDate" value=false>No     
+                </div>
+                <div class="form-group">
+                    <label  for="edit_bookingTypeHandBaggage">Can have hand baggage: </label>
+                    <input type="radio" class="radio radio-success radio-inline mr-2" id="edit_bookingTypeHandBaggage1" formControlName="bookingTypeHandBaggage" value=true>Yes                     
+                    <input type="radio" class="radio radio-danger radio-inline mr-2" id="edit_bookingTypeHandBaggage2" formControlName="bookingTypeHandBaggage" value=false>No                     
+                </div>
+                <div class="form-group">
+                    <label for="edit_bookingTypeCheckedBaggage">Can have checked baggage: </label>
+                    <input type="radio" class="radio radio-success radio-inline" id="edit_bookingTypeCheckedBaggage1" formControlName="bookingTypeCheckedBaggage" value=true>Yes    
+                    <input type="radio" class="radio radio-danger radio-inline" id="edit_bookingTypeCheckedBaggage2" formControlName="bookingTypeCheckedBaggage" value=false>No     
+                </div>
+                <div class="form-group">
+                    <label for="edit_bookingTypeCost">Additional Cost:</label>
+                    <input type="text" class="form-control" id="edit_bookingTypeCost"  formControlName="bookingTypeCost" name="bookingTypeCost">
+                    <span *ngIf="!editForm.get('bookingTypeCost').valid && editForm.get('bookingTypeCost').touched"
+                      class="help-block alert-warning">Please enter a valid number!</span>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_bookingTypeModal').modal('hide')">Edit BookingType</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_bookingTypeModal" tabindex="3" bookingType="dialog" aria-labelledby="delete_bookingTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" bookingType="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteBookingType()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_bookingTypeModalLabel">Delete BookingType</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="bookingTypeId" name="bookingTypeId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Booking Type. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_bookingTypeModal').modal('hide')">Delete BookingType</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="bookingTypes.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Booking Types found!</strong> Add new Booking Types using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+    <h3>Success! </h3>
+    <strong>{{ success }}</strong>
+    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="bookingTypes.length >= 1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Cancel</th>
+        <th>Change Date</th>
+        <th>Checked Baggage</th>
+        <th>Hand Baggage</th>
+        <th>Additonal Cost</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bookingType of bookingTypes; index as i">
+        <td>{{bookingType.name}}</td>
+        <td>{{bookingType.cancelBooking}}</td>
+        <td>{{bookingType.changeDate}}</td>
+        <td>{{bookingType.checkedBaggage}}</td>
+        <td>{{bookingType.handBaggage}}</td>
+        <td>{{bookingType.cost}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_bookingTypeModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_bookingTypeModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
