@@ -1,0 +1,129 @@
+<h2>List of Roles</h2>
+  <p>Roles are listed below. As an operator you can add, edit or delete new roles.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_roleModal">Create New Role</button>            
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchroles();">Refresh List</button>
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_roleModal" tabindex="3" role="dialog" aria-labelledby="new_roleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateRole()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_roleModalLabel" >Create New Role</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_roleName">Role Name:</label>
+              <input type="text" class="form-control" id="insert_roleName"  formControlName="roleName" name="roleName">
+              <span *ngIf="!insertForm.get('roleName').valid && insertForm.get('roleName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_roleModal').modal('hide')">Create Role</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_roleModal" tabindex="3" role="dialog" aria-labelledby="edit_roleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateRole()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_roleModalLabel">Edit Existing Role</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_roleId"  formControlName="roleId" name="roleId">
+            </div>
+            <div class="form-group">
+                <label for="edit_roleName">Role Name:</label>
+                <input type="text" class="form-control" id="edit_roleName"  formControlName="roleName" name="roleName">
+                <span *ngIf="!editForm.get('roleName').valid && editForm.get('roleName').touched"
+                    class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_roleModal').modal('hide')">Edit Role</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_roleModal" tabindex="3" role="dialog" aria-labelledby="delete_roleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteRole()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_roleModalLabel">Delete Role</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="roleId" name="roleId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Role. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_roleModal').modal('hide')">Delete Role</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="roles.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Roles found!</strong> Add new roles using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+    <h3>Success! </h3>
+    <strong>{{ success }}</strong>
+    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="roles.length >= 1">
+    <thead>
+      <tr>
+        <th>Role Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let role of roles; index as i">
+        <td>{{role.name}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_roleModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_roleModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
