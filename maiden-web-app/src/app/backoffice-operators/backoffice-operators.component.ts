@@ -29,8 +29,7 @@ export class BackofficeOperatorsComponent implements OnInit {
   constructor(private rolesService: RolesService, private employeesService: OperatorsService) {}
 
   ngOnInit() {
-    this.fetchroles();
-    this.fetchemployees();
+    this.onRefresh();
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
@@ -52,6 +51,11 @@ export class BackofficeOperatorsComponent implements OnInit {
       'employeeId' : new FormControl(null),
     });
 
+  }
+  
+  onRefresh() {
+    this.fetchroles();
+    this.fetchemployees();
   }
 
   populateEditForm(index: number){

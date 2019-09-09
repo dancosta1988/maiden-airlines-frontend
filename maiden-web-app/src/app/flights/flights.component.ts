@@ -54,10 +54,7 @@ export class FlightsComponent implements OnInit {
 
   ngOnInit() {
     //fetch
-    this.fetchAirports();
-    this.fetchAirplanes();
-    //while(this.fetchedAirports && this.fetchedAirplanes){ }
-    this.fetchFlights();
+    this.onRefresh();
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
@@ -87,6 +84,13 @@ export class FlightsComponent implements OnInit {
       'flightId' : new FormControl(null),
     });
 
+  }
+
+  onRefresh(){
+    this.fetchAirports();
+    this.fetchAirplanes();
+    //while(this.fetchedAirports && this.fetchedAirplanes){ }
+    this.fetchFlights();
   }
 
   populateEditForm(index: number){

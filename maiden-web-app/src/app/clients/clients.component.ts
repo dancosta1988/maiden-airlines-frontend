@@ -31,9 +31,7 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.fetchClientTypes();
-    while(this.fetchedClientTypes){ }
-    this.fetchclients();
+    this.onRefresh();
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
@@ -66,6 +64,12 @@ export class ClientsComponent implements OnInit {
       'clientId' : new FormControl(null),
     });
 
+  }
+
+  onRefresh() {
+    this.fetchClientTypes();
+    while(this.fetchedClientTypes){ }
+    this.fetchclients();
   }
 
   
