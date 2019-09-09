@@ -2,7 +2,7 @@
         <div class="d-flex flex-grow-1">
             <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
             <a class="navbar-brand d-none d-lg-inline-block" href="#">
-                Maiden Airlines
+                {{constants.companyName}}
             </a>
             <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
                 <img src="assets/maiden-logo.png" alt="logo">
@@ -17,11 +17,17 @@
                         <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/booking'>Book a Flight</a>
                     </li>
                     <li class="nav-item">
+                            <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/club'>{{constants.clubName}}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/contacts'>Contacts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/operator'>Operator</a>
+                            <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/backoffice-login'>Backoffice</a>
                     </li>
+                    <!--<li *ngIf="isEmployee()" class="nav-item">
+                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/operator'>Operator</a>
+                    </li>-->
                 </ul>
             </div>
         </div>

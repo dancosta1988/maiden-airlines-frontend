@@ -1,0 +1,39 @@
+<h2 class="title">{{constants.clubName}}</h2>
+<hr>
+<div *ngIf="error">
+    <p>{{constants.clubName}} Subscriptions will soon be available!</p>
+</div>
+<div class="row" *ngIf="!error">
+    <div class="col-sm-6" *ngFor="let clientType of clientTypes; index as i">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">{{clientType.name}}</h3>
+                <hr>
+                <table  class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Miles:</td>
+                        <td>{{clientType.monthlyMiles}}</td>
+                    </tr>
+                    <tr>
+                        <td>Welcome Bonus Miles:</td>
+                        <td>{{clientType.welcomeBonus}}</td>
+                    </tr>
+                    <tr>
+                        <td>Earned Bonus Miles per trip:</td>
+                        <td>{{clientType.bonusMiles}} %</td>
+                    </tr>
+                </tbody>
+
+                </table>
+                <h5 class="card-text text-success">Annual Fee: {{clientType.annualFee}} €</h5>
+            </div>
+        </div>
+    </div>
+</div>
