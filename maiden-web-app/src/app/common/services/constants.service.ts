@@ -6,7 +6,10 @@ import { Injectable } from '@angular/core';
 export class ConstantsService {
 
   //define global variables here...
-  readonly webServicesUrl: string = 'http://192.168.0.77:9090';
+  readonly webServicesUrl: string = 'https://192.168.0.77:8443';
+  readonly companyName: string = 'Maiden Airlines';
+  readonly clubName: string = 'Club Metal Miles';
+  
   
 
   constructor() { }
