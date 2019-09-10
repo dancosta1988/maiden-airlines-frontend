@@ -56,9 +56,7 @@ export class AirplanesComponent implements OnInit {
 
   }
 
-  populateEditForm(index: number){
-    console.log("editing airplane id " + this.airplanes[index].id);
-    
+  populateEditForm(index: number){ 
     
         this.editForm.setValue({
           airplaneId: this.airplanes[index].id,
@@ -76,52 +74,53 @@ export class AirplanesComponent implements OnInit {
   }
 
   onCreateAirplane(){
-    console.log("onCreateAirplane");
     //send http request
     this.airplanesService.createAndStoreAirplane(
       this.insertForm.value.airplaneId,
       this.insertForm.value.airplaneModel, 
       this.insertForm.value.airplaneCargoholdCapacity, 
       this.insertForm.value.airplaneSeats).subscribe(responseData => {
-        console.log(responseData);
+        this.error = "";
         this.success = "Airplane inserted!";
         this.fetchairplanes();
       },
       error =>{
+          this.success ="";
           this.error = error.message;
       });
   }
 
   
   onUpdateAirplane(){
-    console.log("onUpdateAirplane");
+  
     //send http request
     this.airplanesService.updateAirplane(
       this.editForm.value.airplaneId,
       this.editForm.value.airplaneModel, 
       this.editForm.value.airplaneCargoholdCapacity, 
       this.editForm.value.airplaneSeats).subscribe(responseData => {
-        console.log(responseData);
+        this.error ="";
         this.success = "Airplane updated!";
         this.fetchairplanes();
       },
       error =>{
+          this.success ="";
           this.error = error.message;
       });
   }
 
   onDeleteAirplane(){
-    console.log("onDeleteAirplane");
     //get id from the deleteForm
     let index = this.deleteForm.value.airplaneId;
-    console.log("deleting airplane id: " + this.airplanes[index].id);
+
     //send http request
     this.airplanesService.deleteAirplane(this.airplanes[index].id).subscribe(responseData => {
-      console.log(responseData);
+      this.error = "";
       this.success = "Airplane Deleted!";
       this.fetchairplanes();
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
 
@@ -139,8 +138,11 @@ export class AirplanesComponent implements OnInit {
         for (var i = 0, len = airplanes.length; i < len; i++) {
           this.airplanes.push(new Airplane(airplanes[i].id, airplanes[i].model, airplanes[i].cargoHoldCapacity, airplanes[i].numberSeats));
         }
+        this.error = "";
+        this.success = "";
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
     

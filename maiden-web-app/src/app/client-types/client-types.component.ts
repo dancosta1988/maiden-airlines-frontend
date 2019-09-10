@@ -52,7 +52,6 @@ export class ClientTypesComponent implements OnInit {
   }
 
   populateEditForm(index: number){
-    console.log("editing clientType id " + this.clientTypes[index].id);
     
     
         this.editForm.setValue({
@@ -73,7 +72,6 @@ export class ClientTypesComponent implements OnInit {
   }
 
   onCreateClientType(){
-    console.log("onCreateClientType");
     //send http request
     this.clientTypesService.createAndStoreClientType(
       this.insertForm.value.clientTypeName,
@@ -82,7 +80,6 @@ export class ClientTypesComponent implements OnInit {
       this.insertForm.value.clientTypeWelcomeBonus,
       this.insertForm.value.clientTypeBonusMiles
       ).subscribe(responseData => {
-        console.log(responseData);
         if(responseData){
           this.error = "Something went wrong inserting a new client type..."
         }else{
@@ -97,7 +94,6 @@ export class ClientTypesComponent implements OnInit {
 
   
   onUpdateClientType(){
-    console.log("onUpdateClientType");
     //send http request
     this.clientTypesService.updateClientType(
       this.clientTypes[this.editForm.value.clientTypeId].id,
@@ -107,7 +103,6 @@ export class ClientTypesComponent implements OnInit {
       this.editForm.value.clientTypeWelcomeBonus,
       this.editForm.value.clientTypeBonusMiles 
       ).subscribe(responseData => {
-        console.log(responseData);
         this.success = "ClientType updated!";
         this.fetchclientTypes();
       },
@@ -117,13 +112,10 @@ export class ClientTypesComponent implements OnInit {
   }
 
   onDeleteClientType(){
-    console.log("onDeleteClientType");
     //get id from the deleteForm
     let index = this.deleteForm.value.clientTypeId;
-    console.log("deleting clientType id: " + this.clientTypes[index].id);
     //send http request
     this.clientTypesService.deleteClientType(this.clientTypes[index].id).subscribe(responseData => {
-      console.log(responseData);
       this.success = "ClientType Deleted!";
       this.fetchclientTypes();
     },

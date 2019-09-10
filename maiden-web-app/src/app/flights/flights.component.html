@@ -64,7 +64,13 @@
               <input type="text" class="form-control" id="insert_flightPrice"  formControlName="flightPrice" name="flightPrice">
               <span *ngIf="!insertForm.get('flightPrice').valid && insertForm.get('flightPrice').touched"
                 class="help-block alert-warning">Please enter a valid price! (ex.: 100.00)</span>
-        </div>
+          </div>
+          <div class="form-group">
+            <label for="flightStatus">Define number of Miles:</label>
+            <input type="text" class="form-control" id="insert_flightMiles"  formControlName="flightMiles" name="flightMiles">
+            <span *ngIf="!insertForm.get('flightMiles').valid && insertForm.get('flightMiles').touched"
+              class="help-block alert-warning">Please enter a valid number!</span>
+          </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -151,7 +157,13 @@
                       <input type="text" class="form-control" id="edit_flightPrice"  formControlName="flightPrice" name="flightPrice">
                       <span *ngIf="!editForm.get('flightPrice').valid && editForm.get('flightPrice').touched"
                         class="help-block alert-warning">Please enter a valid price! (ex.: 100.00)</span>
-                </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="flightStatus">Define number of Miles:</label>
+                    <input type="text" class="form-control" id="edit_flightMiles"  formControlName="flightMiles" name="flightMiles">
+                    <span *ngIf="!editForm.get('flightMiles').valid && editForm.get('flightMiles').touched"
+                      class="help-block alert-warning">Please enter a valid number!</span>
+                  </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -188,7 +200,30 @@
         </form>
         </div>
     </div>
-  </div>  
+  </div>
+
+  <!-- Modal Occupation-->
+<div class="modal fade" id="occupation_flightModal" tabindex="3" role="dialog" aria-labelledby="occupation_flightModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="occupation_flightModalLabel">Flight Occupation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let seat of seats">
+          <div class = "">{{seat}}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+  </div>
+</div>
+
   <div *ngIf="flights.length < 1 && !isFetching" class="alert alert-warning">
     <strong>No Flights found!</strong> Add new flights using the Create button
   </div>
@@ -199,14 +234,12 @@
     <h3>Error occurred using the webservices!</h3>
     <strong>{{ error }}</strong><br>
     Please contact the coding monkeys.
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
   </div>
   <div *ngIf="success" class="alert alert-success">
       <h3>Success! </h3>
       <strong>{{ success }}</strong>
-      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
   </div>
-<table class="table table-striped bg-light" *ngIf="flights.length >= 1 && !error && fetchedAirplanes && fetchedAirports" >
+<table class="table table-striped bg-light" *ngIf="flights.length >= 1 && airports.length >= 1 && airplanes.length >= 1" >
     <thead>
       <tr>
         <th>Flight Number</th>
@@ -218,6 +251,7 @@
         <th>Gate</th>
         <th>Status</th>
         <th>Base Price</th>
+        <th>Miles</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -235,7 +269,9 @@
         <td *ngIf="flight.status === 'cancelled'" class= "bg-danger text-dark">{{flight.status}}</td>
         <td *ngIf="flight.status == null" class= "bg-danger text-dark">No Information</td>
         <td>{{flight.price}}</td>
+        <td>{{flight.miles}}</td>
         <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#occupation_flightModal" (click)="generateSeats(flight.airplane.numberSeats)">Occupation</button>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>

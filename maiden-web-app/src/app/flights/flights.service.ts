@@ -17,9 +17,10 @@ export class FlightsService {
         arrival_date: string,
         arrival_airport: number,
         airplane: number,
-        price: number){
+        price: number,
+        miles: number){
         
-        return this.http.post(this.constants.webServicesUrl+'/FlightCreate?flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&idAirplane='+airplane+'&price='+price,null);
+        return this.http.post(this.constants.webServicesUrl+'/Flights/FlightCreate?flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&idAirplane='+airplane+'&price='+price+'&miles='+miles,null);
     }
 
     updateFlight(
@@ -32,16 +33,17 @@ export class FlightsService {
         airplane: number,
         gate: number,
         status: string,
-        price: number){
+        price: number,
+        miles: number){
         
-        return this.http.post(this.constants.webServicesUrl+'/FlightUpdate?id='+id+'&flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&idAirplane='+airplane+'&price='+price+'&gate='+gate+'&status='+status,null);
+        return this.http.post(this.constants.webServicesUrl+'/Flights/FlightUpdate?id='+id+'&flightNumber='+flight_number+'&departureDate='+departure_date+'&departureAirport='+departure_airport+'&arrivalDate='+arrival_date+'&arrivalAirport='+arrival_airport+'&idAirplane='+airplane+'&price='+price+'&gate='+gate+'&status='+status+'&miles='+miles,null);
     }
 
     deleteFlight(id: number){
-        return this.http.post(this.constants.webServicesUrl+'/FlightDelete?id='+id,null);
+        return this.http.post(this.constants.webServicesUrl+'/Flights/FlightDelete?id='+id,null);
     }
 
     fetchFlights(){
-        return this.http.get<{id: number, flightNumber: string, departureAirport: number, departureDate: string, arrivalAirport: number, arrivalDate: string, idairplane: number, gate : number, status: string, price: number}[]>(this.constants.webServicesUrl+'/Flights');
+        return this.http.get<{id: number, flightNumber: string, departureAirport: number, departureDate: string, arrivalAirport: number, arrivalDate: string, idairplane: number, gate : number, status: string, price: number, miles: number}[]>(this.constants.webServicesUrl+'/Flights');
     }
 }

@@ -59,7 +59,6 @@ export class AirportsComponent implements OnInit {
   }
 
   populateEditForm(index: number){
-    console.log("editing airport id " + this.airports[index].id);
     
         this.editForm.setValue({
           airportId: index,
@@ -77,25 +76,24 @@ export class AirportsComponent implements OnInit {
   }
 
   onCreateAirport(){
-    console.log("onCreateAiport");
     //send http request
     this.airportsService.createAndStoreAirport(
       this.insertForm.value.airportName, 
       this.insertForm.value.airportShortName, 
       this.insertForm.value.airportCity, 
       this.insertForm.value.airportCountry).subscribe(responseData => {
-        console.log(responseData);
+        this.error ="";
         this.success = "New Airport Inserted.";
         this.fetchAirports();
     },
     error =>{
+      this.success ="";
         this.error = error.message;
     });
     
   }
 
   onUpdateAirport(){
-    console.log("onUpdateAiport");
     //send http request
     this.airportsService.updateAirport(
         this.airports[this.editForm.value.airportId].id,
@@ -103,28 +101,28 @@ export class AirportsComponent implements OnInit {
         this.editForm.value.airportShortName, 
         this.editForm.value.airportCity, 
         this.editForm.value.airportCountry).subscribe(responseData => {
-          console.log(responseData);
+          this.error ="";
           this.success = "Airport Updated.";
           this.fetchAirports();
       },
       error =>{
+          this.success = "";
           this.error = error.message;
       });
   }
 
   onDeleteAirport(){
-    console.log("onDeleteAiport");
     //get id from the deleteForm
     let index = this.deleteForm.value.airportId;
-    console.log("deleting airport id: " + this.airports[index].id);
     //send http request
     this.airportsService.deleteAirport(this.airports[index].id).subscribe(responseData => {
-      console.log(responseData);
+      this.error ="";
       this.success = "Airport Deleted.";
       this.fetchAirports();
   },
   error =>{
-      this.error = error.message;
+    this.success ="";
+    this.error = error.message;
   });
   }
 
@@ -134,16 +132,17 @@ export class AirportsComponent implements OnInit {
 
   private fetchAirports(){
     this.isFetching = true;
-    console.log("Fetching airports...");
     this.airportsService.fetchAirports().subscribe(data =>{
         this.isFetching = false;
-        console.log(data);
         this.airports = [];
         for (var i = 0, len = data.length; i < len; i++) {
           this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
         }
+        this.error ="";
+        this.success ="";
       },
       error =>{
+        this.success ="";
           this.error = error.message;
       });
       

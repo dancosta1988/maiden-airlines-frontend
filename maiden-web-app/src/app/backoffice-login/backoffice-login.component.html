@@ -1,0 +1,55 @@
+
+<div class="justify-content-center">
+       
+            <div class="row" *ngIf="!loggedIn">
+                <div class="modal-header">
+                    <h5 class="">Login to Maiden Airlines Backoffice</h5>
+                </div>
+                <p class="col-12">In order to access backoffice actions, please fill up the form with your credentials given by an administrator</p>
+                <div *ngIf="error" class="alert alert-danger">
+                    <strong>{{ error }}</strong><br>
+                </div>
+            </div>
+            <div *ngIf="loggedIn">
+                    <div class="modal-header row">
+                        <h5 class="col-6">Welcome, {{data.name}} ({{data.role}})</h5>
+                        <div class="form-group col-2"></div>
+                        <button type="submit" class="btn btn-primary col-4" (click)="onLogout()">Log Out</button> 
+                    </div>
+
+                    <p class="col-12">This is your working area. Feel free to navigate throught the different tabs.</p>
+                    <p class="col-12">When you are done, please logout from the backoffice.</p>
+            </div>
+            <div *ngIf="!loggedIn" >
+                <form [formGroup] = "loginForm" (ngSubmit)="onLogin()">
+                <div class="row" >
+                    <div class="form-group col-4"></div>
+                    <div class="form-group mb-2 col-4">
+                            <label for="loginUsername">Type your company's username:</label>
+                            <input type="text" class="form-control" id="loginUsername"  formControlName="loginUsername" name="loginUsername">
+                            <span *ngIf="!loginForm.get('loginUsername').valid && loginForm.get('loginUsername').touched"
+                            class="help-block alert-warning">Please enter a valid email!</span>
+                    </div>
+                    <div class="form-group col-4"></div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-4"></div>
+                    <div class="form-group mb-2 col-4">
+                            <label for="loginBackofficePassword">Type your password:</label>
+                            <input type="password" class="form-control" id="loginBackofficePassword"  formControlName="loginPassword" name="loginPassword">
+                            <span *ngIf="!loginForm.get('loginPassword').valid && loginForm.get('loginPassword').touched"
+                            class="help-block alert-warning">Please enter a valid password (alphanumeric and special characters allowed)!</span>
+                    </div>
+                    <div class="form-group col-4"></div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-4"></div>
+                    <button type="submit" class="btn btn-primary col-4" [disabled]="!loginForm.valid" onclick="$('#loginModal').modal('hide')">Login</button>
+                    <div class="form-group col-4"></div>
+                </div>
+                </form>
+            </div>
+            
+    </div>
+    <app-operator-view *ngIf="loggedIn"></app-operator-view> 

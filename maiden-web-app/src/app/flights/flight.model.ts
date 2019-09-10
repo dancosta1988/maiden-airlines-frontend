@@ -12,6 +12,7 @@ export class Flight{
     public gate: number;
     public status: string;
     public price: number;
+    public miles: number;
 
     constructor ( id: number,
          flight_number: string,
@@ -22,7 +23,8 @@ export class Flight{
          airplane: Airplane,
          gate: number,
          status: string,
-         price: number){
+         price: number,
+         miles: number){
         
          this.id = id;
          this.flight_number = flight_number;
@@ -34,6 +36,7 @@ export class Flight{
          this.gate = gate;
          this.status = status;
          this.price = price;
+         this.miles = miles;
     }
 
 }

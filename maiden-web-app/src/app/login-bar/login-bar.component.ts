@@ -18,7 +18,6 @@ export class LoginBarComponent implements OnInit {
   public data:any=[];
 
   ngOnInit() {
-    console.log("initializing login bar...");
     this.getFromLocal('role');
 
     //create forms
@@ -52,15 +51,8 @@ export class LoginBarComponent implements OnInit {
 
   
   getFromLocal(key): void {
-    console.log('recieved= key:' + key);
     this.data[key]= this.storage.get(key);
-    console.log(this.data);
    }
 
-  isEmployee(){
-    console.log("LoginBar Role: " + this.data.role);
-    return this.data.role === '2' || this.data.role === '7' || this.data.role === '1';
-    //return this.data.role === 'Administrator' || this.data.role === 'Client_Manager' || this.data.role === 'Manager_Operator';
-  }
-
+  
 }

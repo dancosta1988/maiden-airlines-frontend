@@ -2,10 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
 import { AirplanesComponent } from './airplanes/airplanes.component';
 import { AirportsComponent } from './airports/airports.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlightsComponent } from './flights/flights.component';
 import { OperatorViewComponent } from './operator-view/operator-view.component';
 import { ConstantsService } from './common/services/constants.service';
@@ -21,11 +20,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { BookingComponent } from './booking/booking.component';
 import { BookingTypesComponent } from './booking-types/booking-types.component';
+import { BackofficeLoginComponent } from './backoffice-login/backoffice-login.component';
+import { StorageServiceModule} from 'angular-webstorage-service';
+import { ClubComponent } from './club/club.component';
+import { BasicAuthHtppInterceptorService } from './common/services/httpinterceptor.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
     AirplanesComponent,
     AirportsComponent,
     FlightsComponent,
@@ -39,16 +41,20 @@ import { BookingTypesComponent } from './booking-types/booking-types.component';
     ClientsComponent,
     HomeComponent,
     BookingComponent,
-    BookingTypesComponent
+    BookingTypesComponent,
+    BackofficeLoginComponent,
+    ClubComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StorageServiceModule,
   ],
-  providers: [ConstantsService,DatePipe],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass:BasicAuthHtppInterceptorService , multi: true },
+    ConstantsService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

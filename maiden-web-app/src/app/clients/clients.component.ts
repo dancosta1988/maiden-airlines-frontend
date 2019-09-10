@@ -74,9 +74,7 @@ export class ClientsComponent implements OnInit {
 
   
 
-  populateEditForm(index: number){
-    console.log("editing client id " + this.clients[index].id);
-    
+  populateEditForm(index: number){    
     
         this.editForm.setValue({
           clientId:index,
@@ -100,7 +98,6 @@ export class ClientsComponent implements OnInit {
   }
 
   onCreateClient(){
-    console.log("onCreateClient");
     //send http request
     this.clientsService.createAndStoreClient(
       this.insertForm.value.clientFirstName,
@@ -116,7 +113,6 @@ export class ClientsComponent implements OnInit {
       this.insertForm.value.clientEmail,
       this.insertForm.value.clientPassword 
       ).subscribe(responseData => {
-        console.log(responseData);
         if(responseData == -1){
           this.error = "Something went wrong inserting the client..."
         }else{
@@ -132,7 +128,6 @@ export class ClientsComponent implements OnInit {
 
   
   onUpdateClient(){
-    console.log("onUpdateClient");
     //send http request
     this.clientsService.updateClient(
       this.clients[this.editForm.value.clientId].id,
@@ -149,7 +144,6 @@ export class ClientsComponent implements OnInit {
       this.editForm.value.clientEmail,
       this.editForm.value.clientPassword 
       ).subscribe(responseData => {
-        console.log(responseData);
         this.success = "Client updated!";
         this.fetchclients();
       },
@@ -159,13 +153,10 @@ export class ClientsComponent implements OnInit {
   }
 
   onDeleteClient(){
-    console.log("onDeleteClient");
     //get id from the deleteForm
     let index = this.deleteForm.value.clientId;
-    console.log("deleting client id: " + this.clients[index].id);
     //send http request
     this.clientsService.deleteClient(this.clients[index].id).subscribe(responseData => {
-      console.log(responseData);
       this.success = "Client Deleted!";
       this.fetchclients();
     },

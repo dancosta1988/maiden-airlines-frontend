@@ -48,6 +48,8 @@ export class FlightsComponent implements OnInit {
     new Flight(4, "MDN004", "2019-08-31T13:45:00", this.airports[0], "2019-08-30T15:45:00", this.airports[3], this.airplanes[3], 2, "cancelled")
     */
   ]
+
+  public seats: string[] = [];
   
 
   constructor(private datepipe: DatePipe, private http: HttpClient, private flightsService: FlightsService, private airportsService: AirportsService, private airplanesService: AirplanesService) { }
@@ -55,7 +57,7 @@ export class FlightsComponent implements OnInit {
   ngOnInit() {
     //fetch
     this.onRefresh();
-
+    this.generateSeats(100);
     //using Reactive Forms
     this.insertForm = new FormGroup({
       'flightNumber' : new FormControl(null,Validators.required),
@@ -64,7 +66,8 @@ export class FlightsComponent implements OnInit {
       'flightArrivalDate' : new FormControl(null, Validators.required),
       'flightArrivalAirport' : new FormControl(null, Validators.required),
       'flightAirplane' : new FormControl(null, Validators.required),
-      'flightPrice' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")])
+      'flightPrice' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")]),
+      'flightMiles' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*[0-9]$")])
     });
 
     this.editForm = new FormGroup({
@@ -77,7 +80,8 @@ export class FlightsComponent implements OnInit {
       'flightAirplane' : new FormControl(null, Validators.required),
       'flightGate' : new FormControl(null),
       'flightStatus' : new FormControl(null),
-      'flightPrice' : new FormControl(null,  [Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")])
+      'flightPrice' : new FormControl(null,  [Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")]),
+      'flightMiles' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*[0-9]$")])
     });
     
     this.deleteForm = new FormGroup({
@@ -89,7 +93,6 @@ export class FlightsComponent implements OnInit {
   onRefresh(){
     this.fetchAirports();
     this.fetchAirplanes();
-    //while(this.fetchedAirports && this.fetchedAirplanes){ }
     this.fetchFlights();
   }
 
@@ -104,7 +107,8 @@ export class FlightsComponent implements OnInit {
           'flightAirplane' : this.flights[index].airplane.id,
           'flightGate' : this.flights[index].gate,
           'flightStatus' : this.flights[index].status,
-          'flightPrice' : this.flights[index].price
+          'flightPrice' : this.flights[index].price,
+          'flightMiles' : this.flights[index].miles
         });
   }
 
@@ -115,7 +119,6 @@ export class FlightsComponent implements OnInit {
   }
 
   onCreateFlight(){
-    console.log("onCreateFlight");
     //send http request
       this.flightsService.createAndStoreFlight(
       this.insertForm.value.flightNumber,
@@ -124,25 +127,27 @@ export class FlightsComponent implements OnInit {
       this.insertForm.value.flightArrivalDate,
       this.airports[this.insertForm.value.flightArrivalAirport].id,
       this.insertForm.value.flightAirplane,
-      this.insertForm.value.flightPrice
+      this.insertForm.value.flightPrice,
+      this.insertForm.value.flightMiles
     ).subscribe(responseData => {
-      console.log(responseData);
       if(responseData === -1){
         this.error = "Something went wrong adding the flight...";
+        this.success ="";
       }else{
+        this.error ="";
         this.success = "Flight added!";
         this.fetchFlights();
       }
       
   },
   error =>{
+      this.success = "";
       this.error = error.message;
   });
   }
 
   
   onUpdateFlight(){
-    console.log("onUpdateFlight");
     //send http request
     this.flightsService.updateFlight(
       this.flights[this.editForm.value.flightId].id,
@@ -154,29 +159,30 @@ export class FlightsComponent implements OnInit {
       this.editForm.value.flightAirplane,
       this.editForm.value.flightGate,
       this.editForm.value.flightStatus,
-      this.editForm.value.flightPrice
+      this.editForm.value.flightPrice,
+      this.editForm.value.flightMiles
     ).subscribe(responseData => {
-      console.log(responseData);
+      this.error = "";
       this.success = "Flight Updated!";
       this.fetchFlights();
   },
   error =>{
+      this.success ="";
       this.error = error.message;
   });
   }
 
   onDeleteFlight(){
-    console.log("onDeleteFlight");
     //get id from the deleteForm
     let index = this.deleteForm.value.flightId;
-    console.log("deleting flight id: " + this.flights[index].id);
     //send http request
     this.flightsService.deleteFlight(this.flights[index].id).subscribe(responseData => {
-      console.log(responseData);
+      this.error ="";
       this.success = "Flight deleted!";
       this.fetchFlights();
   },
   error =>{
+      this.success ="";
       this.error = error.message;
   })
 
@@ -192,17 +198,17 @@ export class FlightsComponent implements OnInit {
       this.flightsService.fetchFlights().subscribe(flights =>{
         this.isFetching = false;
         this.flights = [];
-
         for (var i = 0, len = flights.length; i < len; i++) {
-          this.flights.push(new Flight(flights[i].id, flights[i].flightNumber, flights[i].departureDate, this.getAirportById(flights[i].departureAirport), flights[i].arrivalDate, this.getAirportById(flights[i].arrivalAirport), this.getAirplaneById(flights[i].idairplane), flights[i].gate, flights[i].status, flights[i].price));
+          this.flights.push(new Flight(flights[i].id, flights[i].flightNumber, flights[i].departureDate, this.getAirportById(flights[i].departureAirport), flights[i].arrivalDate, this.getAirportById(flights[i].arrivalAirport), this.getAirplaneById(flights[i].idairplane), flights[i].gate, flights[i].status, flights[i].price, flights[i].miles));
         }
+        this.success ="";
+        this.error ="";
       },
       error =>{
           this.isFetching = false;
+          this.success ="";
           this.error = error.message;
       });
-    
-    
   }
 
   onErrorClose(){
@@ -216,7 +222,6 @@ export class FlightsComponent implements OnInit {
   private fetchAirplanes(){
     this.fetchedAirplanes = false;
     this.airplanesService.fetchAirplanes().subscribe(airplanes =>{
-      
       this.airplanes = [];
       for (var i = 0, len = airplanes.length; i < len; i++) {
         this.airplanes.push(new Airplane(airplanes[i].id, airplanes[i].model, airplanes[i].cargoHoldCapacity, airplanes[i].numberSeats));
@@ -231,7 +236,6 @@ export class FlightsComponent implements OnInit {
 
   private fetchAirports(){
     this.fetchedAirports = false;
-    console.log("Fetching airports...");
     this.airportsService.fetchAirports().subscribe(data =>{
         
         this.airports = [];
@@ -261,6 +265,19 @@ export class FlightsComponent implements OnInit {
   public getAirplaneById(id:number){
     let airplane: Airplane = this.airplanes.find(x => x.id === id);
     return airplane;
+  }
+
+  public generateSeats(seats: number){
+    this.seats = [];
+    let nseats = 1;
+    for (var i = 0, lenS = seats; nseats <= seats; i++ ) {
+      
+      for (var x = 0, len = 6; x < len && nseats <= seats ; x++, nseats++) {
+        this.seats.push(i+1 + String.fromCharCode(97 + x));
+        console.log(nseats + "/" + seats);
+      }
+    }
+    console.log(this.seats);
   }
 
 }

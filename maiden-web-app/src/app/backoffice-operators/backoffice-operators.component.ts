@@ -58,9 +58,7 @@ export class BackofficeOperatorsComponent implements OnInit {
     this.fetchemployees();
   }
 
-  populateEditForm(index: number){
-    console.log("editing employee id " + this.employees[index].id);
-    
+  populateEditForm(index: number){    
     
         this.editForm.setValue({
           employeeId: index,
@@ -79,7 +77,6 @@ export class BackofficeOperatorsComponent implements OnInit {
   }
 
   onCreateEmployee(){
-    console.log("onCreateEmployee");
     //send http request
     this.employeesService.createAndStoreOperator(
       this.insertForm.value.employeeName,
@@ -87,23 +84,24 @@ export class BackofficeOperatorsComponent implements OnInit {
       this.insertForm.value.employeeUserName,
       this.insertForm.value.employeePassword
       ).subscribe(responseData => {
-        console.log(responseData);
         if(responseData === -1){
+          this.success = "";
           this.error = "Something went wrong when inserting a employee..."
         }else{
+          this.error = "";
           this.success = "Employee inserted!";
           this.fetchemployees();
         }
         
       },
       error =>{
+          this.error = "";
           this.error = error.message;
       });
   }
 
   
   onUpdateEmployee(){
-    console.log("onUpdateEmployee");
     //send http request
     this.employeesService.updateOperator(
       this.employees[this.editForm.value.employeeId].id,
@@ -112,27 +110,28 @@ export class BackofficeOperatorsComponent implements OnInit {
       this.editForm.value.employeeUserName,
       this.editForm.value.employeePassword
       ).subscribe(responseData => {
-        console.log(responseData);
+        this.error = "";
         this.success = "Employee updated!";
         this.fetchemployees();
       },
       error =>{
+          this.success = "";
           this.error = error.message;
       });
   }
 
   onDeleteEmployee(){
-    console.log("onDeleteEmployee");
     //get id from the deleteForm
     let index = this.deleteForm.value.employeeId;
-    console.log("deleting employee id: " + this.employees[index].id);
+  
     //send http request
     this.employeesService.deleteOperator(this.employees[index].id).subscribe(responseData => {
-      console.log(responseData);
+      this.error = "";
       this.success = "Employee Deleted!";
       this.fetchemployees();
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
 
@@ -147,11 +146,14 @@ export class BackofficeOperatorsComponent implements OnInit {
     this.employeesService.fetchOperators().subscribe(employees =>{
       this.isFetching = false;
       this.employees = [];
-        for (var i = 0, len = employees.length; i < len; i++) {
-          this.employees.push(new Operator(employees[i].id, employees[i].name, this.getRoleById(employees[i].idRole), employees[i].username, employees[i].password));
-        }
+      for (var i = 0, len = employees.length; i < len; i++) {
+        this.employees.push(new Operator(employees[i].id, employees[i].name, this.getRoleById(employees[i].idRole), employees[i].username, employees[i].password));
+      }
+      this.error ="";
+      this.success = "";
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
     
@@ -161,13 +163,13 @@ export class BackofficeOperatorsComponent implements OnInit {
     this.fetchedRoles = false;
     this.rolesService.fetchRoles().subscribe(roles =>{
       this.roles = [];
-        for (var i = 0, len = roles.length; i < len; i++) {
-          this.roles.push(new Role(roles[i].id, roles[i].name));
-        }
-        console.log(this.roles);
-        this.fetchedRoles = true;
+      for (var i = 0, len = roles.length; i < len; i++) {
+        this.roles.push(new Role(roles[i].id, roles[i].name));
+      }
+      this.fetchedRoles = true;
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
     

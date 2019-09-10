@@ -45,8 +45,6 @@ export class BackofficeRolesComponent implements OnInit {
   }
 
   populateEditForm(index: number){
-    console.log("editing role id " + this.roles[index].id);
-    
     
         this.editForm.setValue({
           roleId: this.roles[index].id,
@@ -62,49 +60,50 @@ export class BackofficeRolesComponent implements OnInit {
   }
 
   onCreateRole(){
-    console.log("onCreateRole");
     //send http request
     this.rolesService.createAndStoreRole(
       this.insertForm.value.roleName
       ).subscribe(responseData => {
-        console.log(responseData);
+        this.error = "";
         this.success = "Role inserted!";
         this.fetchroles();
       },
       error =>{
+          this.success = "";
           this.error = error.message;
       });
   }
 
   
   onUpdateRole(){
-    console.log("onUpdateRole");
     //send http request
     this.rolesService.updateRole(
       this.editForm.value.roleId,
       this.editForm.value.roleName, 
       ).subscribe(responseData => {
-        console.log(responseData);
+        this.error  = "";
         this.success = "Role updated!";
         this.fetchroles();
       },
       error =>{
+          this.success = "";
           this.error = error.message;
       });
   }
 
   onDeleteRole(){
-    console.log("onDeleteRole");
+    
     //get id from the deleteForm
     let index = this.deleteForm.value.roleId;
-    console.log("deleting role id: " + this.roles[index].id);
+    
     //send http request
     this.rolesService.deleteRole(this.roles[index].id).subscribe(responseData => {
-      console.log(responseData);
+      this.error = "";
       this.success = "Role Deleted!";
       this.fetchroles();
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
 
@@ -119,11 +118,14 @@ export class BackofficeRolesComponent implements OnInit {
     this.rolesService.fetchRoles().subscribe(roles =>{
       this.isFetching = false;
       this.roles = [];
-        for (var i = 0, len = roles.length; i < len; i++) {
-          this.roles.push(new Role(roles[i].id, roles[i].name));
-        }
+      for (var i = 0, len = roles.length; i < len; i++) {
+        this.roles.push(new Role(roles[i].id, roles[i].name));
+      }
+      this.success ="";
+      this.error = "";
     },
     error =>{
+        this.success = "";
         this.error = error.message;
     });
     
