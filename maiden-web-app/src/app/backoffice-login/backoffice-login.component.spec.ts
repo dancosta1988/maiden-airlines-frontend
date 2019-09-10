@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuComponent } from './menu.component';
+import { BackofficeLoginComponent } from './backoffice-login.component';
 
-describe('MenuComponent', () => {
-  let component: MenuComponent;
-  let fixture: ComponentFixture<MenuComponent>;
+describe('BackofficeLoginComponent', () => {
+  let component: BackofficeLoginComponent;
+  let fixture: ComponentFixture<BackofficeLoginComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuComponent ]
+      declarations: [ BackofficeLoginComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuComponent);
+    fixture = TestBed.createComponent(BackofficeLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
