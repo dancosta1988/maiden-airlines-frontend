@@ -21,6 +21,7 @@ export class BackofficeOperatorsComponent implements OnInit {
   public fetchedRoles = false;
   public error = "";
   public success = "";
+  public role = "";
   
   public employees: Operator[] = [ ];
   public roles: Role[] = [ ];
@@ -29,6 +30,8 @@ export class BackofficeOperatorsComponent implements OnInit {
   constructor(private rolesService: RolesService, private employeesService: OperatorsService) {}
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     this.onRefresh();
 
     //using Reactive Forms

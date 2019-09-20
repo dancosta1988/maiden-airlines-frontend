@@ -9,13 +9,14 @@ import { Observable } from 'rxjs';
 })
 export class BasicAuthHtppInterceptorService implements HttpInterceptor {
 
-  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService) { }
+  constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
-    if (this.storage.get('token')) {
+    
+    if (localStorage.getItem('token')) {
       req = req.clone({
         setHeaders: {
-          Authorization: this.storage.get('token')
+          Authorization: localStorage.getItem('token')
         }
       })
     }

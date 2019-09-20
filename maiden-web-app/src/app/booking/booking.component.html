@@ -1,7 +1,7 @@
 <h2>List of Bookings</h2>
   <p>Bookings are listed below. As an operator you can add, edit or delete new bookings.</p>
   <hr>
-  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_bookingModal">Create New Booking</button>            
+  <button *ngIf="role == 'Administrator' || role == 'Client_Manager'" type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_bookingModal">Create New Booking</button>            
   <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>
   <hr>
 
@@ -395,9 +395,9 @@
         <td>{{booking.id}}</td>
         <td>{{booking.date | date : "dd-MM-yyyy hh:mm:ss"}}</td>
         <td>
-            <button class="btn btn-success mb-2 mr-2 btn-block" data-toggle="modal" data-target="#checkin_bookingModal" (click)="populateCheckinForm(i)">Check-In</button>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_bookingModal" (click)="populateEditForm(i)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_bookingModal" (click)="populateDeleteForm(i)">Cancel</button>
+            <button *ngIf="role == 'Administrator' || role == 'Client_Manager'" class="btn btn-success mb-2 mr-2 btn-block" data-toggle="modal" data-target="#checkin_bookingModal" (click)="populateCheckinForm(i)">Check-In</button>
+            <button *ngIf="role == 'Administrator' || role == 'Client_Manager'" class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_bookingModal" (click)="populateEditForm(i)" >Edit</button>
+            <button *ngIf="role == 'Administrator' || role == 'Client_Manager'" class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_bookingModal" (click)="populateDeleteForm(i)">Cancel</button>
         </td>
       </tr>
     </tbody>

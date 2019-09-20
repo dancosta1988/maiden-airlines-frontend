@@ -19,13 +19,15 @@ export class BackofficeRolesComponent implements OnInit {
   public isFetching = false;
   public error = "";
   public success = "";
-  
+  public role = "";
   public roles: Role[] = [ ];
 
    
   constructor(private rolesService: RolesService) {}
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     this.fetchroles();
 
     //using Reactive Forms

@@ -20,6 +20,7 @@ export class AirplanesComponent implements OnInit {
   public isFetching = false;
   public error = "";
   public success = "";
+  public role = "";
   
   public airplanes: Airplane[] = [/*
     new Airplane(1001, "Airbus A380", 500, 320),
@@ -33,6 +34,8 @@ export class AirplanesComponent implements OnInit {
   constructor(private http: HttpClient, private airplanesService: AirplanesService) {}
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     this.fetchairplanes();
 
     //using Reactive Forms

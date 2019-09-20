@@ -18,7 +18,7 @@ export class BookingTypesComponent implements OnInit {
   public isFetching = false;
   public error = "";
   public success = "";
-  
+  public role = "";
   public bookingTypes: BookingType[] = [ ];
 
   public editBookingTypeCancel : string = "false";
@@ -30,6 +30,8 @@ export class BookingTypesComponent implements OnInit {
   constructor(private bookingTypesService: BookingTypesService) {}
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     this.fetchbookingTypes();
 
     //using Reactive Forms

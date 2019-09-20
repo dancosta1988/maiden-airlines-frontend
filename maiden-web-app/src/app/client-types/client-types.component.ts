@@ -18,13 +18,15 @@ export class ClientTypesComponent implements OnInit {
   public isFetching = false;
   public error = "";
   public success = "";
-  
+  public role ="";
   public clientTypes: ClientType[] = [ ];
 
    
   constructor(private clientTypesService: ClientTypesService) {}
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     this.fetchclientTypes();
 
     //using Reactive Forms

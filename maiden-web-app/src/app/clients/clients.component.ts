@@ -21,7 +21,7 @@ export class ClientsComponent implements OnInit {
   public isFetching = false;
   public error = "";
   public success = "";
-  
+  public role = "";
   public clients: Client[] = [ ];
   public types: ClientType[] = [ ];
   public fetchedClientTypes: boolean;
@@ -30,7 +30,7 @@ export class ClientsComponent implements OnInit {
   constructor(private datepipe: DatePipe,private clientsService: ClientsService, private clientTypesService: ClientTypesService) {}
 
   ngOnInit() {
-
+    this.role = localStorage.getItem('role');
     this.onRefresh();
 
     //using Reactive Forms

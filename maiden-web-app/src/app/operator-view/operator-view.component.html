@@ -1,18 +1,18 @@
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" >
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Manager_Operator'">
           <a (click)="setView('flights');" class="nav-link active" id="flights" data-toggle="tab" href="#flights_content" role="tab" aria-controls="flights_content" aria-selected="true">
               <img width="20px" alt="flights logo" src="assets/flights.png"/> Manage Flights</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Manager_Operator'">
             <a (click)="setView('airports');" class="nav-link" id="airports" data-toggle="tab" href="#airports_content" role="tab" aria-controls="airports_content" >
                     <img width="20px" alt="Airports logo" src="assets/airports.png"/> Manage Airports</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Manager_Operator'">
             <a (click)="setView('airplanes');" class="nav-link" id="airplanes" data-toggle="tab" href="#airplanes_content" role="tab" aria-controls="airplanes_content" >
                 <img width="20px" alt="Airplanes logo" src="assets/airplanes.png"/> Manage Airplanes</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="role == 'Administrator'">
             <a (click)="setView('employees');" class="nav-link" id="employees" data-toggle="tab" href="#employees_content" role="tab" aria-controls="employees_content" >
                 <img width="20px" alt="Employees logo" src="assets/employees.png"/> Manage Backoffice</a>
         </li>
@@ -20,60 +20,60 @@
             <a (click)="setView('roles');" class="nav-link" id="roles" data-toggle="tab" href="#roles_content" role="tab" aria-controls="roles_content" >
                 <img width="20px" alt="Roles logo" src="assets/roles.png"/> Manage Backoffice Roles</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Client_Manager'">
             <a (click)="setView('clients');" class="nav-link" id="clients" data-toggle="tab" href="#clients_content" role="tab" aria-controls="clients_content" >
                 <img width="20px" alt="Clients logo" src="assets/clients.png"/> Manage Clients </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Manager_Operator'">
             <a (click)="setView('clientTypes');" class="nav-link" id="clientTypes" data-toggle="tab" href="#types_content" role="tab" aria-controls="types_content" >
                 <img width="20px" alt="Client types logo" src="assets/types.png"/> Manage Client Types</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Client_Manager'">
                 <a (click)="setView('bookings');" class="nav-link" id="booking" data-toggle="tab" href="#booking_content" role="tab" aria-controls="booking_content" >
                     <img width="20px" alt="Booking logo" src="assets/booking.png"/> Manage Bookings </a>
         </li>
-        <li class="nav-item">
-                <a (click)="setView('bookingTypes');" class="nav-link" id="booking" data-toggle="tab" href="#bookingTypes_content" role="tab" aria-controls="bookingTypes_content" >
+        <li class="nav-item" *ngIf="role == 'Administrator' || role == 'Manager_Operator'">
+                <a (click)="setView('bookingTypes');" class="nav-link" id="bookingTypes" data-toggle="tab" href="#bookingTypes_content" role="tab" aria-controls="bookingTypes_content" >
                     <img width="20px" alt="Booking Types logo" src="assets/bookingTypes.png"/> Manage Booking Types </a>
         </li>
       </ul>
 
       <div class="tab-content" id="content">
-        <div class="tab-pane fade show active" id="flights_content" role="tabpanel" aria-labelledby="flights-tab">
+        <div *ngIf="showView == 'flights'" class="tab-pane fade show active" id="flights_content" role="tabpanel" aria-labelledby="flights-tab">
             <br>
-            <app-flights *ngIf="showView == 'flights'"></app-flights>
+            <app-flights></app-flights>
         </div>
-        <div class="tab-pane fade" id="airports_content" role="tabpanel" aria-labelledby="airports-tab">
+        <div *ngIf="showView == 'airports'" class="tab-pane fade show active" id="airports_content" role="tabpanel" aria-labelledby="airports-tab">
             <br>
-            <app-airports *ngIf="showView == 'airports'"></app-airports>
+            <app-airports ></app-airports>
         </div>
-        <div class="tab-pane fade" id="airplanes_content" role="tabpanel" aria-labelledby="airplanes-tab">
+        <div *ngIf="showView == 'airplanes'" class="tab-pane fade show active" id="airplanes_content" role="tabpanel" aria-labelledby="airplanes-tab">
             <br>
-            <app-airplanes *ngIf="showView == 'airplanes'"></app-airplanes>
+            <app-airplanes></app-airplanes>
         </div>
-        <div class="tab-pane fade" id="employees_content" role="tabpanel" aria-labelledby="employees-tab">
+        <div *ngIf="showView == 'employees'" class="tab-pane fade show active" id="employees_content" role="tabpanel" aria-labelledby="employees-tab">
             <br>
-            <app-backoffice-operators *ngIf="showView == 'employees'"></app-backoffice-operators>
+            <app-backoffice-operators ></app-backoffice-operators>
         </div>
-        <div class="tab-pane fade" id="roles_content" role="tabpanel" aria-labelledby="roles-tab">
+        <div *ngIf="showView == 'roles'" class="tab-pane fade show active" id="roles_content" role="tabpanel" aria-labelledby="roles-tab">
             <br>
-            <app-backoffice-roles *ngIf="showView == 'roles'"></app-backoffice-roles>
+            <app-backoffice-roles ></app-backoffice-roles>
         </div>
-        <div class="tab-pane fade" id="types_content" role="tabpanel" aria-labelledby="types-tab">
+        <div *ngIf="showView == 'clientTypes'" class="tab-pane fade show active" id="types_content" role="tabpanel" aria-labelledby="types-tab">
             <br>
-            <app-client-types *ngIf="showView == 'clientTypes'"></app-client-types>
+            <app-client-types ></app-client-types>
         </div>
-        <div class="tab-pane fade" id="clients_content" role="tabpanel" aria-labelledby="clients-tab">
+        <div *ngIf="showView == 'clients'" class="tab-pane fade show active" id="clients_content" role="tabpanel" aria-labelledby="clients-tab">
             <br>
-            <app-clients *ngIf="showView == 'clients'"></app-clients>
+            <app-clients ></app-clients>
         </div>
-        <div class="tab-pane fade" id="booking_content" role="tabpanel" aria-labelledby="booking-tab">
+        <div *ngIf="showView == 'bookings'" class="tab-pane fade show active" id="booking_content" role="tabpanel" aria-labelledby="booking-tab">
                 <br>
-                <app-booking *ngIf="showView == 'bookings'"></app-booking>
+                <app-booking ></app-booking>
         </div>
-        <div class="tab-pane fade" id="bookingTypes_content" role="tabpanel" aria-labelledby="bookingTypes-tab">
+        <div *ngIf="showView == 'bookingTypes'" class="tab-pane fade show active" id="bookingTypes_content" role="tabpanel" aria-labelledby="bookingTypes-tab">
                 <br>
-                <app-booking-types *ngIf="showView == 'bookingTypes'"></app-booking-types>
+                <app-booking-types ></app-booking-types>
         </div>
       </div>
 

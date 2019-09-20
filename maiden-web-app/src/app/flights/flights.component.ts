@@ -56,11 +56,11 @@ export class FlightsComponent implements OnInit {
   public role:string = "";
   
 
-  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService, private datepipe: DatePipe, private http: HttpClient, private flightsService: FlightsService, private airportsService: AirportsService, private airplanesService: AirplanesService, private bookingsService:BookingsService) { }
+  constructor( private datepipe: DatePipe, private http: HttpClient, private flightsService: FlightsService, private airportsService: AirportsService, private airplanesService: AirplanesService, private bookingsService:BookingsService) { }
 
   ngOnInit() {
 
-    this.role = this.storage.get('role');
+    this.role = localStorage.getItem('role');
     
     //fetch
     this.onRefresh();

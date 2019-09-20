@@ -1,7 +1,7 @@
 <h2>List of Flights</h2>
   <p>Flights are listed below. As an operator you can add, edit or delete flights.</p>
   <hr>
-  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_flightModal">Create New Flight</button>
+  <button *ngIf="role == 'Administrator' || role == 'Manager_Operator'" type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_flightModal">Create New Flight</button>
   <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>            
   <hr>
 <!-- Modal Insert-->
@@ -275,7 +275,7 @@
         <td>{{flight.miles}}</td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#occupation_flightModal" (click)="generateSeats(flight.airplane.numberSeats, i)">Occupation</button>
-            <button *ngIf="role == 'Administrator' || role ==''" class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
+            <button *ngIf="role == 'Administrator' || role == 'Manager_Operator'" class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
             <button *ngIf="role == 'Administrator'" class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>

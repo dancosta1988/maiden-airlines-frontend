@@ -1,7 +1,7 @@
 <h2>List of Airports</h2>
   <p>Airports are listed below. As a operator you can add, edit or delete new airports.</p>
   <hr>
-  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_airportModal">Create New Airport</button>            
+  <button *ngIf="role == 'Administrator' || role == 'Manager_Operator'" type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_airportModal">Create New Airport</button>            
   <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchAirports();">Refresh List</button>
   <hr>
 <!-- Modal Insert-->
@@ -681,8 +681,8 @@
         <td>{{airport.city}}</td>
         <td>{{airport.country}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(i)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(i)">Delete</button>
+            <button *ngIf="role == 'Administrator' || role == 'Manager_Operator'" class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_airportModal" (click)="populateEditForm(i)" >Edit</button>
+            <button *ngIf="role == 'Administrator'" class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_airportModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>
     </tbody>

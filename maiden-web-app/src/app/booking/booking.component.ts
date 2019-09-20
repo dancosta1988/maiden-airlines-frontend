@@ -34,7 +34,7 @@ export class BookingComponent implements OnInit {
   private fetchedAirports = false;
   private fetchedClientTypes = false;
   
-  
+  public role = "";
   public error = "";
   public success = "";
   public checkinError = "";
@@ -86,6 +86,8 @@ export class BookingComponent implements OnInit {
     private bookingsService: BookingsService) { }
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     //fetch
     this.onRefresh();
     this.generateSeats(100);//hardcoded

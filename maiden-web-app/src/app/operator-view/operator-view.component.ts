@@ -11,18 +11,26 @@ export class OperatorViewComponent implements OnInit {
   public showView = "";
   public role = "";
 
-  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService) { 
-    this.role = this.storage.get('role');
-    console.log(this.storage);
-    console.log(this.storage.get('name'));
+  constructor() { 
+    
   }
 
   ngOnInit() {
-    this.setView('flights');
+    
+    if(localStorage.getItem('role')){ 
+      this.role = localStorage.getItem('role');
+      
+      switch(this.role){
+        case "Administrator": this.setView('flights');break;
+        case "Manager_Operator": this.setView('flights');break;
+        case "Client_Manager": this.setView('clients');break;
+      }
+    }
     
   }
 
   public setView(view: string){
+    console.log(view);
     this.showView = view;
   }
 

@@ -22,6 +22,7 @@ export class AirportsComponent implements OnInit {
   public error = "";
   public success = "";
   public currentlySelected = -1;
+  public role = "";
 
   public airports: Airport[] = [
     /*new Airport(1, "Aiport 1", "A1", "Lisbon", "Portugal"),
@@ -34,6 +35,8 @@ export class AirportsComponent implements OnInit {
   constructor(private http: HttpClient, private airportsService: AirportsService) {}
 
   ngOnInit() {
+
+    this.role = localStorage.getItem('role');
     this.fetchAirports();
 
     //using Reactive Forms
