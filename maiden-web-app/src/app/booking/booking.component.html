@@ -205,8 +205,8 @@
   </div>
 </div>  
 
-<div class="modal fade" id="checkin_bookingModal" tabindex="3" booking="dialog" aria-labelledby="checkin_bookingModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" booking="document">
+<div class="modal fade" id="checkin_bookingModal" tabindex="3" role="dialog" aria-labelledby="checkin_bookingModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         
         <div class="modal-header">
@@ -250,8 +250,8 @@
   </div>
 
 
-<div class="modal fade" id="edit_bookingModal" tabindex="3" booking="dialog" aria-labelledby="edit_bookingModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" booking="document">
+<div class="modal fade" id="edit_bookingModal" tabindex="3" role="dialog" aria-labelledby="edit_bookingModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "editForm" (ngSubmit)="onUpdateBooking()">
         <div class="modal-header">
@@ -338,8 +338,8 @@
   </div>  
 
 
-<div class="modal fade" id="delete_bookingModal" tabindex="3" booking="dialog" aria-labelledby="delete_bookingModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" booking="document">
+<div class="modal fade" id="delete_bookingModal" tabindex="3" role="dialog" aria-labelledby="delete_bookingModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteBooking()">
         <div class="modal-header">

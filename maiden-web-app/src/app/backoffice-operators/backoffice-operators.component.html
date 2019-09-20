@@ -5,8 +5,8 @@
   <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>
   <hr>
 <!-- Modal Insert-->
-<div class="modal fade" id="new_employeeModal" tabindex="3" employee="dialog" aria-labelledby="new_employeeModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" employee="document">
+<div class="modal fade" id="new_employeeModal" tabindex="3" role="dialog" aria-labelledby="new_employeeModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
       <div class="modal-content">
       <form [formGroup] = "insertForm" (ngSubmit)="onCreateEmployee()">
       <div class="modal-header">
@@ -53,8 +53,8 @@
 </div>  
 
 <!-- Modal Edit-->
-<div class="modal fade" id="edit_employeeModal" tabindex="3" employee="dialog" aria-labelledby="edit_employeeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" employee="document">
+<div class="modal fade" id="edit_employeeModal" tabindex="3" role="dialog" aria-labelledby="edit_employeeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "editForm" (ngSubmit)="onUpdateEmployee()">
         <div class="modal-header">
@@ -104,8 +104,8 @@
   </div>  
 
 <!-- Modal Delete-->
-<div class="modal fade" id="delete_employeeModal" tabindex="3" employee="dialog" aria-labelledby="delete_employeeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" employee="document">
+<div class="modal fade" id="delete_employeeModal" tabindex="3" role="dialog" aria-labelledby="delete_employeeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteEmployee()">
         <div class="modal-header">

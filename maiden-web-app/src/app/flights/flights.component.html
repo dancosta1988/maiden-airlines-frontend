@@ -275,8 +275,8 @@
         <td>{{flight.miles}}</td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#occupation_flightModal" (click)="generateSeats(flight.airplane.numberSeats, i)">Occupation</button>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(i)">Delete</button>
+            <button *ngIf="role == 'Administrator' || role ==''" class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
+            <button *ngIf="role == 'Administrator'" class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>
     </tbody>

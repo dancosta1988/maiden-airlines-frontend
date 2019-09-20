@@ -5,8 +5,8 @@
   <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchclientTypes();">Refresh List</button>
   <hr>
 <!-- Modal Insert-->
-<div class="modal fade" id="new_clientTypeModal" tabindex="3" clientType="dialog" aria-labelledby="new_clientTypeModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" clientType="document">
+<div class="modal fade" id="new_clientTypeModal" tabindex="3" role="dialog" aria-labelledby="new_clientTypeModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
       <div class="modal-content">
       <form [formGroup] = "insertForm" (ngSubmit)="onCreateClientType()">
       <div class="modal-header">
@@ -57,8 +57,8 @@
 </div>  
 
 <!-- Modal Edit-->
-<div class="modal fade" id="edit_clientTypeModal" tabindex="3" clientType="dialog" aria-labelledby="edit_clientTypeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" clientType="document">
+<div class="modal fade" id="edit_clientTypeModal" tabindex="3" role="dialog" aria-labelledby="edit_clientTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "editForm" (ngSubmit)="onUpdateClientType()">
         <div class="modal-header">
@@ -112,8 +112,8 @@
   </div>  
 
 <!-- Modal Delete-->
-<div class="modal fade" id="delete_clientTypeModal" tabindex="3" clientType="dialog" aria-labelledby="delete_clientTypeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" clientType="document">
+<div class="modal fade" id="delete_clientTypeModal" tabindex="3" role="dialog" aria-labelledby="delete_clientTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteClientType()">
         <div class="modal-header">

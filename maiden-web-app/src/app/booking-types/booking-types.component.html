@@ -5,8 +5,8 @@
   <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchbookingTypes();">Refresh List</button>
   <hr>
 <!-- Modal Insert-->
-<div class="modal fade" id="new_bookingTypeModal" tabindex="3" bookingType="dialog" aria-labelledby="new_bookingTypeModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" bookingType="document">
+<div class="modal fade" id="new_bookingTypeModal" tabindex="3" role="dialog" aria-labelledby="new_bookingTypeModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
       <div class="modal-content">
       <form [formGroup] = "insertForm" (ngSubmit)="onCreateBookingType()">
       <div class="modal-header">
@@ -67,8 +67,8 @@
 </div>  
 
 <!-- Modal Edit-->
-<div class="modal fade" id="edit_bookingTypeModal" tabindex="3" bookingType="dialog" aria-labelledby="edit_bookingTypeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" bookingType="document">
+<div class="modal fade" id="edit_bookingTypeModal" tabindex="3" role="dialog" aria-labelledby="edit_bookingTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "editForm" (ngSubmit)="onUpdateBookingType()">
         <div class="modal-header">
@@ -124,8 +124,8 @@
   </div>  
 
 <!-- Modal Delete-->
-<div class="modal fade" id="delete_bookingTypeModal" tabindex="3" bookingType="dialog" aria-labelledby="delete_bookingTypeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" bookingType="document">
+<div class="modal fade" id="delete_bookingTypeModal" tabindex="3" role="dialog" aria-labelledby="delete_bookingTypeModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
         <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteBookingType()">
         <div class="modal-header">
