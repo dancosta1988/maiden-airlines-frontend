@@ -39,15 +39,15 @@ export class AirplanesComponent implements OnInit {
     this.insertForm = new FormGroup({
       'airplaneId' : new FormControl(null,Validators.required),
       'airplaneModel' : new FormControl(null,Validators.required),
-      'airplaneCargoholdCapacity' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      'airplaneSeats' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")])
+      'airplaneCargoholdCapacity' : new FormControl(null, [Validators.required, Validators.maxLength(5), Validators.pattern("^[0-9]*$")]),
+      'airplaneSeats' : new FormControl(null, [Validators.required, Validators.maxLength(4),Validators.pattern("^[0-9]*$")])
     });
 
     this.editForm = new FormGroup({
       'airplaneId' : new FormControl({disabled : true}),
       'airplaneModel' : new FormControl(null,Validators.required),
-      'airplaneCargoholdCapacity' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      'airplaneSeats' : new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")])
+      'airplaneCargoholdCapacity' : new FormControl(null, [Validators.required, Validators.maxLength(5), Validators.pattern("^[0-9]*$")]),
+      'airplaneSeats' : new FormControl(null, [Validators.required, Validators.maxLength(4),Validators.pattern("^[0-9]*$")])
     });
     
     this.deleteForm = new FormGroup({

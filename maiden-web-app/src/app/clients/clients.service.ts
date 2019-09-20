@@ -16,12 +16,11 @@ export class ClientsService {
         address: string,
         contactNumber: number,
         gender: string,
-        miles: number,
         photoPath: string,
         type: number,
         email: string,
         password: string){
-        return this.http.post(this.constants.webServicesUrl+'/ClientCreate?address='+ address +'&contactNumber='+ contactNumber+'&firstName='+ firstName +'&lastName='+ lastName +'&gender='+ gender +'&numberMiles='+ miles +'&dateOfBirth='+dateOfBirth +'&email='+ email +'&idNumber='+ numberID +'&idTypeClient='+ type+'&password='+ password +'&photo='+ photoPath, null);
+        return this.http.post(this.constants.webServicesUrl+'/Clients/ClientCreate?address='+ address +'&contactNumber='+ contactNumber+'&firstName='+ firstName +'&lastName='+ lastName +'&gender='+ gender +'&dateOfBirth='+dateOfBirth +'&email='+ email +'&idNumber='+ numberID +'&idTypeClient='+ type+'&password='+ password +'&photo='+ photoPath, null);
     }
 
     updateClient(id: number,firstName: string,
@@ -31,16 +30,15 @@ export class ClientsService {
         address: string,
         contactNumber: number,
         gender: string,
-        miles: number,
         photoPath: string,
         type: number,
         email: string,
         password: string){
-        return this.http.post(this.constants.webServicesUrl+'/ClientUpdate?address='+ address +'&contactNumber='+ contactNumber+'&firstName='+ firstName +'&lastName='+ lastName +'&gender='+ gender +'&numberMiles='+ miles +'&dateOfBirth='+dateOfBirth +'&email='+ email +'&idNumber='+ numberID +'&idTypeClient='+ type+'&password='+ password +'&photo='+ photoPath +'&id='+ id, null);
+        return this.http.post(this.constants.webServicesUrl+'/Clients/ClientUpdate?address='+ address +'&contactNumber='+ contactNumber+'&firstName='+ firstName +'&lastName='+ lastName +'&gender='+ gender +'&dateOfBirth='+dateOfBirth +'&email='+ email +'&idNumber='+ numberID +'&idTypeClient='+ type+'&password='+ password +'&photo='+ photoPath +'&id='+ id, null);
     }
 
     deleteClient(id: number){
-        return this.http.post(this.constants.webServicesUrl+'/ClientDelete?id='+id, null);
+        return this.http.post(this.constants.webServicesUrl+'/Clients/ClientDelete?id='+id, null);
     }
 
     fetchClients(){

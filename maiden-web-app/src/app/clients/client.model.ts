@@ -5,7 +5,7 @@ export class Client{
     public firstName: string;
     public lastName: string;
     public dateOfBirth: string;
-    public numberID: string;
+    public idNumber: string;
     public address: string;
     public contactNumber: number;
     public gender: string;
@@ -19,7 +19,7 @@ export class Client{
          firstName: string,
          lastName: string,
          dateOfBirth: string,
-         numberID: string,
+         idNumber: string,
          address: string,
          contactNumber: number,
          gender: string,
@@ -33,7 +33,7 @@ export class Client{
             this.firstName = firstName;
             this.lastName = lastName;
             this.dateOfBirth = dateOfBirth;
-            this.numberID = numberID;
+            this.idNumber = idNumber;
             this.address = address;
             this.contactNumber = contactNumber;
             this.gender = gender;

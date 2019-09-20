@@ -21,10 +21,10 @@ export class BookingTypesComponent implements OnInit {
   
   public bookingTypes: BookingType[] = [ ];
 
-  public editBookingTypeCancel : boolean = false;
-  public editBookingTypeChangeDate : boolean = false;
-  public editBookingTypeHandBaggage : boolean = false;
-  public editBookingTypeCheckedbaggage : boolean = false;
+  public editBookingTypeCancel : string = "false";
+  public editBookingTypeChangeDate : string = "false";
+  public editBookingTypeHandBaggage : string = "false";
+  public editBookingTypeCheckedbaggage : string = "false";
 
    
   constructor(private bookingTypesService: BookingTypesService) {}
@@ -162,9 +162,11 @@ export class BookingTypesComponent implements OnInit {
     this.bookingTypesService.fetchBookingTypes().subscribe(bookingTypes =>{
       this.isFetching = false;
       this.bookingTypes = [];
+      this.bookingTypes = bookingTypes;
+      /*
         for (var i = 0, len = bookingTypes.length; i < len; i++) {
           this.bookingTypes.push(new BookingType( bookingTypes[i].id, bookingTypes[i].name, bookingTypes[i].cancelBooking, bookingTypes[i].changeDate, bookingTypes[i].checkedBaggage, bookingTypes[i].handBaggage, bookingTypes[i].cost ));
-        }
+        }*/
     },
     error =>{
         this.error = error.message;

@@ -48,16 +48,16 @@
               class="help-block alert-warning">Please enter a valid Address!</span>
         </div>
         <div class="form-group">
-            <label for="insert_clientContactNumber">Identification Number:</label>
+            <label for="insert_clientContactNumber">Contact Number:</label>
             <input type="text" class="form-control" id="insert_clientContactNumber"  formControlName="clientContactNumber" name="clientContactNumber">
             <span *ngIf="!insertForm.get('clientContactNumber').valid && insertForm.get('clientContactNumber').touched"
               class="help-block alert-warning">Please enter a valid Contact Number!</span>
         </div>
         <div class="form-group">
-            <label for="insert_clientNumberID">Contact Number:</label>
+            <label for="insert_clientNumberID">Identification Number:</label>
             <input type="text" class="form-control" id="insert_clientNumberID"  formControlName="clientNumberID" name="clientNumberID">
             <span *ngIf="!insertForm.get('clientNumberID').valid && insertForm.get('clientNumberID').touched"
-              class="help-block alert-warning">Please enter a valid Contact Number!</span>
+              class="help-block alert-warning">Please enter a valid Identification Number!</span>
         </div>
         <div class="form-group">
             <label for="insert_clientType">Select Client Type:</label>

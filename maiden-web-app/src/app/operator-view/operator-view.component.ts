@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
 
 @Component({
   selector: 'app-operator-view',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OperatorViewComponent implements OnInit {
 
-  constructor() { }
+  public showView = "";
+  public role = "";
+
+  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService) { 
+    this.role = this.storage.get('role');
+    console.log(this.storage);
+    console.log(this.storage.get('name'));
+  }
 
   ngOnInit() {
+    this.setView('flights');
+    
   }
+
+  public setView(view: string){
+    this.showView = view;
+  }
+
+
 
 }
