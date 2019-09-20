@@ -64,7 +64,7 @@
             <select class="form-control" id="insert_clientType"  formControlName="clientType" name="clientType">
               <option *ngFor="let type of types; index as i;" value={{i}}>{{type.name}}</option>
             </select>
-            <span *ngIf="!editForm.get('clientType').valid && editForm.get('clientType').touched"
+            <span *ngIf="!insertForm.get('clientType').valid && insertForm.get('clientType').touched"
               class="help-block alert-warning">Please enter a valid Client type!</span>
         </div>
         <hr>

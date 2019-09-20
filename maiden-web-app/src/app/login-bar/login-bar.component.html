@@ -11,19 +11,19 @@
             <div class="collapse navbar-collapse flex-grow-1 text-left" >
                 <ul class="navbar-nav ml-auto flex-nowrap">
                     <li class="nav-item">
-                        <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/home'>Home</a>
+                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/home'>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/booking'>Book a Flight</a>
+                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/booking'>Book a Flight</a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/club'>{{constants.clubName}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link m-2 menu-item nav-active" routerLinkActive="nav-active" routerLink='/contacts'>Contacts</a>
+                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/contacts'>Contacts</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/backoffice-login'>Backoffice</a>
+                        <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/backoffice-login'>Backoffice</a>
                     </li>
                     <!--<li *ngIf="isEmployee()" class="nav-item">
                         <a class="nav-link m-2 menu-item" routerLinkActive="nav-active" routerLink='/operator'>Operator</a>
@@ -32,13 +32,27 @@
             </div>
         </div>
         
-        <div class="collapse navbar-collapse flex-grow-1 text-right" >
+        <div class="collapse navbar-collapse flex-grow-1 text-right" *ngIf="!loggedIn">
             <ul class="navbar-nav ml-auto flex-nowrap">
                 <li class="nav-item">
                     <a href="#" class="nav-link m-2 menu-item nav-active" data-toggle="modal" data-target="#signupModal">Sign up</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link m-2 menu-item" data-toggle="modal" data-target="#loginModal">Login</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="collapse navbar-collapse flex-grow-1 text-right" *ngIf="loggedIn">
+            <ul class="navbar-nav ml-auto flex-nowrap">
+                <li class="nav-item">
+                    <div class="nav-link m-2 menu-item nav-active" >{{currentClient.miles}}</div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item nav-active" data-toggle="modal" data-target="#editModal">{{currentClient.firstName}} {{currentClient.lastName}}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link m-2 menu-item" (click) = "onLogout()">Logout</a>
                 </li>
             </ul>
         </div>
@@ -58,72 +72,160 @@
             <div class="modal-body">
                 
                 <div class="form-group">
-                    <label for="signupFirstName">Your first name:</label>
-                    <input type="text" class="form-control" id="signupFirstName"  formControlName="signupFirstName" name="signupFirstName">
+                    <label for="insert_signupFirstName">First Name:</label>
+                    <input type="text" class="form-control" id="insert_signupFirstName"  formControlName="signupFirstName" name="signupFirstName">
                     <span *ngIf="!signupForm.get('signupFirstName').valid && signupForm.get('signupFirstName').touched"
-                    class="help-block alert-warning">Please enter a valid first name!</span>
+                      class="help-block alert-warning">Please enter a valid name!</span>
                 </div>
                 <div class="form-group">
-                        <label for="signupLastName">Your last name:</label>
-                        <input type="text" class="form-control" id="signupLastName"  formControlName="signupLastName" name="signupLastName">
-                        <span *ngIf="!signupForm.get('signupLastName').valid && signupForm.get('signupLastName').touched"
-                        class="help-block alert-warning">Please enter a valid last name!</span>
-                </div>
-                <div class="form-group">
-                        <label for="signupVAT">Your VAT number:</label>
-                        <input type="text" class="form-control" id="signupVAT"  formControlName="signupVAT" name="signupVAT">
-                        <span *ngIf="!signupForm.get('signupVAT').valid && signupForm.get('signupVAT').touched"
-                        class="help-block alert-warning">Please enter a valid VAT!</span>
-                </div>
-                <div class="form-group">
-                    <label for="signupDOB">Date of Birth:</label>
-                    <input class="form-control" type="date-local" id="signupDOB" formControlName="signupDOB" name="signupDOB" />
-                    <span *ngIf="!signupForm.get('signupDOB').valid && signupForm.get('signupDOB').touched"
-                    class="help-block alert-warning">Please enter a valid date!</span>
-                </div>
-                <div class="form-group">
-                        <label for="signupGender">Select Gender:</label><br>
-                        <input type="radio" name="signupGender" id="signupGender1" formControlName="signupGender" value="male" checked> Male<br>
-                        <input type="radio" name="signupGender" id="signupGender2" formControlName="signupGender" value="female"> Female<br>
-                        <span *ngIf="!signupForm.get('signupGender').valid && signupForm.get('signupGender').touched"
-                        class="help-block alert-warning">Please enter Gender!</span>
-                </div>
-                <div class="form-group">
-                    <label for="signupContact">Your contact number:</label>
-                    <input type="text" class="form-control" id="signupContact"  formControlName="signupContact" name="signupContact">
-                    <span *ngIf="!signupForm.get('signupContact').valid && signupForm.get('signupContact').touched"
-                    class="help-block alert-warning">Please enter a valid contact!</span>
-                </div>
-                <div class="form-group">
-                        <label for="signupContactType">Select Contact Type:</label><br>
-                        <input type="radio" name="signupContactType" id="ContactType1" formControlName="signupContactType" value="house_phone" checked> Household phone<br>
-                        <input type="radio" name="signupContactType" id="ContactType2" formControlName="signupContactType" value="mobile_phone"> Mobile phone<br>
-                        <span *ngIf="!signupForm.get('signupContactType').valid && signupForm.get('signupContactType').touched"
-                        class="help-block alert-warning">Please enter a valid contact type!</span>
-                </div>
-                <hr>
-                <div class="form-group">
-                        <label for="signupEmail">Type you email:</label>
-                        <input type="text" class="form-control" id="signupEmail"  formControlName="signupEmail" name="signupEmail">
-                        <span *ngIf="!signupForm.get('signupEmail').valid && signupForm.get('signupEmail').touched"
-                        class="help-block alert-warning">Please enter a valid email!</span>
-                </div>
-                <div class="form-group">
-                        <label for="signupPassword">Choose a password:</label>
-                        <input type="password" class="form-control" id="signupPassword"  formControlName="signupPassword" name="signupPassword">
-                        <span *ngIf="!signupForm.get('signupPassword').valid && signupForm.get('signupPassword').touched"
-                        class="help-block alert-warning">Please enter a valid password (alphanumeric and special characters allowed)!</span>
-                </div>
-                <div class="form-group">
-                        <label for="signupConfirmPassword">Confirm password:</label>
-                        <input type="password" class="form-control" id="signupConfirmPassword"  formControlName="signupConfirmPassword" name="signupConfirmPassword">
-                        <span *ngIf="!signupForm.get('signupConfirmPassword').valid && signupForm.get('signupConfirmPassword').touched"
-                        class="help-block alert-warning">Please enter a valid password (alphanumeric and special characters allowed)!</span>
-                </div>
+                  <label for="insert_signupLastName">Last Name:</label>
+                  <input type="text" class="form-control" id="insert_signupLastName"  formControlName="signupLastName" name="signupLastName">
+                  <span *ngIf="!signupForm.get('signupLastName').valid && signupForm.get('signupLastName').touched"
+                    class="help-block alert-warning">Please enter a valid name!</span>
+              </div>
+              <div class="form-group">
+                <label for="insert_signupDateOfBirth">Date of Birth:</label>
+                <input type="date" class="form-control" id="insert_signupDateOfBirth"  formControlName="signupDateOfBirth" name="signupDateOfBirth">
+                <span *ngIf="!signupForm.get('signupDateOfBirth').valid && signupForm.get('signupDateOfBirth').touched"
+                  class="help-block alert-warning">Please enter a date!</span>
+              </div>
+              <div class="form-group">
+                  <label for="insert_signupGender">Select Gender:</label><br>
+                  <input type="radio" name="signupGender" id="insert_signupGender1" formControlName="signupGender" value="Male" checked> Male<br>
+                  <input type="radio" name="signupGender" id="insert_signupGender2" formControlName="signupGender" value="Female"> Female<br>
+                  <span *ngIf="!signupForm.get('signupGender').valid && signupForm.get('signupGender').touched"
+                  class="help-block alert-warning">Please enter Gender!</span>
+              </div>
+              <div class="form-group">
+                  <label for="insert_signupAddress">Address:</label>
+                  <input type="text" class="form-control" id="insert_signupAddress"  formControlName="signupAddress" name="signupAddress">
+                  <span *ngIf="!signupForm.get('signupAddress').valid && signupForm.get('signupAddress').touched"
+                    class="help-block alert-warning">Please enter a valid Address!</span>
+              </div>
+              <div class="form-group">
+                  <label for="insert_signupContactNumber">Contact Number:</label>
+                  <input type="text" class="form-control" id="insert_signupContactNumber"  formControlName="signupContactNumber" name="signupContactNumber">
+                  <span *ngIf="!signupForm.get('signupContactNumber').valid && signupForm.get('signupContactNumber').touched"
+                    class="help-block alert-warning">Please enter a valid Contact Number!</span>
+              </div>
+              <div class="form-group">
+                  <label for="insert_signupNumberID">Identification Number:</label>
+                  <input type="text" class="form-control" id="insert_signupNumberID"  formControlName="signupNumberID" name="signupNumberID">
+                  <span *ngIf="!signupForm.get('signupNumberID').valid && signupForm.get('signupNumberID').touched"
+                    class="help-block alert-warning">Please enter a valid Identification Number!</span>
+              </div>
+              <div class="form-group">
+                  <label for="insert_signupType">Choose your membership:</label>
+                  <select class="form-control" id="insert_signupType"  formControlName="signupType" name="signupType">
+                    <option *ngFor="let type of types; index as i;" value={{i}}>{{type.name}}</option>
+                  </select>
+                  <span *ngIf="!signupForm.get('signupType').valid && signupForm.get('signupType').touched"
+                    class="help-block alert-warning">Please enter a valid membership!</span>
+              </div>
+              <hr>
+              <div class="form-group">
+                      <label for="signupEmail">Your email:</label>
+                      <input type="text" class="form-control" id="signupEmail"  formControlName="signupEmail" name="signupEmail">
+                      <span *ngIf="!signupForm.get('signupEmail').valid && signupForm.get('signupEmail').touched"
+                      class="help-block alert-warning">Please enter a valid email!</span>
+              </div>
+              <div class="form-group">
+                <label for="signupPassword">Password:</label>
+                <input type="password" class="form-control" id="signupPassword"  formControlName="signupPassword" name="signupPassword">
+                <span *ngIf="!signupForm.get('signupPassword').valid && signupForm.get('signupPassword').touched"
+                class="help-block alert-warning">Please enter a valid password!</span>
+              </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid" onclick="$('#signupModal').modal('hide')">Register</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit-->
+<div class="modal fade" id="editModal" tabindex="3" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup]="editForm" (ngSubmit)="onUpdateClient()">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel" >Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-group">
+                    <label for="edit_editFirstName">First Name:</label>
+                    <input type="text" class="form-control" id="edit_editFirstName"  formControlName="editFirstName" name="editFirstName">
+                    <span *ngIf="!editForm.get('editFirstName').valid && editForm.get('editFirstName').touched"
+                      class="help-block alert-warning">Please enter a valid name!</span>
+                </div>
+                <div class="form-group">
+                  <label for="edit_editLastName">Last Name:</label>
+                  <input type="text" class="form-control" id="edit_editLastName"  formControlName="editLastName" name="editLastName">
+                  <span *ngIf="!editForm.get('editLastName').valid && editForm.get('editLastName').touched"
+                    class="help-block alert-warning">Please enter a valid name!</span>
+              </div>
+              <div class="form-group">
+                <label for="edit_editDateOfBirth">Date of Birth:</label>
+                <input type="date" class="form-control" id="edit_editDateOfBirth"  formControlName="editDateOfBirth" name="editDateOfBirth">
+                <span *ngIf="!editForm.get('editDateOfBirth').valid && editForm.get('editDateOfBirth').touched"
+                  class="help-block alert-warning">Please enter a date!</span>
+              </div>
+              <div class="form-group">
+                  <label for="edit_editGender">Select Gender:</label><br>
+                  <input type="radio" name="editGender" id="edit_editGender1" formControlName="editGender" value="Male" checked> Male<br>
+                  <input type="radio" name="editGender" id="edit_editGender2" formControlName="editGender" value="Female"> Female<br>
+                  <span *ngIf="!editForm.get('editGender').valid && editForm.get('editGender').touched"
+                  class="help-block alert-warning">Please enter Gender!</span>
+              </div>
+              <div class="form-group">
+                  <label for="edit_editAddress">Address:</label>
+                  <input type="text" class="form-control" id="edit_editAddress"  formControlName="editAddress" name="editAddress">
+                  <span *ngIf="!editForm.get('editAddress').valid && editForm.get('editAddress').touched"
+                    class="help-block alert-warning">Please enter a valid Address!</span>
+              </div>
+              <div class="form-group">
+                  <label for="edit_editContactNumber">Contact Number:</label>
+                  <input type="text" class="form-control" id="edit_editContactNumber"  formControlName="editContactNumber" name="editContactNumber">
+                  <span *ngIf="!editForm.get('editContactNumber').valid && editForm.get('editContactNumber').touched"
+                    class="help-block alert-warning">Please enter a valid Contact Number!</span>
+              </div>
+              <div class="form-group">
+                  <label for="edit_editNumberID">Identification Number:</label>
+                  <input type="text" class="form-control" id="edit_editNumberID"  formControlName="editNumberID" name="editNumberID">
+                  <span *ngIf="!editForm.get('editNumberID').valid && editForm.get('editNumberID').touched"
+                    class="help-block alert-warning">Please enter a valid Identification Number!</span>
+              </div>
+              <div class="form-group">
+                  <label for="edit_editType">Choose your membership:</label>
+                  <select class="form-control" id="edit_editType"  formControlName="editType" name="editType">
+                    <option *ngFor="let type of types; index as i;" value={{i}}>{{type.name}}</option>
+                  </select>
+                  <span *ngIf="!editForm.get('editType').valid && editForm.get('editType').touched"
+                    class="help-block alert-warning">Please enter a valid membership!</span>
+              </div>
+              <hr>
+              <div class="form-group">
+                      <label for="editEmail">Your email:</label>
+                      <input type="text" class="form-control" id="editEmail"  formControlName="editEmail" name="editEmail">
+                      <span *ngIf="!editForm.get('editEmail').valid && editForm.get('editEmail').touched"
+                      class="help-block alert-warning">Please enter a valid email!</span>
+              </div>
+              <div class="form-group">
+                <label for="editPassword">Password:</label>
+                <input type="password" class="form-control" id="editPassword"  formControlName="editPassword" name="editPassword">
+                <span *ngIf="!editForm.get('editPassword').valid && editForm.get('editPassword').touched"
+                class="help-block alert-warning">Please enter a valid password!</span>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#editModal').modal('hide')">Edit Profile</button>
             </div>
         </form>
         </div>

@@ -68,8 +68,7 @@ export class ClientsComponent implements OnInit {
 
   onRefresh() {
     this.fetchClientTypes();
-    while(this.fetchedClientTypes){ }
-    this.fetchclients();
+    
   }
 
   
@@ -205,9 +204,10 @@ export class ClientsComponent implements OnInit {
     this.clientTypesService.fetchClientTypes().subscribe(clientTypes =>{
       this.fetchedClientTypes = true;
       this.types = [];
-        for (var i = 0, len = clientTypes.length; i < len; i++) {
-          this.types.push(new ClientType(clientTypes[i].id, clientTypes[i].name, clientTypes[i].annualFee, clientTypes[i].monthlyMiles, clientTypes[i].welcomeBonus, clientTypes[i].bonusMiles));
-        }
+      for (var i = 0, len = clientTypes.length; i < len; i++) {
+        this.types.push(new ClientType(clientTypes[i].id, clientTypes[i].name, clientTypes[i].annualFee, clientTypes[i].monthlyMiles, clientTypes[i].welcomeBonus, clientTypes[i].bonusMiles));
+      }
+      this.fetchclients();
     },
     error =>{
         this.error = error.message;

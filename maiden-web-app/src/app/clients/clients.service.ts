@@ -41,6 +41,22 @@ export class ClientsService {
         return this.http.post(this.constants.webServicesUrl+'/Clients/ClientDelete?id='+id, null);
     }
 
+    getClientByMail(email: string){
+        return this.http.post<{id: number,firstName: string,
+            lastName: string,
+            dateOfBirth: string,
+            idNumber: string,
+            address: string,
+            contactNumber: number,
+            gender: string,
+            numberMiles: number,
+            photo: string,
+            idTypeClient: number,
+            email: string
+            }[]>(this.constants.webServicesUrl+'/Clients/ClientByEmail?email='+email, null);
+    }
+
+
     fetchClients(){
         return this.http.get<{id: number,firstName: string,
             lastName: string,
@@ -48,7 +64,6 @@ export class ClientsService {
             idNumber: string,
             address: string,
             contactNumber: number,
-            contactType: string,
             gender: string,
             numberMiles: number,
             photo: string,

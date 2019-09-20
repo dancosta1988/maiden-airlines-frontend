@@ -6,7 +6,7 @@ import { ConstantsService } from '../common/services/constants.service';
 @Injectable({
     providedIn: 'root'
   })
-export class BackofficeAuthenticationService {
+export class ClientAuthenticationService {
   
     constructor( private httpClient:HttpClient, private constants: ConstantsService  ) { }
     
