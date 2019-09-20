@@ -1,12 +1,12 @@
-<!-- <h2>List of Bookings</h2>
+<h2>List of Bookings</h2>
   <p>Bookings are listed below. As an operator you can add, edit or delete new bookings.</p>
   <hr>
   <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_bookingModal">Create New Booking</button>            
-  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchbookings();">Refresh List</button>
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>
   <hr>
 
-<div class="modal fade" id="new_bookingModal" tabindex="3" booking="dialog" aria-labelledby="new_bookingModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" booking="document">
+<div class="modal fade" id="new_bookingModal" tabindex="3" role="dialog" aria-labelledby="new_bookingModalLabel" aria-hidden="true" >
+  <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
       <form [formGroup] = "insertForm" (ngSubmit)="onCreateBooking()">
       <div class="modal-header">
@@ -16,21 +16,238 @@
           </button>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-              <label for="insert_bookingName">Booking Name:</label>
-              <input type="text" class="form-control" id="insert_bookingName"  formControlName="bookingName" name="bookingName">
-              <span *ngIf="!insertForm.get('bookingName').valid && insertForm.get('bookingName').touched"
-                class="help-block alert-warning">Please enter a valid name!</span>
+        <div *ngIf="currentPage == 1">
+            <div class="form-group">
+                <label for="insert_bookingClient">To:</label>
+                <select class="form-control" id="insert_bookingClient"  formControlName="bookingClient" name="bookingClient">
+                    <option *ngFor="let client of clients; index as i;" value={{i}}>{{client.firstName}} {{client.lastName}}</option>
+                </select>
+                <span *ngIf="!insertForm.get('bookingClient').valid && insertForm.get('bookingClient').touched"
+                  class="help-block alert-warning">Please enter a valid Location!</span>
+            </div>
+            <div class="form-group">
+                <label for="insert_clientGender">Select your flights:</label><br>
+              <input type="radio" name="bookingReturn" id="insert_bookingReturn1" formControlName="bookingReturn" value="false" checked> One way<br>
+              <input type="radio" name="bookingReturn" id="insert_bookingReturn2" formControlName="bookingReturn" value="true"> Return<br>
+              <span *ngIf="!insertForm.get('bookingReturn').valid && insertForm.get('bookingReturn').touched"
+              class="help-block alert-warning">Please enter Gender!</span>
+            </div>
+            <div class="form-group">
+                <label for="insert_bookingDepartureAirport">From:</label>
+                <select class="form-control" id="insert_bookingDepartureAirport"  formControlName="bookingDepartureAirport" name="bookingDepartureAirport">
+                    <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
+                </select>
+                <span *ngIf="!insertForm.get('bookingDepartureAirport').valid && insertForm.get('bookingDepartureAirport').touched"
+                  class="help-block alert-warning">Please enter a valid Location!</span>
+            </div>
+            <div class="form-group">
+                <label for="insert_bookingArrivalAirport">To:</label>
+                <select class="form-control" id="insert_bookingArrivalAirport"  formControlName="bookingArrivalAirport" name="bookingArrivalAirport">
+                    <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
+                </select>
+                <span *ngIf="!insertForm.get('bookingArrivalAirport').valid && insertForm.get('bookingArrivalAirport').touched"
+                  class="help-block alert-warning">Please enter a valid Location!</span>
+            </div>
+            <div class="form-group">
+                <label for="bookingDepartureDate">Select Departure Date:</label>
+                <input class="form-control" type="date" id="insert_bookingDepartureDate" formControlName="bookingDepartureDate" name="bookingDepartureDate" />
+                <span *ngIf="!insertForm.get('bookingDepartureDate').valid && insertForm.get('bookingDepartureDate').touched"
+                  class="help-block alert-warning">Please enter a valid date!</span>
+            </div>
+            <div class="form-group" *ngIf="insertForm.get('bookingReturn').value == 'true'">
+                <label for="bookingArrivalDate">Select Arrival Date:</label>
+                <input class="form-control" type="date" id="insert_bookingArrivalDate" formControlName="bookingArrivalDate" name="bookingArrivalDate" />
+                <span *ngIf="!insertForm.get('bookingArrivalDate').valid && insertForm.get('bookingArrivalDate').touched"
+                  class="help-block alert-warning">Please enter a valid date!</span>
+            </div>
+            <div class="form-group">
+                <label for="insert_bookingType">Select Booking Type:</label>
+                <select class="form-control" id="insert_bookingType"  formControlName="bookingType" name="bookingType">
+                    <option *ngFor="let type of types; index as i;" value={{i}}>{{type.name}}</option>
+                </select>
+                <span *ngIf="!insertForm.get('bookingType').valid && insertForm.get('bookingType').touched"
+                    class="help-block alert-warning">Please enter a valid type!</span>
+            </div>
+            <!--<div class="form-group">
+                <label for="insert_bookingNumberPassengers">Select Number of Passengers:</label>
+                <input id="insert_bookingNumberPassengers" class="form-control" placeholder="1" required type="number" value="" min="1" max="5"/>
+            </div>-->
+          </div>
+      
+      <div *ngIf="currentPage == 2">
+          <div>
+            <h5>Outbound Flights</h5>
+            <hr>
+            <div *ngIf="outboundFlights.length == 0" class="alert-warning">No Flights Found for this date</div>
+
+            <div *ngFor="let flight of outboundFlights; index as i;" class="row">
+              <div class="col-2">{{flight.flight_number}}</div>
+              <div class="col-2">{{flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{flight.arrival_airport.shortName}}</div>
+              <div class="col-2">Departure Time: {{flight.departure_date| date : "HH:mm"}}</div>
+              <div class="col-2">Arrival Time: {{flight.arrival_date| date : "HH:mm"}}</div>
+              <div class="col-2 text-success">{{flight.price}} €</div>
+              <input id="insert_bookingOutboundFlight" class="form-control col-2" type="radio" value="{{i}}" formControlName="bookingOutboundFlight"/>
+              <hr>
+            </div>
+          </div>
+          
+          <div *ngIf="insertForm.get('bookingReturn').value == 'true'">
+            <h5>Return Flights</h5>
+            <div *ngIf="returnFlights.length == 0" class="alert-warning">No Flights Found for this date</div>
+            <div *ngFor="let flight of returnFlights; index as i;" class="row">
+                <div class="col-2">{{flight.flight_number}}</div>
+                <div class="col-2">{{flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{flight.arrival_airport.shortName}}</div>
+                <div class="col-2">Departure Time: {{flight.departure_date| date : "HH:mm"}}</div>
+                <div class="col-2">Arrival Time: {{flight.arrival_date| date : "HH:mm"}}</div>
+                <div class="col-2 text-success">{{flight.price}} €</div>
+                <input id="insert_bookingReturnFlight" class="form-control col-2" type="radio" value="{{i}}" formControlName="bookingReturnFlight"/>
+              <hr>
+            </div>
           </div>
       </div>
+      <div *ngIf="currentPage == 3">
+          <h5>Additional Passengers</h5>
+          <hr>
+          <div *ngIf="additionalPassengers.length == 0" class="alert-warning">No additional passengers were added</div>
+          <div *ngFor="let passenger of additionalPassengers; index as i;" class="alert-success row">
+            <div class="col-4">{{passenger.firstName}} {{passenger.lastName}}</div>
+            <div class="col-4">{{passenger.idNumber}}</div>
+            <div class="col-4">{{passenger.dateOfBirth | date : "dd/MM/yyyy"}}</div>
+          </div>
+          <hr>
+          <div class="form-group">
+              <label for="insert_bookingFirstName">First Name:</label>
+              <input type="text" class="form-control" id="insert_bookingFirstName"  formControlName="bookingFirstName" name="bookingFirstName">
+              <span *ngIf="!insertForm.get('bookingFirstName').valid && insertForm.get('bookingFirstName').touched"
+                class="help-block alert-warning">Please enter a valid name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_bookingLastName">Last Name:</label>
+            <input type="text" class="form-control" id="insert_bookingLastName"  formControlName="bookingLastName" name="bookingLastName">
+            <span *ngIf="!insertForm.get('bookingLastName').valid && insertForm.get('bookingLastName').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
+        </div>
+        <div class="form-group">
+          <label for="insert_bookingDateOfBirth">Date of Birth:</label>
+          <input type="date" class="form-control" id="insert_bookingDateOfBirth"  formControlName="bookingDateOfBirth" name="bookingDateOfBirth">
+          <span *ngIf="!insertForm.get('bookingDateOfBirth').valid && insertForm.get('bookingDateOfBirth').touched"
+            class="help-block alert-warning">Please enter a date!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingGender">Select Gender:</label><br>
+            <input type="radio" name="bookingGender" id="insert_bookingGender1" formControlName="bookingGender" value="Male" checked> Male<br>
+            <input type="radio" name="bookingGender" id="insert_bookingGender2" formControlName="bookingGender" value="Female"> Female<br>
+            <span *ngIf="!insertForm.get('bookingGender').valid && insertForm.get('bookingGender').touched"
+            class="help-block alert-warning">Please enter Gender!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingIDNumber">Identification Number:</label>
+            <input type="text" class="form-control" id="insert_bookingIDNumber"  formControlName="bookingIDNumber" name="bookingIDNumber">
+            <span *ngIf="!insertForm.get('bookingIDNumber').valid && insertForm.get('bookingIDNumber').touched"
+              class="help-block alert-warning">Please enter a valid id Number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingAddress">Address:</label>
+            <input type="text" class="form-control" id="insert_bookingAddress"  formControlName="bookingAddress" name="bookingAddress">
+            <span *ngIf="!insertForm.get('bookingAddress').valid && insertForm.get('bookingAddress').touched"
+              class="help-block alert-warning">Please enter a valid id Number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingContactNumber">Contact Number:</label>
+            <input type="text" class="form-control" id="insert_bookingContactNumber"  formControlName="bookingContactNumber" name="bookingContactNumber">
+            <span *ngIf="!insertForm.get('bookingContactNumber').valid && insertForm.get('bookingContactNumber').touched"
+              class="help-block alert-warning">Please enter a valid id Number!</span>
+        </div>
+        
+        <button type="button" class="btn btn-success mr-1" (click) ="onAddPassenger()">Add Passenger</button>
+      </div>
+      <div *ngIf="currentPage == 4">
+        <div class="form-group">
+              <label for="insert_bookingID">Booking Number:</label>
+              <input type="text" class="form-control" id="insert_bookingID"  formControlName="bookingID" name="bookingID" [attr.disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingFlightCost">Flights Cost:</label>
+            <input type="text" class="form-control" id="insert_bookingFlightCost"  formControlName="bookingFlightCost" name="bookingFlightCost" [attr.disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingTypeCost">Booking Type Cost:</label>
+            <input type="text" class="form-control" id="insert_bookingTypeCost"  formControlName="bookingTypeCost" name="bookingTypeCost" [attr.disabled]="true">
+        </div>
+        <div class="form-group">
+            <label for="insert_bookingTotalCost">Total Cost:</label>
+            <input type="text" class="form-control" id="insert_bookingTotalCost"  formControlName="bookingTotalCost" name="bookingTotalCost" [attr.disabled]="true">
+        </div>
+      <hr>
+      <div class="form-group">
+          <label for="insert_bookingCardNumber">Credit Card Number:</label>
+          <input type="text" class="form-control" id="insert_bookingCardNumber"  formControlName="bookingCardNumber" name="bookingCardNumber">
+          <span *ngIf="!insertForm.get('bookingCardNumber').valid && insertForm.get('bookingCardNumber').touched"
+            class="help-block alert-warning">Please enter a valid Card Number!</span>
+      </div>
+      <div class="form-group">
+          <label for="insert_bookingCardSecurity">3 Digit Security Number:</label>
+          <input type="text" class="form-control" id="insert_bookingCardSecurity"  formControlName="bookingCardSecurity" name="bookingCardSecurity">
+          <span *ngIf="!insertForm.get('bookingCardSecurity').valid && insertForm.get('bookingCardSecurity').touched"
+            class="help-block alert-warning">Please enter a valid Security Number!</span>
+      </div>
+    </div>
+    </div>  
       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_bookingModal').modal('hide')">Create Booking</button>
+          <button *ngIf="currentPage > 1 && currentPage < 4" type="button" class="btn btn-primary" (click) = "previous()">Previous</button>
+          <button *ngIf="currentPage < 3" type="button" class="btn btn-primary" (click) = "next()">Next</button>
+          <button type="submit" class="btn btn-primary" *ngIf="currentPage == 3">Book</button>
+          <button *ngIf="currentPage == 4" type="button" class="btn btn-danger" data-dismiss="modal" (click) ="onCancel(insertForm.get('bookingID').value)">Cancel</button>
+          <button type="button" class="btn btn-primary" *ngIf="currentPage == 4" [disabled]="!insertForm.get('bookingCardSecurity').valid || !insertForm.get('bookingCardNumber').valid" onclick="$('#new_bookingModal').modal('hide')" (click)="onConfirm()">Confirm Payment</button>
       </div>
       </form>
       </div>
   </div>
 </div>  
+
+<div class="modal fade" id="checkin_bookingModal" tabindex="3" booking="dialog" aria-labelledby="checkin_bookingModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" booking="document">
+        <div class="modal-content">
+        
+        <div class="modal-header">
+            <h5 class="modal-title" id="checkin_bookingModalLabel">Check-In</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="checkinError" class="alert alert-danger">
+                <h3>Error: </h3>
+                <strong>{{ checkinError }}</strong><br>
+                Please contact the coding monkeys.
+              </div>
+              <div *ngIf="checkinSuccess" class="alert alert-success">
+                <h3>Success! </h3>
+                <strong>{{ checkinSuccess }}</strong>
+              </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="bookingId" value=""/>
+            </div>
+            <div *ngIf="checkin.length == 0" class="alert-warning">No Passengers for this Reservation (should not be possible)</div>
+            <div *ngIf="checkin.length > 0">
+              <div *ngFor="let passenger of checkin; index as i;" class="alert-info row">
+                <div class="col-4">{{passenger.client.firstName}} {{passenger.client.lastName}}</div>
+                <div class="col-4">{{passenger.flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{passenger.flight.arrival_airport.shortName}}</div>
+                <div class="col-2" *ngIf="passenger.seat != null">{{passenger.seat}}</div>
+                <div class="col-2" *ngIf="passenger.seat == null">No Seat</div>
+                <button type="submit" class="btn btn-success col-2" [disabled] = "passenger.seat != null" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
+                <hr>
+              </div>
+            </div>   
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+       
+        </div>
+    </div>
+  </div>
 
 
 <div class="modal fade" id="edit_bookingModal" tabindex="3" booking="dialog" aria-labelledby="edit_bookingModalLabel" aria-hidden="true" >
@@ -45,14 +262,71 @@
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <input type="hidden" class="form-control" id="edit_bookingId"  formControlName="bookingId" name="bookingId">
+                <input type="hidden" class="form-control"  formControlName="bookingId" name="bookingId" value=""/>
+            </div>
+            <p class="alert alert-warning" *ngIf="!changeDate"> This booking does not allow to change dates! </p>
+            <div class="form-group">
+              <label for="bookingType">Booking Type:</label>
+              <input class="form-control" type="text" id="bookingType" formControlName="bookingType" name="bookingType" />
             </div>
             <div class="form-group">
-                <label for="edit_bookingName">Booking Name:</label>
-                <input type="text" class="form-control" id="edit_bookingName"  formControlName="bookingName" name="bookingName">
-                <span *ngIf="!editForm.get('bookingName').valid && editForm.get('bookingName').touched"
-                    class="help-block alert-warning">Please enter a valid name!</span>
+                <label for="Arrival_bookingDepartureAirport">From:</label>
+                <select class="form-control" id="Arrival_bookingDepartureAirport"  formControlName="bookingDepartureAirport" name="bookingDepartureAirport" [attr.disabled]="true">
+                    <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
+                </select>
+                <span *ngIf="!editForm.get('bookingDepartureAirport').valid && editForm.get('bookingDepartureAirport').touched"
+                  class="help-block alert-warning">Please enter a valid Location!</span>
             </div>
+            <div class="form-group">
+                <label for="Arrival_bookingArrivalAirport">To:</label>
+                <select class="form-control" id="Arrival_bookingArrivalAirport"  formControlName="bookingArrivalAirport" name="bookingArrivalAirport" [attr.disabled]="true">
+                    <option *ngFor="let airport of airports; index as i;" value={{i}}>{{airport.name}}</option>
+                </select>
+                <span *ngIf="!editForm.get('bookingArrivalAirport').valid && editForm.get('bookingArrivalAirport').touched"
+                  class="help-block alert-warning">Please enter a valid Location!</span>
+            </div>
+            <div class="form-group">
+                <label for="bookingDepartureDate">Select Departure Date:</label>
+                <input class="form-control" type="date" id="Arrival_bookingDepartureDate" formControlName="bookingDepartureDate" name="bookingDepartureDate" (input)="onOutboundDateChange()" />
+                <span *ngIf="!editForm.get('bookingDepartureDate').valid && editForm.get('bookingDepartureDate').touched"
+                  class="help-block alert-warning">Please enter a valid date!</span>
+            </div>
+            <div class="form-group" *ngIf="returnFlightId != null">
+                <label for="bookingArrivalDate">Select Return Date:</label>
+                <input class="form-control" type="date" id="Arrival_bookingArrivalDate" formControlName="bookingArrivalDate" name="bookingArrivalDate" (input)="onReturnDateChange()" />
+                <span *ngIf="!editForm.get('bookingArrivalDate').valid && editForm.get('bookingArrivalDate').touched"
+                  class="help-block alert-warning">Please enter a valid date!</span>
+            </div>
+
+            <div>
+                <h5>Outbound Flights</h5>
+                <hr>
+                <div *ngIf="outboundFlights.length == 0" class="alert-warning">No Flights Found for this date</div>
+    
+                <div *ngFor="let flight of outboundFlights; index as i;" class="row">
+                  <div class="col-2">{{flight.flight_number}}</div>
+                  <div class="col-2">{{flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{flight.arrival_airport.shortName}}</div>
+                  <div class="col-2">Departure Time: {{flight.departure_date| date : "HH:mm"}}</div>
+                  <div class="col-2">Arrival Time: {{flight.arrival_date| date : "HH:mm"}}</div>
+                  <div class="col-2 text-success">{{flight.price}} €</div>
+                  <input id="Arrival_bookingOutboundFlight" class="form-control col-2" type="radio" value="{{i}}" formControlName="bookingOutboundFlight" [checked]="flight.id == outFlightId"/>
+                  <hr>
+                </div>
+            </div>
+
+            <div *ngIf="returnFlightId != null">
+                <h5>Return Flights</h5>
+                <div *ngIf="returnFlights.length == 0" class="alert-warning">No return Flights Found for this date</div>
+                <div *ngFor="let flight of returnFlights; index as i;" class="row">
+                    <div class="col-2">{{flight.flight_number}}</div>
+                    <div class="col-2">{{flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{flight.arrival_airport.shortName}}</div>
+                    <div class="col-2">Departure Time: {{flight.departure_date| date : "HH:mm"}}</div>
+                    <div class="col-2">Arrival Time: {{flight.arrival_date| date : "HH:mm"}}</div>
+                    <div class="col-2 text-success">{{flight.price}} €</div>
+                    <input id="Arrival_bookingReturnFlight" class="form-control col-2" type="radio" value="{{i}}" formControlName="bookingReturnFlight" [checked]="flight.id == returnFlightId"/>
+                  <hr>
+                </div>
+              </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -77,19 +351,23 @@
         <div class="modal-body">
             <div class="form-group">
                 <input type="hidden" class="form-control"  formControlName="bookingId" name="bookingId" value=""/>
-                <div class="alert alert-warning">
+                <div class="alert alert-warning" *ngIf="cancelBooking">
                     <strong>Warning!</strong> You are about to delete an Booking. Are you sure?
-                  </div>
+                </div>
+                <div class="alert alert-warning" *ngIf="!cancelBooking">
+                  <strong>Warning!</strong> This booking can't be cancelled!
+              </div>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger" onclick="$('#delete_bookingModal').modal('hide')">Delete Booking</button>
+            <button type="submit" class="btn btn-danger" [disabled]="!deleteForm.valid" onclick="$('#delete_bookingModal').modal('hide')">Delete Booking</button>
         </div>
         </form>
         </div>
     </div>
-  </div>  
+  </div>
+
   <div *ngIf="bookings.length < 1 && !isFetching" class="alert alert-warning">
     <strong>No Bookings found!</strong> Add new bookings using the Create button
   </div>
@@ -100,35 +378,26 @@
     <h3>Error occurred using the webservices!</h3>
     <strong>{{ error }}</strong><br>
     Please contact the coding monkeys.
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
   </div>
   <div *ngIf="success" class="alert alert-success">
     <h3>Success! </h3>
     <strong>{{ success }}</strong>
-    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
   </div>
 <table class="table table-striped" *ngIf="bookings.length >= 1">
     <thead>
       <tr>
         <th>Booking Number</th>
-        <th>Passenger Name</th>
-        <th>Flight Number</th>
-        <th>Departure Date</th>
-        <th>Check-in Status</th>
-        <th>Seat</th>
+        <th>Date</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let booking of bookings; index as i">
         <td>{{booking.id}}</td>
-        <td>{{booking.passenger.name}}</td>
-        <td>{{booking.flight.departure_flight}}</td>
-        <td>{{booking.flight.departure_date}}</td>
-        <td>{{booking.checkin}}</td>
-        <td>{{booking.seat}}</td>
+        <td>{{booking.date | date : "dd-MM-yyyy hh:mm:ss"}}</td>
         <td>
+            <button class="btn btn-success mb-2 mr-2 btn-block" data-toggle="modal" data-target="#checkin_bookingModal" (click)="populateCheckinForm(i)">Check-In</button>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_bookingModal" (click)="populateEditForm(i)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_bookingModal" (click)="populateDeleteForm(i)">Delete</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_bookingModal" (click)="populateDeleteForm(i)">Cancel</button>
         </td>
       </tr>
     </tbody>
@@ -139,4 +408,4 @@
 
 
 
- -->
+ 
