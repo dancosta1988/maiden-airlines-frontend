@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Airplane } from '../airplanes/airplane.model';
 import { Airport } from '../airports/airport.model';
@@ -8,6 +8,8 @@ import { FlightsService } from './flights.service';
 import { AirportsService } from '../airports/airports.service';
 import { AirplanesService } from '../airplanes/airplanes.service';
 import { DatePipe } from '@angular/common';
+import { BookingsService } from '../booking/booking.service';
+import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
 
 @Component({
   selector: 'app-flights',
@@ -49,15 +51,20 @@ export class FlightsComponent implements OnInit {
     */
   ]
 
-  public seats: string[] = [];
+  public seats: {seat:string, occupied:boolean}[] = [];
+
+  public role:string = "";
   
 
-  constructor(private datepipe: DatePipe, private http: HttpClient, private flightsService: FlightsService, private airportsService: AirportsService, private airplanesService: AirplanesService) { }
+  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService, private datepipe: DatePipe, private http: HttpClient, private flightsService: FlightsService, private airportsService: AirportsService, private airplanesService: AirplanesService, private bookingsService:BookingsService) { }
 
   ngOnInit() {
+
+    this.role = this.storage.get('role');
+    
     //fetch
     this.onRefresh();
-    this.generateSeats(100);
+    
     //using Reactive Forms
     this.insertForm = new FormGroup({
       'flightNumber' : new FormControl(null,Validators.required),
@@ -267,17 +274,44 @@ export class FlightsComponent implements OnInit {
     return airplane;
   }
 
-  public generateSeats(seats: number){
-    this.seats = [];
-    let nseats = 1;
-    for (var i = 0, lenS = seats; nseats <= seats; i++ ) {
+  public generateSeats(seats: number, flightIndex: number){
+
+    this.bookingsService.getBookingFlightClientByFlightId(
+      this.flights[flightIndex].id
+    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[] )=> {
       
-      for (var x = 0, len = 6; x < len && nseats <= seats ; x++, nseats++) {
-        this.seats.push(i+1 + String.fromCharCode(97 + x));
-        console.log(nseats + "/" + seats);
+      let occupiedSeats: string[] = [];
+      for (var i = 0, len = responseData.length; i < len; i++) {
+        if(responseData[i].seat != null){
+          occupiedSeats.push(responseData[i].seat);
+        }
+            
       }
-    }
-    console.log(this.seats);
+      console.log(occupiedSeats);
+      this.seats = [];
+      let nseats = 1;
+      for (var i = 0, lenS = seats; nseats <= seats; i++ ) {
+        
+        for (var x = 0, len = 6; x < len && nseats <= seats ; x++, nseats++) {
+          let seat = i+1 + String.fromCharCode(97 + x);
+          let occupied: boolean = occupiedSeats.includes(seat);
+          this.seats.push({seat:seat, occupied: occupied});
+        }
+      }
+      
+      this.error = "";
+      this.success = "Booking Updated!";
+      this.onRefresh();
+    },
+    error =>{
+        this.success ="";
+        this.error = error.message;
+    });
+
+
+
+    
+    
   }
 
 }

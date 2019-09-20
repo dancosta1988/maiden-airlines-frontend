@@ -213,8 +213,11 @@
           </button>
       </div>
       <div class="modal-body">
-        <div *ngFor="let seat of seats">
-          <div class = "">{{seat}}</div>
+        <div class="row">
+          <div *ngFor="let seat of seats; index as i" class="col-2">
+            <div class = "btn btn-info mr-1 btn-block" *ngIf="!seat.occupied">{{seat.seat}}</div>
+            <div class = "btn btn-danger mr-1 btn-block" *ngIf="seat.occupied">{{seat.seat}}</div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -271,7 +274,7 @@
         <td>{{flight.price}}</td>
         <td>{{flight.miles}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#occupation_flightModal" (click)="generateSeats(flight.airplane.numberSeats)">Occupation</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#occupation_flightModal" (click)="generateSeats(flight.airplane.numberSeats, i)">Occupation</button>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_flightModal" (click)="populateEditForm(i)" >Edit</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_flightModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
