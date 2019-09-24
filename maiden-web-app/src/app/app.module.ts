@@ -24,6 +24,7 @@ import { BackofficeLoginComponent } from './backoffice-login/backoffice-login.co
 import { StorageServiceModule} from 'angular-webstorage-service';
 import { ClubComponent } from './club/club.component';
 import { BasicAuthHtppInterceptorService } from './common/services/httpinterceptor.service';
+import { ClientBookingComponent } from './client-booking/client-booking.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { BasicAuthHtppInterceptorService } from './common/services/httpintercept
     BookingComponent,
     BookingTypesComponent,
     BackofficeLoginComponent,
-    ClubComponent
+    ClubComponent,
+    ClientBookingComponent
   ],
   imports: [
     BrowserModule,
