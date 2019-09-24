@@ -34,14 +34,14 @@ export class BookingsService {
     }
 
     getBookingById(id: number){
-        return this.http.post(this.constants.webServicesUrl+'/Bookings/BookingByID?id='+id, null);
+        return this.http.post<Booking[]>(this.constants.webServicesUrl+'/Bookings/BookingByID?id='+id, null);
     }
 
     getBookingFlightClientByBookingId(id: number){
-        return this.http.post<{id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[]>(this.constants.webServicesUrl+'/Bookings/BookingByClientFlight?idBooking='+id+'&idFlight=&idClient=&id=', null);
+        return this.http.post<{id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[]>(this.constants.webServicesUrl+'/Bookings/BookingByClientFlight?idBooking='+id+'&idFlight=&idClient=&id=', null);
     }
 
     getBookingFlightClientByFlightId(id: number){
-        return this.http.post<{id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[]>(this.constants.webServicesUrl+'/Bookings/BookingByClientFlight?idBooking=&idFlight='+id+'&idClient=&id=', null);
+        return this.http.post<{id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[]>(this.constants.webServicesUrl+'/Bookings/BookingByClientFlight?idBooking=&idFlight='+id+'&idClient=&id=', null);
     }
 }
