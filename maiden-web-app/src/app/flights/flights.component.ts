@@ -278,7 +278,7 @@ export class FlightsComponent implements OnInit {
 
     this.bookingsService.getBookingFlightClientByFlightId(
       this.flights[flightIndex].id
-    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[] )=> {
+    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[] )=> {
       
       let occupiedSeats: string[] = [];
       for (var i = 0, len = responseData.length; i < len; i++) {
@@ -287,7 +287,6 @@ export class FlightsComponent implements OnInit {
         }
             
       }
-      console.log(occupiedSeats);
       this.seats = [];
       let nseats = 1;
       for (var i = 0, lenS = seats; nseats <= seats; i++ ) {

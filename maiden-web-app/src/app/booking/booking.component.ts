@@ -175,16 +175,16 @@ export class BookingComponent implements OnInit {
   populateCheckinForm(bookingIndex: number){
       //send http request
       this.checkin =[];
-      console.log(this.bookings );
-      console.log("Getting checkin info for booking: " +this.bookings[bookingIndex].id );
 
       this.bookingsService.getBookingFlightClientByBookingId(
         this.bookings[bookingIndex].id
-      ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[] )=> {
+      ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[] )=> {
               
         for (var i = 0, len = responseData.length; i < len; i++) {
           if(responseData[i].id != null){
-            this.checkin.push({"id" : responseData[i].id, "booking" : this.getBookingById(responseData[i].idBooking), "client" : this.getClientById(responseData[i].idClient), "flight": this.getFlightById(responseData[i].idFlight), "checkin": responseData[i].checkin, "seat" :responseData[i].seat});
+            let client = this.getClientById(responseData[i].idClient);
+            let flight = this.getFlightById(responseData[i].idFlight);
+            this.checkin.push({"id" : responseData[i].id, "booking" : this.getBookingById(responseData[i].idBooking), "client" : client, "flight": flight, "checkin": responseData[i].checkIn, "seat" :responseData[i].seat});
           }
         }
         
@@ -202,7 +202,7 @@ export class BookingComponent implements OnInit {
   populateEditForm(index: number){
     this.currentBookingIndex = index;
     this.bookingsService.getBookingFlightClientByBookingId(this.bookings[index].id).subscribe(
-      (bookingClientFlight: {id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[]) =>{
+      (bookingClientFlight: {id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[]) =>{
         
         this.outboundFlights = [];
         this.returnFlights = [];
@@ -281,11 +281,9 @@ export class BookingComponent implements OnInit {
     let canCancel:boolean = this.canCancelBooking(index);
         
     if(!canCancel){
-      console.log("can not cancel...");
       this.deleteForm.disable();
       this.cancelBooking = false;
     }else{
-      console.log("can cancel...");
       this.deleteForm.enable();
       this.cancelBooking = true;
     }
@@ -302,8 +300,6 @@ export class BookingComponent implements OnInit {
       
     ).subscribe(responseData => {
       this.next();
-      //console.log("Price: " + responseData["Total Cost"]);
-
       this.insertForm.patchValue({
         "bookingID": responseData["BookingID"],
         "bookingTotalCost" : responseData["TotalCost"]+'€',
@@ -324,11 +320,10 @@ export class BookingComponent implements OnInit {
 
     this.bookingsService.getBookingFlightClientByBookingId(
       this.bookings[this.editForm.getRawValue().bookingId].id
-    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[] )=> {
+    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[] )=> {
             
       for (var i = 0, len = responseData.length; i < len; i++) {
         if(responseData[i].id != null){
-          //this.checkin.push({"id" : responseData[i].id, "booking" : this.getBookingById(responseData[i].idBooking), "client" : this.getClientById(responseData[i].idClient), "flight": this.getFlightById(responseData[i].idFlight), "checkin": responseData[i].checkin, "seat" :responseData[i].seat});
 
           if(responseData[i].idFlight == this.outFlightId){
             //send http request
@@ -404,12 +399,12 @@ export class BookingComponent implements OnInit {
     //send http request
     this.bookingsService.getBookingFlightClientByFlightId(
       flightId
-    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkin: boolean, seat: string}[] )=> {
+    ).subscribe((responseData: {id: number, idBooking: number, idClient: number, idFlight: number, checkIn: boolean, seat: string}[] )=> {
       
     
       for (var i = 0, len = responseData.length; i < len; i++) {
         if(responseData[i].id != null){
-          booking_flights_clients.push({"id" : responseData[i].id, "booking" : this.getBookingById(responseData[i].idBooking), "client" : this.getClientById(responseData[i].idClient), "flight": this.getFlightById(responseData[i].idFlight), "checkin": responseData[i].checkin, "seat" :responseData[i].seat});
+          booking_flights_clients.push({"id" : responseData[i].id, "booking" : this.getBookingById(responseData[i].idBooking), "client" : this.getClientById(responseData[i].idClient), "flight": this.getFlightById(responseData[i].idFlight), "checkin": responseData[i].checkIn, "seat" :responseData[i].seat});
         }
       }
       
@@ -422,7 +417,7 @@ export class BookingComponent implements OnInit {
       let nseats = 1;
       for (var i = 0, lenS = seats; nseats <= seats && assignedSeat == ""; i++ ) {
         for (var x = 0, len = 6; x < len && nseats <= seats && assignedSeat == ""; x++, nseats++) {
-          let genSeat = (i+1 + String.fromCharCode(97 + x));
+          let genSeat = (i+1 + String.fromCharCode(97 + x)).toUpperCase();
           if(!this.isSeatOccupied(genSeat, booking_flights_clients)){
             assignedSeat = genSeat;
           }
@@ -448,7 +443,6 @@ export class BookingComponent implements OnInit {
 
   private isSeatOccupied(seat:string, bookings:{id: number, booking: Booking, client: Client, flight: Flight, checkin: boolean, seat: string}[]){
       for(var x = 0, len = bookings.length; x < len; x++){
-        console.log("seat: " + seat + " occupied: " + bookings[x].seat);
         if(seat == bookings[x].seat){
           return true;
         }
@@ -518,7 +512,6 @@ export class BookingComponent implements OnInit {
         }
         this.success ="";
         this.error ="";
-        console.log(this.outboundFlights);
       },
       error =>{
           this.isFetching = false;
@@ -540,7 +533,6 @@ export class BookingComponent implements OnInit {
         }
         this.success ="";
         this.error ="";
-        console.log(this.returnFlights);
       },
       error =>{
           this.isFetching = false;
@@ -601,7 +593,6 @@ export class BookingComponent implements OnInit {
           this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
         }
         this.fetchedAirports = true;
-        console.log(this.airports);
       },
       error =>{
           this.error = error.message;
@@ -742,13 +733,10 @@ export class BookingComponent implements OnInit {
   }
 
   public next(){
-    console.log(this.currentPage);
     switch(this.currentPage){
       case 1 : this.fetchOutboundFlights(this.insertForm.value.bookingDepartureDate, this.airports[this.insertForm.value.bookingDepartureAirport].id, this.airports[this.insertForm.value.bookingArrivalAirport].id);  
-               console.log("searching Outbound flights");
                if(this.insertForm.value.bookingReturn == 'true'){
                 this.fetchReturnFlights(this.insertForm.value.bookingArrivalDate, this.airports[this.insertForm.value.bookingArrivalAirport].id, this.airports[this.insertForm.value.bookingDepartureAirport].id);  
-                console.log("searching Return flights");
                } break;
       case 2 : this.additionalPassengers = []; break; 
     }

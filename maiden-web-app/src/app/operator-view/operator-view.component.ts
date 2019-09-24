@@ -30,7 +30,6 @@ export class OperatorViewComponent implements OnInit {
   }
 
   public setView(view: string){
-    console.log(view);
     this.showView = view;
   }
 

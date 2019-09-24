@@ -61,8 +61,7 @@ export class BookingTypesComponent implements OnInit {
   }
 
   populateEditForm(index: number){
-    console.log("editing bookingType id " + this.bookingTypes[index].id);
-    
+   
     this.editForm.setValue({
       bookingTypeId : index,
       bookingTypeName : this.bookingTypes[index].name,
@@ -76,13 +75,7 @@ export class BookingTypesComponent implements OnInit {
     this.editBookingTypeCancel = this.bookingTypes[index].cancelBooking;
     this.editBookingTypeChangeDate = this.bookingTypes[index].changeDate;
     this.editBookingTypeHandBaggage = this.bookingTypes[index].handBaggage;
-    this.editBookingTypeCheckedbaggage = this.bookingTypes[index].checkedBaggage;
-
-    console.log("cancel " + this.bookingTypes[index].cancelBooking + " " + this.editForm.value.bookingTypeCancel);
-    console.log("checked " + this.bookingTypes[index].checkedBaggage + " " + this.editForm.value.bookingTypeCheckedBaggage);
-    console.log("hand " + this.bookingTypes[index].handBaggage + " " + this.editForm.value.bookingTypeHandBaggage);
-    console.log("changedate " + this.bookingTypes[index].changeDate + " " + this.editForm.value.bookingTypeChangeDate);
-    
+    this.editBookingTypeCheckedbaggage = this.bookingTypes[index].checkedBaggage;    
   }
 
   populateDeleteForm(index: number){
@@ -92,7 +85,6 @@ export class BookingTypesComponent implements OnInit {
   }
 
   onCreateBookingType(){
-    console.log("onCreateBookingType");
     //send http request
     this.bookingTypesService.createAndStoreBookingType(
       this.insertForm.value.bookingTypeName,
@@ -103,7 +95,6 @@ export class BookingTypesComponent implements OnInit {
       this.insertForm.value.bookingTypeCost
       
       ).subscribe(responseData => {
-        console.log(responseData);
         if(responseData){
           this.error = "Something went wrong inserting a new booking type..."
         }else{
@@ -118,7 +109,6 @@ export class BookingTypesComponent implements OnInit {
 
   
   onUpdateBookingType(){
-    console.log("onUpdateBookingType");
     //send http request
     this.bookingTypesService.updateBookingType(
       this.bookingTypes[this.editForm.value.bookingTypeId].id,
@@ -129,7 +119,6 @@ export class BookingTypesComponent implements OnInit {
       this.editForm.value.bookingTypeHandBaggage,
       this.editForm.value.bookingTypeCost
       ).subscribe(responseData => {
-        console.log(responseData);
         this.success = "Booking Type updated!";
         this.fetchbookingTypes();
       },
@@ -139,13 +128,10 @@ export class BookingTypesComponent implements OnInit {
   }
 
   onDeleteBookingType(){
-    console.log("onDeleteBookingType");
     //get id from the deleteForm
     let index = this.deleteForm.value.bookingTypeId;
-    console.log("deleting bookingType id: " + this.bookingTypes[index].id);
     //send http request
     this.bookingTypesService.deleteBookingType(this.bookingTypes[index].id).subscribe(responseData => {
-      console.log(responseData);
       this.success = "BookingType Deleted!";
       this.fetchbookingTypes();
     },
