@@ -7,6 +7,7 @@ import { ClientsService } from '../clients/clients.service';
 import { ClientType } from '../client-types/client-type.model';
 import { ClientTypesService } from '../client-types/client-types.service';
 import { Client } from '../clients/client.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-login-bar',
@@ -27,11 +28,11 @@ export class LoginBarComponent implements OnInit {
   public currentClient: Client = null;
   
 
-  constructor(  private constants: ConstantsService, private clientAuthService:ClientAuthenticationService, private clientsService: ClientsService, private clientTypesService:ClientTypesService ) { }
+  constructor(private datepipe: DatePipe, private constants: ConstantsService, private clientAuthService:ClientAuthenticationService, private clientsService: ClientsService, private clientTypesService:ClientTypesService ) { }
 
   ngOnInit() {
 
-    if(localStorage.getItem('name')){
+    if(localStorage.getItem('userId')){
       this.onLogout();
     }
 
@@ -51,6 +52,7 @@ export class LoginBarComponent implements OnInit {
     });
 
     this.editForm = new FormGroup({
+      'editId' : new FormControl(null,Validators.required),
       'editFirstName' : new FormControl(null,Validators.required),
       'editLastName' : new FormControl(null,Validators.required),
       'editAddress' : new FormControl(null,Validators.required),
@@ -60,7 +62,7 @@ export class LoginBarComponent implements OnInit {
       'editNumberID' : new FormControl(null,[Validators.required, Validators.maxLength(8),Validators.pattern("^[0-9]*[0-9]$")]),
       'editType' : new FormControl(null,Validators.required),
       'editEmail' : new FormControl(null,[Validators.required, Validators.email]),
-      'editPassword' : new FormControl(null,Validators.required)
+      'editPassword' : new FormControl(null)
     });
 
     this.loginForm = new FormGroup({
@@ -93,7 +95,7 @@ export class LoginBarComponent implements OnInit {
     
     this.loggedIn = false;
     localStorage.removeItem("name");
-    localStorage.removeItem("clientId");
+    localStorage.removeItem("userId");
     localStorage.removeItem("token"); 
     
   }
@@ -108,7 +110,7 @@ export class LoginBarComponent implements OnInit {
           localStorage.setItem('userId', responseData[0].id + "");
 
           this.currentClient = new Client(responseData[0].id, responseData[0].firstName, responseData[0].lastName, responseData[0].dateOfBirth, responseData[0].idNumber, responseData[0].address, responseData[0].contactNumber, responseData[0].gender, responseData[0].numberMiles, responseData[0].photo, this.getTypeById(responseData[0].idTypeClient), responseData[0].email, "" );
-          //console.log(this.currentClient);
+          this.populateEditForm();
           this.loggedIn = true;
       },
       error =>{
@@ -149,25 +151,45 @@ export class LoginBarComponent implements OnInit {
   onUpdateClient(){
     //send http request
     this.clientsService.updateClient(
-      this.editForm.value.clientId,
-      this.editForm.value.clientFirstName,
-      this.editForm.value.clientLastName,
-      this.editForm.value.clientDateOfBirth,
-      this.editForm.value.clientNumberID,
-      this.editForm.value.clientAddress,
-      this.editForm.value.clientContactNumber,
-      this.editForm.value.clientGender, 
+      this.editForm.value.editId,
+      this.editForm.value.editFirstName,
+      this.editForm.value.editLastName,
+      this.editForm.value.editDateOfBirth,
+      this.editForm.value.editNumberID,
+      this.editForm.value.editAddress,
+      this.editForm.value.editContactNumber,
+      this.editForm.value.editGender, 
       "",
-      this.types[this.editForm.value.clientType].id,
-      this.editForm.value.clientEmail,
-      this.editForm.value.clientPassword 
+      this.types[this.editForm.value.editType].id,
+      this.editForm.value.editEmail,
+      this.editForm.value.editPassword 
       ).subscribe(responseData => {
         this.success = "Information updated!";
       },
       error =>{
           this.error = error.message;
       });
+
+      this.getClientByUsername();
   }
+
+  populateEditForm(){    
+    
+    this.editForm.setValue({
+      editId:this.currentClient.id,
+      editFirstName: this.currentClient.firstName,
+      editLastName : this.currentClient.lastName,
+      editAddress : this.currentClient.address,
+      editGender : this.currentClient.gender,
+      editDateOfBirth : this.datepipe.transform(this.currentClient.dateOfBirth, 'yyyy-MM-dd'),
+      editContactNumber : this.currentClient.contactNumber,
+      editNumberID : this.currentClient.idNumber,
+      editType : this.getTypeIndex(this.currentClient.type),
+      editEmail : this.currentClient.email,
+      editPassword : this.currentClient.password,
+    });
+
+}
 
   fetchClientTypes() {
     this.fetchedClientTypes = false;
@@ -187,6 +209,10 @@ export class LoginBarComponent implements OnInit {
   public getTypeById(id:number){
     let clientType: ClientType = this.types.find(x => x.id === id);
     return clientType;
+  }
+
+  public getTypeIndex(type: ClientType){
+    return this.types.indexOf(type);
   }
 
 }

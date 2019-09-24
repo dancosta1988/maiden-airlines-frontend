@@ -50,4 +50,10 @@ export class FlightsService {
     fetchFlightsByDateAndAirports(departureDate: string, departureAirport: number, arrivalAirport: number){
         return this.http.post<{id: number, flightNumber: string, departureAirport: number, departureDate: string, arrivalAirport: number, arrivalDate: string, idairplane: number, gate : number, status: string, price: number, miles: number}[]>(this.constants.webServicesUrl+'/Flights/FlightByDateAndLocal?arrivalAirport='+arrivalAirport+'&departureAirport='+departureAirport+'&departureDate='+departureDate,null);
     }
+
+    fetchFlightsById(flightId: number){
+        return this.http.post<{id: number, flightNumber: string, departureAirport: number, departureDate: string, arrivalAirport: number, arrivalDate: string, idairplane: number, gate : number, status: string, price: number, miles: number}[]>(this.constants.webServicesUrl+'/Flights/FlightByID?id='+flightId,null);
+    }
+
+
 }
