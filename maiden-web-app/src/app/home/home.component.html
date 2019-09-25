@@ -2,36 +2,14 @@
 
 <hr>
 <div class="row">
-        <div class="col-sm-4">
-            <div class="card shadow rounded-top" style="background: url('assets/geneva.jpg');background-size: cover;">
+        <div class="col-sm-4" *ngFor="let showflight of showflights;">
+            <div class="card shadow rounded-top" [ngStyle]="getBackground()">
                 <div class="card-body">
-                    <h3 class="card-title text-center">GENEBRA</h3>
+                    <h3 class="card-title text-center">{{showflight.arrival_airport.city}}</h3>
                     <hr>
                     <p class="card-text font-weight-bold text-white">From </p>
-                    <h1 class="card-text text-white text-center font-weight-bold">50€</h1>
-                    <p class="card-text font-weight-bold text-white">Departures from Lisbon and Oporto</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card shadow rounded-top" style="background: url('assets/paris.jpg');background-size: cover">
-                <div class="card-body">
-                    <h3 class="card-title text-center">PARIS</h3>
-                    <hr>
-                    <p class="card-text font-weight-bold text-white">From </p>
-                    <h1 class="card-text text-white text-center font-weight-bold">45€</h1>
-                    <p class="card-text font-weight-bold text-white">Departures from Lisbon</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card shadow rounded-top">
-                <div class="card-body" style="background: url('assets/london.jpg');background-size: cover">
-                    <h3 class="card-title text-center">LONDON</h3>
-                    <hr>
-                    <p class="card-text font-weight-bold text-white">From </p>
-                    <h1 class="card-text text-white text-center font-weight-bold">38€</h1>
-                    <p class="card-text font-weight-bold text-white">Departures from Lisbon and Oporto</p>
+                    <h1 class="card-text text-white text-center font-weight-bold">{{showflight.price}} €</h1>
+                    <p class="card-text font-weight-bold text-white">Departures from {{showflight.departure_airport.city}}</p>
                 </div>
             </div>
         </div>
