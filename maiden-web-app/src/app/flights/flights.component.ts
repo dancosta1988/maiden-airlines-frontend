@@ -292,7 +292,7 @@ export class FlightsComponent implements OnInit {
       for (var i = 0, lenS = seats; nseats <= seats; i++ ) {
         
         for (var x = 0, len = 6; x < len && nseats <= seats ; x++, nseats++) {
-          let seat = i+1 + String.fromCharCode(97 + x);
+          let seat = (i+1 + String.fromCharCode(97 + x)).toUpperCase();
           let occupied: boolean = occupiedSeats.includes(seat);
           this.seats.push({seat:seat, occupied: occupied});
         }

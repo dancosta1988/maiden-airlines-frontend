@@ -213,12 +213,12 @@
           </button>
       </div>
       <div class="modal-body">
-        <div class="row">
-          <div *ngFor="let seat of seats; index as i" class="col-2">
-            <div class = "btn btn-info mr-1 btn-block" *ngIf="!seat.occupied">{{seat.seat}}</div>
-            <div class = "btn btn-danger mr-1 btn-block" *ngIf="seat.occupied">{{seat.seat}}</div>
+          <div  class="row text-center">
+              <div *ngFor="let seat of seats; index as i" class="col-2">
+                <div class = "btn btn-info mb-2 mr-2 btn-block" *ngIf="!seat.occupied">{{seat.seat}}</div>
+                <div class = "btn btn-danger mb-2 mr-2 btn-block" *ngIf="seat.occupied">{{seat.seat}}</div>
+              </div>
           </div>
-        </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
