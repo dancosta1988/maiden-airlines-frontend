@@ -16,6 +16,8 @@ import { ClientsService } from '../clients/clients.service';
 import { ClientTypesService } from '../client-types/client-types.service';
 import { BookingsService } from '../booking/booking.service';
 import { HttpClient } from '@angular/common/http';
+import { LoginBarComponent } from '../login-bar/login-bar.component';
+import { DataService } from '../common/services/data.service';
 
 @Component({
   selector: 'app-client-booking',
@@ -77,7 +79,8 @@ export class ClientBookingComponent implements OnInit {
   public seats: {seat:string, occupied: boolean, passengerSeat: boolean}[] = [];
   
 
-  constructor(private datepipe: DatePipe, 
+  constructor(
+    private datepipe: DatePipe, 
     private http: HttpClient, 
     private flightsService: FlightsService, 
     private airportsService: AirportsService, 
@@ -85,21 +88,24 @@ export class ClientBookingComponent implements OnInit {
     private bookingTypesService: BookingTypesService, 
     private clientsService: ClientsService, 
     private clientTypesService: ClientTypesService,
-    private bookingsService: BookingsService) { }
+    private bookingsService: BookingsService,
+    private data: DataService) { }
 
   ngOnInit() {
+    
     this.getClientByID();
     //fetch
     this.onRefresh();
-    this.generateSeats(100);//hardcoded
+    console.log(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+
     //using Reactive Forms
     this.insertForm = new FormGroup({
       'bookingClient' : new FormControl(null,Validators.required),
       'bookingDepartureAirport' : new FormControl(null,Validators.required),
       'bookingArrivalAirport' : new FormControl(null, Validators.required),
       'bookingType' : new FormControl(null, Validators.required),
-      'bookingDepartureDate' : new FormControl(null, Validators.required),
-      'bookingArrivalDate' : new FormControl(null, Validators.required),
+      'bookingDepartureDate' : new FormControl(this.datepipe.transform(new Date(), 'yyyy-MM-dd'), Validators.required),
+      'bookingArrivalDate' : new FormControl(this.datepipe.transform(new Date(), 'yyyy-MM-dd'), Validators.required),
       'bookingOutboundFlight' : new FormControl(null, Validators.required),
       'bookingReturnFlight' : new FormControl(null, Validators.required),
       'bookingReturn' : new FormControl('false', Validators.required),
@@ -192,6 +198,14 @@ export class ClientBookingComponent implements OnInit {
     }else{
       return result;
     }
+  }
+
+  public isCheckinOpen(bookingClientFlightIndex: number){
+      let today = new Date();
+      let departure = new Date(this.checkin[bookingClientFlightIndex].flight.departure_date);
+      let difference_In_Time = departure.getTime() - today.getTime(); 
+      console.log(difference_In_Time / (1000 * 3600 * 24));
+      return (difference_In_Time / (1000 * 3600 * 24)) <= 2 && (difference_In_Time / (1000 * 3600 * 24)) >= 0; 
   }
 
   private canCancelBooking(index: number){
@@ -532,6 +546,7 @@ export class ClientBookingComponent implements OnInit {
       this.checkinError ="";
       this.checkinSuccess = "Checked In!";
       this.populateCheckinForm(this.getBookingIndex(this.getBookingById(booking.booking.id)));
+      this.data.refreshClient();
     },
     error =>{
         this.checkinSuccess ="";
@@ -547,7 +562,7 @@ export class ClientBookingComponent implements OnInit {
         this.isFetching = false;
         this.outboundFlights = [];
         for (var i = 0, len = flights.length; i < len; i++) {
-          if(flights[i].flightNumber != ""){
+          if(flights[i].flightNumber != "" && flights[i].status != "Cancelled"){
             this.outboundFlights.push(new Flight(flights[i].id, flights[i].flightNumber, flights[i].departureDate, this.getAirportById(flights[i].departureAirport), flights[i].arrivalDate, this.getAirportById(flights[i].arrivalAirport), this.getAirplaneById(flights[i].idairplane), flights[i].gate, flights[i].status, flights[i].price, flights[i].miles));
           }
         }
@@ -568,7 +583,7 @@ export class ClientBookingComponent implements OnInit {
         this.isFetching = false;
         this.returnFlights = [];
         for (var i = 0, len = flights.length; i < len; i++) {
-          if(flights[i].flightNumber != ""){
+          if(flights[i].flightNumber != "" && flights[i].status != "Cancelled"){
             this.returnFlights.push(new Flight(flights[i].id, flights[i].flightNumber, flights[i].departureDate, this.getAirportById(flights[i].departureAirport), flights[i].arrivalDate, this.getAirportById(flights[i].arrivalAirport), this.getAirplaneById(flights[i].idairplane), flights[i].gate, flights[i].status, flights[i].price, flights[i].miles));
           }
         }
@@ -744,7 +759,7 @@ export class ClientBookingComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Please Login our Signup if you don't have an account!";
       });
   }
 
@@ -881,7 +896,6 @@ export class ClientBookingComponent implements OnInit {
     
     this.success = "Added a new Booking!";
     this.error = "";
-
     this.insertForm.reset();
     this.currentPage = 1;
   }

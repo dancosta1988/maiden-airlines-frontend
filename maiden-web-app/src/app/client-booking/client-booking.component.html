@@ -39,8 +39,8 @@
                                 <td *ngIf="passenger.seat != null">{{passenger.seat}}</td>
                                 <td *ngIf="passenger.seat == null">No Seat</td>
                                 <td>
-                                    <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
-                                    <button type="submit" class="btn btn-info mb-2 mr-2" [disabled] = "passenger.seat == null" (click)="drawSeats(passenger.flight.id, i)">Change Seats</button>
+                                    <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null || !isCheckinOpen(i)" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
+                                    <button type="submit" class="btn btn-info mb-2 mr-2" [disabled] = "passenger.seat == null || !isCheckinOpen(i)" (click)="drawSeats(passenger.flight.id, i)">Change Seats</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -439,17 +439,27 @@
 
     </div>
     <div class="tab-pane fade" id="checkin_content" role="tabpanel" aria-labelledby="checkin-tab">
-        
+        <h2>Check-In</h2>
+        <p>1- Make sure you are logged in 2- Get your booking number 3- Search </p>
+        <div *ngIf="error" class="alert alert-danger">
+            <h3>Error occurred using the webservices!</h3>
+            <strong>{{ error }}</strong><br>
+          </div>
+          <div *ngIf="success" class="alert alert-success">
+            <h3>Success! </h3>
+            <strong>{{ success }}</strong>
+          </div>
+        <hr>
         <form [formGroup] = "searchForm" class="col-12">
             <div class="form-group">
                 <label for="search_bookingId">Booking Number:</label>
                 <input type="text" class="form-control" id="search_bookingId"  formControlName="bookingId" name="bookingId">
                 <span *ngIf="!searchForm.get('bookingId').valid && searchForm.get('bookingId').touched"
                 class="help-block alert-warning">Please enter a valid Booking Number!</span>
-                <button type="button" class="btn btn-success col-2" (click)="getBookingByNumber()">Search</button>
+                <button type="button" class="btn btn-success mb-2 mr-2 col-2" (click)="getBookingByNumber()">Search</button>
             </div>
         </form>
-
+        <p *ngIf="bookings.length >= 1">Check-in, change your seat or manage your booking</p>
         <table class="table table-striped" *ngIf="bookings.length >= 1">
             <thead>
               <tr>

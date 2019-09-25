@@ -8,6 +8,7 @@ import { ClientType } from '../client-types/client-type.model';
 import { ClientTypesService } from '../client-types/client-types.service';
 import { Client } from '../clients/client.model';
 import { DatePipe } from '@angular/common';
+import { DataService } from '../common/services/data.service';
 
 @Component({
   selector: 'app-login-bar',
@@ -28,15 +29,19 @@ export class LoginBarComponent implements OnInit {
   public currentClient: Client = null;
   
 
-  constructor(private datepipe: DatePipe, private constants: ConstantsService, private clientAuthService:ClientAuthenticationService, private clientsService: ClientsService, private clientTypesService:ClientTypesService ) { }
+  constructor(private data: DataService, private datepipe: DatePipe, private constants: ConstantsService, private clientAuthService:ClientAuthenticationService, private clientsService: ClientsService, private clientTypesService:ClientTypesService ) {
+    this.data.currentMessage.subscribe(message => {this.refreshClient();});
+   }
 
   ngOnInit() {
-
-    if(localStorage.getItem('userId')){
-      this.onLogout();
+    this.fetchClientTypes();
+    
+    this.data.currentMessage.subscribe(message => {this.refreshClient();});
+    if(localStorage.getItem('username')){
+      this.refreshClient();
     }
 
-    this.fetchClientTypes();
+    
     //create forms
     this.signupForm = new FormGroup({
       'signupFirstName' : new FormControl(null,Validators.required),
@@ -81,6 +86,7 @@ export class LoginBarComponent implements OnInit {
           this.error = "";
           let tokenStr= responseData.body;
           localStorage.setItem('token', tokenStr);
+          localStorage.setItem('username', this.loginForm.value.loginEmail);
           this.getClientByUsername();
           
       },
@@ -96,14 +102,19 @@ export class LoginBarComponent implements OnInit {
     this.loggedIn = false;
     localStorage.removeItem("name");
     localStorage.removeItem("userId");
-    localStorage.removeItem("token"); 
+    localStorage.removeItem("token");
+    localStorage.removeItem("username"); 
     
+  }
+
+  refreshClient(){
+    this.getClientByUsername();
   }
 
   getClientByUsername(){ 
     //send http request
     this.clientsService.getClientByMail(
-      this.loginForm.value.loginEmail,
+      localStorage.getItem('username')
       ).subscribe((responseData) =>{
           localStorage.setItem('name', responseData[0].firstName + " " +responseData[0].lastName);
           this.name = localStorage.getItem('name');
