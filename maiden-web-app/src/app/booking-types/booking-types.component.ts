@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BookingTypesService } from './booking-types-service';
 import { BookingType } from './booking-type.model';
+import { DataService } from '../common/services/data.service';
 
 @Component({
   selector: 'app-booking-types',
@@ -27,7 +28,9 @@ export class BookingTypesComponent implements OnInit {
   public editBookingTypeCheckedbaggage : string = "false";
 
    
-  constructor(private bookingTypesService: BookingTypesService) {}
+  constructor(private bookingTypesService: BookingTypesService) {
+
+  }
 
   ngOnInit() {
 
