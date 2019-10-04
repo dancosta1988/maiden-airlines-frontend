@@ -7,6 +7,7 @@ import { BackofficeAuthenticationService } from './backoffice-login.service';
 import { WebStorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 import { inject } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
+import { DataService } from '../common/services/data.service';
 
 @Component({
   selector: 'app-backoffice-login',
@@ -25,7 +26,8 @@ export class BackofficeLoginComponent implements OnInit {
   
   public employee: Operator; ;
      
-  constructor( private backofficeAuthService: BackofficeAuthenticationService, private rolesService: RolesService, private employeesService: OperatorsService) {}
+  constructor( private backofficeAuthService: BackofficeAuthenticationService, private rolesService: RolesService, private employeesService: OperatorsService,
+    private dataService: DataService) {}
 
   ngOnInit() {
     
@@ -56,6 +58,8 @@ export class BackofficeLoginComponent implements OnInit {
   }
 
   onLogin(){
+    this.dataService.logoutClient();
+
     //send http request
     this.backofficeAuthService.authenticate(
       this.loginForm.value.loginUsername,

@@ -16,7 +16,6 @@ import { ClientsService } from '../clients/clients.service';
 import { ClientTypesService } from '../client-types/client-types.service';
 import { BookingsService } from '../booking/booking.service';
 import { HttpClient } from '@angular/common/http';
-import { LoginBarComponent } from '../login-bar/login-bar.component';
 import { DataService } from '../common/services/data.service';
 
 @Component({
@@ -367,7 +366,7 @@ export class ClientBookingComponent implements OnInit {
           this.error = error.message;
       });
     }else{
-      this.error = "Please Login our Signup if you don't have an account!";
+      this.error = "Please Login or Signup if you don't have an account!";
     }
   }
 

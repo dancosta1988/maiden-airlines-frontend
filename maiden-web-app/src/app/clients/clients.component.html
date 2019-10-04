@@ -200,9 +200,8 @@
     <strong>Loading...</strong>
   </div>
   <div *ngIf="error" class="alert alert-danger">
-    <h3>Error occurred using the webservices!</h3>
+    <h3>Oops!</h3>
     <strong>{{ error }}</strong><br>
-    Please contact the coding monkeys.
     <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
   </div>
   <div *ngIf="success" class="alert alert-success">

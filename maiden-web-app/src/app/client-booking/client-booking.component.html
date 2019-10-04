@@ -12,7 +12,6 @@
             <div *ngIf="checkinError" class="alert alert-danger">
                 <h3>Error: </h3>
                 <strong>{{ checkinError }}</strong><br>
-                Please contact the coding monkeys.
               </div>
               <div *ngIf="checkinSuccess" class="alert alert-success">
                 <h3>Success! </h3>
@@ -201,7 +200,7 @@
         <h2>Book your Flight!</h2>
   <hr>
   <div *ngIf="error" class="alert alert-danger">
-    <h3>Error occurred using the webservices!</h3>
+    <h3>Oops!</h3>
     <strong>{{ error }}</strong><br>
   </div>
   <div *ngIf="success" class="alert alert-success">
@@ -406,7 +405,6 @@
             <div *ngIf="checkinError" class="alert alert-danger">
                 <h3>Error: </h3>
                 <strong>{{ checkinError }}</strong><br>
-                Please contact the coding monkeys.
               </div>
               <div *ngIf="checkinSuccess" class="alert alert-success">
                 <h3>Success! </h3>
@@ -442,7 +440,7 @@
         <h2>Check-In</h2>
         <p>1- Make sure you are logged in 2- Get your booking number 3- Search </p>
         <div *ngIf="error" class="alert alert-danger">
-            <h3>Error occurred using the webservices!</h3>
+            <h3>Oops!</h3>
             <strong>{{ error }}</strong><br>
           </div>
           <div *ngIf="success" class="alert alert-success">

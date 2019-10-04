@@ -30,13 +30,26 @@ export class LoginBarComponent implements OnInit {
   
 
   constructor(private data: DataService, private datepipe: DatePipe, private constants: ConstantsService, private clientAuthService:ClientAuthenticationService, private clientsService: ClientsService, private clientTypesService:ClientTypesService ) {
-    this.data.currentMessage.subscribe(message => {this.refreshClient();});
+    this.data.currentMessage.subscribe(message => {message => {
+
+      if(message === "updateClient")
+        this.refreshClient()
+      else if(message === "logoutClient")
+        this.onLogout();
+      }});
    }
 
   ngOnInit() {
     this.fetchClientTypes();
     
-    this.data.currentMessage.subscribe(message => {this.refreshClient();});
+    this.data.currentMessage.subscribe(message => {
+
+      if(message === "updateClient")
+        this.refreshClient()
+      else if(message === "logoutClient")
+        this.onLogout();
+      });
+
     if(localStorage.getItem('username')){
       this.refreshClient();
     }

@@ -13,6 +13,10 @@ export class DataService {
     this.messageSource.next('updateClient');
   }
 
+  logoutClient(){
+    this.messageSource.next('logoutClient');
+  }
+
   
 
 }
