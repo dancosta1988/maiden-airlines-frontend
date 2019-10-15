@@ -30,6 +30,12 @@
               class="help-block alert-warning">Please enter a valid short name!</span>
           </div>
           <div class="form-group">
+            <label for="airportImagePath">Image Path:</label>
+            <input type="text" class="form-control" id="insert_airportImagePath"  formControlName="airportImagePath" name="airportImagePath">
+            <span *ngIf="!insertForm.get('airportImagePath').valid && insertForm.get('airportImagePath').touched"
+              class="help-block alert-warning">Please enter a valid image path!</span>
+          </div>
+          <div class="form-group">
             <label for="cityList">Select City:</label>
             <select class="form-control" id="insert_cityList"  formControlName="airportCity" name="airportCity">
                 <option>Barcelona</option>
@@ -337,6 +343,12 @@
               <input type="text" class="form-control" id="edit_airportShortName"   formControlName="airportShortName" name="airportShortName">
               <span *ngIf="!editForm.get('airportShortName').valid && editForm.get('airportShortName').touched"
               class="help-block alert-warning">Please enter a valid short name!</span>
+            </div>
+            <div class="form-group">
+              <label for="airportImagePath">Image Path:</label>
+              <input type="text" class="form-control" id="edit_airportImagePath"  formControlName="airportImagePath" name="airportImagePath">
+              <span *ngIf="!editForm.get('airportImagePath').valid && editForm.get('airportImagePath').touched"
+                class="help-block alert-warning">Please enter a valid image path!</span>
             </div>
             <div class="form-group">
               <label for="edit_cityList">Select City:</label>

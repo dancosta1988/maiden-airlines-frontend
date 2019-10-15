@@ -43,6 +43,7 @@ export class AirportsComponent implements OnInit {
     this.insertForm = new FormGroup({
       'airportName' : new FormControl(null,Validators.required),
       'airportShortName' : new FormControl(null, Validators.required),
+      'airportImagePath' : new FormControl(null, Validators.required),
       'airportCity' : new FormControl(null, Validators.required),
       'airportCountry' : new FormControl(null, Validators.required)
     });
@@ -51,6 +52,7 @@ export class AirportsComponent implements OnInit {
       'airportId' : new FormControl(null),
       'airportName' : new FormControl(null,Validators.required),
       'airportShortName' : new FormControl(null, Validators.required),
+      'airportImagePath' : new FormControl(null, Validators.required),
       'airportCity' : new FormControl(null, Validators.required),
       'airportCountry' : new FormControl(null, Validators.required)
     });
@@ -67,6 +69,7 @@ export class AirportsComponent implements OnInit {
           airportId: index,
           airportName: this.airports[index].name,
           airportShortName: this.airports[index].shortName,
+          airportImagePath: this.airports[index].imagePath,
           airportCity: this.airports[index].city,
           airportCountry: this.airports[index].country
     });
@@ -84,7 +87,8 @@ export class AirportsComponent implements OnInit {
       this.insertForm.value.airportName, 
       this.insertForm.value.airportShortName, 
       this.insertForm.value.airportCity, 
-      this.insertForm.value.airportCountry).subscribe(responseData => {
+      this.insertForm.value.airportCountry,
+      this.insertForm.value.airportImagePath).subscribe(responseData => {
         this.error ="";
         this.success = "New Airport Inserted.";
         this.fetchAirports();
@@ -103,7 +107,8 @@ export class AirportsComponent implements OnInit {
         this.editForm.value.airportName, 
         this.editForm.value.airportShortName, 
         this.editForm.value.airportCity, 
-        this.editForm.value.airportCountry).subscribe(responseData => {
+        this.editForm.value.airportCountry,
+        this.editForm.value.airportImagePath).subscribe(responseData => {
           this.error ="";
           this.success = "Airport Updated.";
           this.fetchAirports();
@@ -139,7 +144,7 @@ export class AirportsComponent implements OnInit {
         this.isFetching = false;
         this.airports = [];
         for (var i = 0, len = data.length; i < len; i++) {
-          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
+          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country, data[i].imagePath));
         }
         this.error ="";
         this.success ="";

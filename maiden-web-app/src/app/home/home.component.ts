@@ -39,8 +39,8 @@ export class HomeComponent implements OnInit {
     
   }
 
-  getBackground(): Object{
-    return { 'background': this.backgrounds[Math.ceil(Math.random() * (this.backgrounds.length-1))], 'background-size': 'cover'};
+  getBackground(i): Object{
+    return { 'background': this.showflights[i].arrival_airport.imagePath, 'background-size': 'cover'};
   }
 
   getRandomFlights(){
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
         
         this.airports = [];
         for (var i = 0, len = data.length; i < len; i++) {
-          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
+          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country, data[i].imagePath));
         }
         this.fetchedAirports = true;
       },

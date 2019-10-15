@@ -8,12 +8,12 @@ export class AirportsService {
 
     constructor(private http: HttpClient, private constants: ConstantsService){}
 
-    createAndStoreAirport(name: string, short_name: string, city: string, country: string){
-        return this.http.post(this.constants.webServicesUrl+'/Airports/AirportCreate?shortName='+short_name+'&country='+country+'&city='+city+'&name='+name,null)
+    createAndStoreAirport(name: string, short_name: string, city: string, country: string, imagePath: string){
+        return this.http.post(this.constants.webServicesUrl+'/Airports/AirportCreate?shortName='+short_name+'&country='+country+'&city='+city+'&name='+name+'&imagePath='+imagePath,null)
     }
 
-    updateAirport(id: number, name: string, short_name: string, city: string, country: string){
-        return this.http.post(this.constants.webServicesUrl+'/Airports/AirportUpdate?id='+id+'&shortName='+short_name+'&country='+country+'&city='+city+'&name='+name,null);
+    updateAirport(id: number, name: string, short_name: string, city: string, country: string, imagePath: string){
+        return this.http.post(this.constants.webServicesUrl+'/Airports/AirportUpdate?id='+id+'&shortName='+short_name+'&country='+country+'&city='+city+'&name='+name+'&imagePath='+imagePath,null);
     }
 
     deleteAirport(id: number){

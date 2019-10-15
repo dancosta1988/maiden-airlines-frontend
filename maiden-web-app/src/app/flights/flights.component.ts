@@ -247,7 +247,7 @@ export class FlightsComponent implements OnInit {
         
         this.airports = [];
         for (var i = 0, len = data.length; i < len; i++) {
-          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country));
+          this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country, data[i].imagePath));
         }
         this.fetchedAirports = true;
       },

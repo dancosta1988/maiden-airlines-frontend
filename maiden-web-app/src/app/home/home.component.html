@@ -2,8 +2,8 @@
 
 <hr>
 <div class="row">
-        <div class="col-sm-4" *ngFor="let showflight of showflights;">
-            <div class="card shadow rounded-top" [ngStyle]="getBackground()">
+        <div class="col-sm-4" *ngFor="let showflight of showflights;index as i;">
+            <div class="card shadow rounded-top" [ngStyle]="getBackground(i)">
                 <div class="card-body">
                     <h3 class="card-title text-center">{{showflight.arrival_airport.city}}</h3>
                     <hr>
