@@ -90,7 +90,7 @@ export class BookingComponent implements OnInit {
     this.role = localStorage.getItem('role');
     //fetch
     this.onRefresh();
-    this.generateSeats(100);//hardcoded
+    //this.generateSeats(100);//hardcoded
     //using Reactive Forms
     this.insertForm = new FormGroup({
       'bookingClient' : new FormControl(null,Validators.required),
@@ -164,12 +164,9 @@ export class BookingComponent implements OnInit {
 
   onRefresh(){
     this.fetchAirplanes();
-    this.fetchAirports();
+    
     this.fetchbookingTypes();
     this.fetchClientTypes();
-    this.fetchClients();
-    this.fetchFlights();
-    this.fetchBookings();
   }
 
   populateCheckinForm(bookingIndex: number){
@@ -558,6 +555,7 @@ export class BookingComponent implements OnInit {
         this.airplanes.push(new Airplane(airplanes[i].id, airplanes[i].model, airplanes[i].cargoHoldCapacity, airplanes[i].numberSeats));
       }
       this.fetchedAirplanes = true;
+      this.fetchAirports();
     },
     error =>{
         this.error = error.message;
@@ -606,6 +604,8 @@ export class BookingComponent implements OnInit {
       this.types = [];
       this.types = bookingTypes;
       
+      this.fetchFlights();
+
     },
     error =>{
         this.error = error.message;
@@ -624,6 +624,8 @@ export class BookingComponent implements OnInit {
         }
         this.success ="";
         this.error ="";
+        this.fetchBookings();
+
       },
       error =>{
           this.isFetching = false;
@@ -726,6 +728,9 @@ export class BookingComponent implements OnInit {
         for (var i = 0, len = clientTypes.length; i < len; i++) {
           this.clientTypes.push(new ClientType(clientTypes[i].id, clientTypes[i].name, clientTypes[i].annualFee, clientTypes[i].monthlyMiles, clientTypes[i].welcomeBonus, clientTypes[i].bonusMiles));
         }
+
+        this.fetchClients();
+
     },
     error =>{
         this.error = error.message;
@@ -760,6 +765,8 @@ export class BookingComponent implements OnInit {
   public onConfirm(){
     this.success = "Added a new Booking!";
     this.error = "";
+    this.currentPage = 1;
+    this.onRefresh();
   }
 
 }

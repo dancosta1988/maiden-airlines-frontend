@@ -204,7 +204,7 @@
 
   <!-- Modal Occupation-->
 <div class="modal fade" id="occupation_flightModal" tabindex="3" role="dialog" aria-labelledby="occupation_flightModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
       <div class="modal-header">
           <h5 class="modal-title" id="occupation_flightModalLabel">Flight Occupation</h5>
@@ -260,9 +260,9 @@
     <tbody>
       <tr *ngFor="let flight of flights; index as i;">
         <td>{{flight.flight_number}}</td>
-        <td>{{flight.departure_date | date : "dd-MM-y HH:mm:ss"}}</td>
+        <td>{{flight.departure_date | date : "dd-MM-y HH:mm"}}</td>
         <td>{{flight.departure_airport.name}} ({{flight.departure_airport.shortName}}), {{flight.departure_airport.city}} </td>
-        <td>{{flight.arrival_date | date : "dd-MM-y HH:mm:ss"}}</td>
+        <td>{{flight.arrival_date | date : "dd-MM-y HH:mm"}}</td>
         <td>{{flight.arrival_airport.name}} ({{flight.arrival_airport.shortName}}), {{flight.arrival_airport.city}}</td>
         <td>{{flight.airplane.id}} ({{flight.airplane.model}}) </td>
         <td>{{flight.gate}}</td>
@@ -270,7 +270,7 @@
         <td *ngIf="flight.status === 'delayed'" class= "bg-warning text-dark">{{flight.status}}</td>
         <td *ngIf="flight.status === 'cancelled'" class= "bg-danger text-dark">{{flight.status}}</td>
         <td *ngIf="flight.status == null" class= "bg-danger text-dark">No Information</td>
-        <td>{{flight.price}}</td>
+        <td>{{flight.price}} €</td>
         <td>{{flight.miles}}</td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#occupation_flightModal" (click)="generateSeats(flight.airplane.numberSeats, i)">Occupation</button>

@@ -202,12 +202,10 @@
   <div *ngIf="error" class="alert alert-danger">
     <h3>Oops!</h3>
     <strong>{{ error }}</strong><br>
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
   </div>
   <div *ngIf="success" class="alert alert-success">
       <h3>Success! </h3>
       <strong>{{ success }}</strong>
-      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
   </div>
 <table class="table table-striped" *ngIf="clients.length >= 1 && !error && fetchedClientTypes">
     <thead>

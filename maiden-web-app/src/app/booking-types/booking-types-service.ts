@@ -25,7 +25,7 @@ export class BookingTypesService {
             hand = 1;
         
         
-        return this.http.post(this.constants.webServicesUrl+'/BookingTypeCreate?name='+name+'&handBaggage='+hand+'&checkedBaggage='+checked+'&changeDate='+change+'&cancelBooking='+cancel+'&cost='+cost, null);
+        return this.http.post(this.constants.webServicesUrl+'/BookingTypes/BookingTypeCreate?name='+name+'&handBaggage='+hand+'&checkedBaggage='+checked+'&changeDate='+change+'&cancelBooking='+cancel+'&cost='+cost, null);
     }
 
     updateBookingType(id: number, name: string,
@@ -44,11 +44,11 @@ export class BookingTypesService {
             checked = 1;
         if(handBaggage)
             hand = 1;
-        return this.http.post(this.constants.webServicesUrl+'/BookingTypeUpdate?name='+name+'&handBaggage='+hand+'&checkedBaggage='+checked+'&changeDate='+change+'&cancelBooking='+cancel+'&cost='+cost, null);
+        return this.http.post(this.constants.webServicesUrl+'/BookingTypes/BookingTypeUpdate?name='+name+'&handBaggage='+hand+'&checkedBaggage='+checked+'&changeDate='+change+'&cancelBooking='+cancel+'&cost='+cost, null);
     }
 
     deleteBookingType(id: number){
-        return this.http.post(this.constants.webServicesUrl+'/BookingTypeDelete?id='+id, null);
+        return this.http.post(this.constants.webServicesUrl+'/BookingTypes/BookingTypeDelete?id='+id, null);
     }
 
     fetchBookingTypes(){

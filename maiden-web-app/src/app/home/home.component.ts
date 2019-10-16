@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   public showflights: Flight[] = [];
   public backgrounds: string[] = ["url('assets/geneva.jpg')", "url('assets/paris.jpg')", "url('assets/london.jpg')"];
 
-  everySecond: Observable<number> = timer(5000, 10000);
+  everySecond: Observable<number> = timer(5000, 15000);
   private subscription = this.everySecond.subscribe((seconds) => {
       this.getRandomFlights();
   })
@@ -40,13 +40,17 @@ export class HomeComponent implements OnInit {
   }
 
   getBackground(i): Object{
-    return { 'background': this.showflights[i].arrival_airport.imagePath, 'background-size': 'cover'};
+    return { 'background': 'url('+this.showflights[i].arrival_airport.imagePath+')', 'background-size': 'cover'};
   }
 
   getRandomFlights(){
     this.showflights = [];
-    for(let i = 0; i < 3 && this.flights.length > 0; i++){
-      this.showflights.push(this.flights[Math.ceil(Math.random() * (this.flights.length-1))]);
+    for(let i = 0; i < 3 && this.flights.length > 0;){
+      let destination:Flight = this.flights[Math.ceil(Math.random() * (this.flights.length-1))];
+      if(this.showflights.indexOf(destination) < 0){
+        this.showflights.push(destination);
+        i++;
+      }
     }
       
   }

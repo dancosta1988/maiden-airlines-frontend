@@ -16,6 +16,14 @@
           </button>
       </div>
       <div class="modal-body">
+          <div *ngIf="error" class="alert alert-danger">
+              <h3>Oops!</h3>
+              <strong>{{ error }}</strong><br>
+            </div>
+            <div *ngIf="success" class="alert alert-success">
+              <h3>Success! </h3>
+              <strong>{{ success }}</strong>
+            </div>
         <div *ngIf="currentPage == 1">
             <div class="form-group">
                 <label for="insert_bookingClient">To:</label>
