@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit {
 
   onRefresh(){
     this.fetchAirports();
-    this.fetchFlights();
   }
 
      
@@ -104,6 +103,8 @@ export class HomeComponent implements OnInit {
           this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country, data[i].imagePath));
         }
         this.fetchedAirports = true;
+        this.fetchFlights();
+
       },
       error =>{
           this.error = error.message;
