@@ -31,20 +31,20 @@ export class ClientTypesComponent implements OnInit {
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
-      'clientTypeName' : new FormControl(null,Validators.required),
-      'clientTypeAnnualFee' : new FormControl(null,Validators.required),
-      'clientTypeMonthlyMiles' : new FormControl(null,Validators.required),
-      'clientTypeWelcomeBonus' : new FormControl(null,Validators.required),
-      'clientTypeBonusMiles' : new FormControl(null,Validators.required)
+      'clientTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientTypeAnnualFee' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")]),
+      'clientTypeMonthlyMiles' : new FormControl(null,[Validators.required,Validators.pattern("^[0-9]*[0-9]$")]),
+      'clientTypeWelcomeBonus' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")]),
+      'clientTypeBonusMiles' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")])
     });
 
     this.editForm = new FormGroup({
       'clientTypeId' : new FormControl(null),
-      'clientTypeName' : new FormControl(null,Validators.required),
-      'clientTypeAnnualFee' : new FormControl(null,Validators.required),
-      'clientTypeMonthlyMiles' : new FormControl(null,Validators.required),
-      'clientTypeWelcomeBonus' : new FormControl(null,Validators.required),
-      'clientTypeBonusMiles' : new FormControl(null,Validators.required)
+      'clientTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientTypeAnnualFee' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")]),
+      'clientTypeMonthlyMiles' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")]),
+      'clientTypeWelcomeBonus' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")]),
+      'clientTypeBonusMiles' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")])
     });
     
     this.deleteForm = new FormGroup({

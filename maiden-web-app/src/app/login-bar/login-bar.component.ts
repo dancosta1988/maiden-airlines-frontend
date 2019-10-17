@@ -57,9 +57,9 @@ export class LoginBarComponent implements OnInit {
     
     //create forms
     this.signupForm = new FormGroup({
-      'signupFirstName' : new FormControl(null,Validators.required),
-      'signupLastName' : new FormControl(null,Validators.required),
-      'signupAddress' : new FormControl(null,Validators.required),
+      'signupFirstName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'signupLastName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'signupAddress' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'signupGender' : new FormControl(null,Validators.required),
       'signupDateOfBirth' : new FormControl(null,Validators.required),
       'signupContactNumber' : new FormControl(null,[Validators.required, Validators.maxLength(9),Validators.pattern("^[0-9]*[0-9]$")]),
@@ -71,9 +71,9 @@ export class LoginBarComponent implements OnInit {
 
     this.editForm = new FormGroup({
       'editId' : new FormControl(null,Validators.required),
-      'editFirstName' : new FormControl(null,Validators.required),
-      'editLastName' : new FormControl(null,Validators.required),
-      'editAddress' : new FormControl(null,Validators.required),
+      'editFirstName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'editLastName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'editAddress' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'editGender' : new FormControl(null,Validators.required),
       'editDateOfBirth' : new FormControl(null,Validators.required),
       'editContactNumber' : new FormControl(null,[Validators.required, Validators.maxLength(9),Validators.pattern("^[0-9]*[0-9]$")]),

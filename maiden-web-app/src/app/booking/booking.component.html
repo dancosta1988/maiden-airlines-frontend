@@ -237,14 +237,27 @@
             </div>
             <div *ngIf="checkin.length == 0" class="alert-warning">No Passengers for this Reservation (should not be possible)</div>
             <div *ngIf="checkin.length > 0">
-              <div *ngFor="let passenger of checkin; index as i;" class="alert-info row">
-                <div class="col-4">{{passenger.client.firstName}} {{passenger.client.lastName}}</div>
-                <div class="col-4">{{passenger.flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{passenger.flight.arrival_airport.shortName}}</div>
-                <div class="col-2" *ngIf="passenger.seat != null">{{passenger.seat}}</div>
-                <div class="col-2" *ngIf="passenger.seat == null">No Seat</div>
-                <button type="submit" class="btn btn-success col-2" [disabled] = "passenger.seat != null" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
-                <hr>
-              </div>
+                <table class="table table-striped" *ngIf="bookings.length >= 1">
+                    <thead>
+                        <tr>
+                        <th>Passenger</th>
+                        <th>Flight</th>
+                        <th>Seat</th>
+                        <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let passenger of checkin; index as i;" class="alert-info">
+                            <td>{{passenger.client.firstName}} {{passenger.client.lastName}} <img *ngIf="isChild(passenger.client.dateOfBirth)" width="20px" src="assets/baby.png" alt="baby"></td>
+                            <td>{{passenger.flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{passenger.flight.arrival_airport.shortName}}</td>
+                            <td *ngIf="passenger.seat != null">{{passenger.seat}}</td>
+                            <td *ngIf="passenger.seat == null">No Seat</td>
+                            <td>
+                                <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null || !isCheckinOpen(i) || isChild(passenger.client.dateOfBirth)" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
+                            </td>
+                        </tr>
+                    </tbody>
+            </table>   
             </div>   
 
         </div>

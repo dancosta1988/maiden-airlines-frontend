@@ -36,17 +36,17 @@ export class BackofficeOperatorsComponent implements OnInit {
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
-      'employeeName' : new FormControl(null,Validators.required),
+      'employeeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
       'employeeRole' : new FormControl(null,Validators.required),
-      'employeeUserName' : new FormControl(null,Validators.required),
+      'employeeUserName' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'employeePassword' : new FormControl(null,Validators.required)
     });
 
     this.editForm = new FormGroup({
       'employeeId' : new FormControl(null),
-      'employeeName' : new FormControl(null,Validators.required),
+      'employeeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
       'employeeRole' : new FormControl(null,Validators.required),
-      'employeeUserName' : new FormControl(null,Validators.required),
+      'employeeUserName' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'employeePassword' : new FormControl(null,Validators.required)
     });
     

@@ -67,7 +67,7 @@ export class FlightsComponent implements OnInit {
     
     //using Reactive Forms
     this.insertForm = new FormGroup({
-      'flightNumber' : new FormControl(null,Validators.required),
+      'flightNumber' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'flightDepartureDate' : new FormControl(null, Validators.required),
       'flightDepartureAirport' : new FormControl(null, Validators.required),
       'flightArrivalDate' : new FormControl(null, Validators.required),
@@ -79,7 +79,7 @@ export class FlightsComponent implements OnInit {
 
     this.editForm = new FormGroup({
       'flightId' : new FormControl(null),
-      'flightNumber' : new FormControl(null,Validators.required),
+      'flightNumber' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'flightDepartureDate' : new FormControl(null, Validators.required),
       'flightDepartureAirport' : new FormControl(null, Validators.required),
       'flightArrivalDate' : new FormControl(null, Validators.required),

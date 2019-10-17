@@ -102,11 +102,11 @@ export class BookingComponent implements OnInit {
       'bookingOutboundFlight' : new FormControl(null, Validators.required),
       'bookingReturnFlight' : new FormControl(null, Validators.required),
       'bookingReturn' : new FormControl('false', Validators.required),
-      'bookingFirstName' : new FormControl(null, Validators.required),
-      'bookingLastName' : new FormControl(null, Validators.required),
+      'bookingFirstName' : new FormControl(null, [Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'bookingLastName' : new FormControl(null, [Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
       'bookingDateOfBirth' : new FormControl(null, Validators.required),
       'bookingGender' : new FormControl(null, Validators.required),
-      'bookingAddress' : new FormControl(null, Validators.required),
+      'bookingAddress' : new FormControl(null, [Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'bookingContactNumber' : new FormControl(null, [Validators.required, Validators.maxLength(9), Validators.pattern("^[0-9]*[0-9]$")]),
       'bookingIDNumber' : new FormControl(null, Validators.required),
       'bookingID' : new FormControl({disabled: true}, Validators.required),
@@ -424,6 +424,17 @@ export class BookingComponent implements OnInit {
       //checkin
       if(assignedSeat != ""){
         this.checkingIn(this.checkin[bookingClientFlightIndex],this.checkin[bookingClientFlightIndex].id,assignedSeat, this.checkin[bookingClientFlightIndex].client.id, this.checkin[bookingClientFlightIndex].flight.id );
+
+        //check if there is a child in the reservation
+        for(let x = 0; x < this.checkin.length; x++){
+          
+          let born = this.checkin[x].client.dateOfBirth;
+          if (this.checkin[bookingClientFlightIndex].flight.id == this.checkin[x].flight.id && this.isChild(born) && (this.checkin[x].seat == "" || this.checkin[x].seat == null)){
+            //if exists checkin in the same seat
+            this.checkingIn(this.checkin[x],this.checkin[x].id,assignedSeat, this.checkin[x].client.id, this.checkin[x].flight.id);
+          }
+          
+        }
       }else{
         this.checkinError = "Could not find a free seat.";
         this.checkinSuccess = "";
@@ -433,9 +444,18 @@ export class BookingComponent implements OnInit {
     },
     error =>{
         this.checkinSuccess ="";
-        this.checkinError = error.message;
+        this.checkinError = error.message; 
     });
 
+  }
+
+  public isChild(born: string){
+    let today = new Date();
+    let bornDate = new Date(born);
+    let difference_In_Time = today.getTime() - bornDate.getTime();
+    let result = Math.abs(Math.round(difference_In_Time / (1000 * 60 * 60 * 24 * 365.25)));
+    console.log("years:" + result + "result: " + (result <= 2));
+    return (result <= 2);
   }
 
   private isSeatOccupied(seat:string, bookings:{id: number, booking: Booking, client: Client, flight: Flight, checkin: boolean, seat: string}[]){

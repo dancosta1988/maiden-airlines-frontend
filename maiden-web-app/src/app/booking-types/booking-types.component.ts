@@ -39,22 +39,22 @@ export class BookingTypesComponent implements OnInit {
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
-      'bookingTypeName' : new FormControl(null,Validators.required),
+      'bookingTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
       'bookingTypeCancel' : new FormControl(null,Validators.required),
       'bookingTypeCheckedBaggage' : new FormControl(null,Validators.required),
       'bookingTypeHandBaggage' : new FormControl(null,Validators.required),
       'bookingTypeChangeDate' : new FormControl(null,Validators.required),
-      'bookingTypeCost' : new FormControl(null,Validators.required)
+      'bookingTypeCost' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")])
     });
 
     this.editForm = new FormGroup({
       'bookingTypeId' : new FormControl(null),
-      'bookingTypeName' : new FormControl(null,Validators.required),
+      'bookingTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
       'bookingTypeCancel' : new FormControl(null,Validators.required),
       'bookingTypeCheckedBaggage' : new FormControl(null,Validators.required),
       'bookingTypeHandBaggage' : new FormControl(null,Validators.required),
       'bookingTypeChangeDate' : new FormControl(null,Validators.required),
-      'bookingTypeCost' : new FormControl(null,Validators.required)
+      'bookingTypeCost' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")])
     });
     
     this.deleteForm = new FormGroup({

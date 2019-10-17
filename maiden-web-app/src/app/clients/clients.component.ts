@@ -35,9 +35,9 @@ export class ClientsComponent implements OnInit {
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
-      'clientFirstName' : new FormControl(null,Validators.required),
-      'clientLastName' : new FormControl(null,Validators.required),
-      'clientAddress' : new FormControl(null,Validators.required),
+      'clientFirstName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientLastName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientAddress' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'clientGender' : new FormControl(null,Validators.required),
       'clientDateOfBirth' : new FormControl(null,Validators.required),
       'clientContactNumber' : new FormControl(null,[Validators.required, Validators.maxLength(9),Validators.pattern("^[0-9]*[0-9]$")]),
@@ -49,9 +49,9 @@ export class ClientsComponent implements OnInit {
 
     this.editForm = new FormGroup({
       'clientId' : new FormControl(null),
-      'clientFirstName' : new FormControl(null,Validators.required),
-      'clientLastName' : new FormControl(null,Validators.required),
-      'clientAddress' : new FormControl(null,Validators.required),
+      'clientFirstName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientLastName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientAddress' : new FormControl(null,[Validators.required, Validators.pattern("^[a-zA-ZÀ-ú0-9_.+-ªº ]*[a-zA-ZÀ-ú0-9-.ºª ]+$")]),
       'clientGender' : new FormControl(null,Validators.required),
       'clientDateOfBirth' : new FormControl(null,Validators.required),
       'clientContactNumber' : new FormControl(null,[Validators.required, Validators.maxLength(9),Validators.pattern("^[0-9]*[0-9]$")]),

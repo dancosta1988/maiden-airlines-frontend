@@ -9,6 +9,9 @@
             </button>
         </div>
         <div class="modal-body">
+            <div class="alert alert-warning">
+                <strong>Online Check-in is only allowed 48 hours before your flight.</strong><br>
+              </div>
             <div *ngIf="checkinError" class="alert alert-danger">
                 <h3>Error: </h3>
                 <strong>{{ checkinError }}</strong><br>
@@ -33,13 +36,13 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let passenger of checkin; index as i;" class="alert-info">
-                                <td>{{passenger.client.firstName}} {{passenger.client.lastName}}</td>
+                                <td>{{passenger.client.firstName}} {{passenger.client.lastName}} <img *ngIf="isChild(passenger.client.dateOfBirth)" width="20px" src="assets/baby.png" alt="baby"></td>
                                 <td>{{passenger.flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{passenger.flight.arrival_airport.shortName}}</td>
                                 <td *ngIf="passenger.seat != null">{{passenger.seat}}</td>
                                 <td *ngIf="passenger.seat == null">No Seat</td>
                                 <td>
-                                    <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null || !isCheckinOpen(i)" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
-                                    <button type="submit" class="btn btn-info mb-2 mr-2" [disabled] = "passenger.seat == null || !isCheckinOpen(i)" (click)="drawSeats(passenger.flight.id, i)">Change Seats</button>
+                                    <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null || !isCheckinOpen(i) || isChild(passenger.client.dateOfBirth)" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
+                                    <button type="submit" class="btn btn-info mb-2 mr-2" [disabled] = "passenger.seat == null || !isCheckinOpen(i) || isChild(passenger.client.dateOfBirth)" (click)="drawSeats(passenger.flight.id, i)">Change Seats</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -391,51 +394,7 @@
 
 
 
-<div class="modal fade" id="checkin_bookingModal" tabindex="3" role="dialog" aria-labelledby="checkin_bookingModalLabel" aria-hidden="true" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        
-        <div class="modal-header">
-            <h5 class="modal-title" id="checkin_bookingModalLabel">Check-In</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div *ngIf="checkinError" class="alert alert-danger">
-                <h3>Error: </h3>
-                <strong>{{ checkinError }}</strong><br>
-              </div>
-              <div *ngIf="checkinSuccess" class="alert alert-success">
-                <h3>Success! </h3>
-                <strong>{{ checkinSuccess }}</strong>
-              </div>
-            <div class="form-group">
-                <input type="hidden" class="form-control" name="bookingId" value=""/>
-            </div>
-            <div *ngIf="checkin.length == 0" class="alert-warning">No Passengers for this Reservation (should not be possible)</div>
-            <div *ngIf="checkin.length > 0">
-              <div *ngFor="let passenger of checkin; index as i;" class="alert-info row">
-                <div class="col-4">{{passenger.client.firstName}} {{passenger.client.lastName}}</div>
-                <div class="col-4">{{passenger.flight.departure_airport.shortName}} <img width="20px" alt="airplane" src="assets/airplanes.png"/> {{passenger.flight.arrival_airport.shortName}}</div>
-                <div class="col-2" *ngIf="passenger.seat != null">{{passenger.seat}}</div>
-                <div class="col-2" *ngIf="passenger.seat == null">No Seat</div>
-                <button type="submit" class="btn btn-success col-2" [disabled] = "passenger.seat != null" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
-                <hr>
-              </div>
-            </div>   
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-       
-        </div>
-    </div>
-  </div>
-
-
-    </div>
+   </div>
     <div class="tab-pane fade" id="checkin_content" role="tabpanel" aria-labelledby="checkin-tab">
         <h2>Check-In</h2>
         <p>1- Make sure you are logged in 2- Get your booking number 3- Search </p>
@@ -448,13 +407,13 @@
             <strong>{{ success }}</strong>
           </div>
         <hr>
-        <form [formGroup] = "searchForm" class="col-12">
-            <div class="form-group">
-                <label for="search_bookingId">Booking Number:</label>
+        <form [formGroup] = "searchForm" class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="search_bookingId">Booking Number: </label>
                 <input type="text" class="form-control" id="search_bookingId"  formControlName="bookingId" name="bookingId">
                 <span *ngIf="!searchForm.get('bookingId').valid && searchForm.get('bookingId').touched"
                 class="help-block alert-warning">Please enter a valid Booking Number!</span>
-                <button type="button" class="btn btn-success mb-2 mr-2 col-2" (click)="getBookingByNumber()">Search</button>
+                <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="getBookingByNumber()">Search</button>
             </div>
         </form>
         <p *ngIf="bookings.length >= 1">Check-in, change your seat or manage your booking</p>
