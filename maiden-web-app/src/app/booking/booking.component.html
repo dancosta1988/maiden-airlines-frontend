@@ -113,7 +113,7 @@
             </div>
           </div>
       </div>
-      <div *ngIf="currentPage == 3">
+      <div *ngIf="currentPage == 3  && !booking">
           <h5>Additional Passengers</h5>
           <hr>
           <div *ngIf="additionalPassengers.length == 0" class="alert-warning">No additional passengers were added</div>
@@ -169,7 +169,7 @@
         
         <button type="button" class="btn btn-success mr-1" (click) ="onAddPassenger()">Add Passenger</button>
       </div>
-      <div *ngIf="currentPage == 4">
+      <div *ngIf="currentPage == 4 && !booking">
         <div class="form-group">
               <label for="insert_bookingID">Booking Number:</label>
               <input type="text" class="form-control" id="insert_bookingID"  formControlName="bookingID" name="bookingID" [attr.disabled]="true">
@@ -200,6 +200,7 @@
             class="help-block alert-warning">Please enter a valid Security Number!</span>
       </div>
     </div>
+    <div *ngIf="booking" class="mx-auto d-block" style="position: relative; display: block; margin-left: auto; margin-right: auto;"><img width="300px" src="assets/loading.gif" alt="loading"></div>
     </div>  
       <div class="modal-footer">
           <button *ngIf="currentPage > 1 && currentPage < 4" type="button" class="btn btn-primary" (click) = "previous()">Previous</button>
@@ -235,8 +236,9 @@
             <div class="form-group">
                 <input type="hidden" class="form-control" name="bookingId" value=""/>
             </div>
+            <div *ngIf=checking class="mx-auto d-block" style="position: relative; display: block; margin-left: auto; margin-right: auto;"><img width="300px" src="assets/loading.gif" alt="loading"></div>
             <div *ngIf="checkin.length == 0" class="alert-warning">No Passengers for this Reservation (should not be possible)</div>
-            <div *ngIf="checkin.length > 0">
+            <div *ngIf="checkin.length > 0 && !checking">
                 <table class="table table-striped" *ngIf="bookings.length >= 1">
                     <thead>
                         <tr>
@@ -253,7 +255,7 @@
                             <td *ngIf="passenger.seat != null">{{passenger.seat}}</td>
                             <td *ngIf="passenger.seat == null">No Seat</td>
                             <td>
-                                <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null || !isCheckinOpen(i) || isChild(passenger.client.dateOfBirth)" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
+                                <button type="submit" class="btn btn-success mb-2 mr-2" [disabled] = "passenger.seat != null || isChild(passenger.client.dateOfBirth)" (click)="onCheckin(passenger.flight.id, i)">Check In</button>
                             </td>
                         </tr>
                     </tbody>

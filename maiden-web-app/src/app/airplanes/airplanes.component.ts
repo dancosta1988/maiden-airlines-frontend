@@ -89,7 +89,7 @@ export class AirplanesComponent implements OnInit {
       },
       error =>{
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -108,7 +108,7 @@ export class AirplanesComponent implements OnInit {
       },
       error =>{
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -124,7 +124,7 @@ export class AirplanesComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
   }
@@ -146,7 +146,7 @@ export class AirplanesComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }

@@ -23,8 +23,9 @@
             <div class="form-group">
                 <input type="hidden" class="form-control" name="bookingId" value=""/>
             </div>
+            <div *ngIf=checking class="mx-auto d-block" style="position: relative; display: block; margin-left: auto; margin-right: auto;"><img width="300px" src="assets/loading.gif" alt="loading"></div>
             <div *ngIf="checkin.length == 0" class="alert-warning">No Passengers for this Reservation (should not be possible)</div>
-            <div *ngIf="checkin.length > 0">
+            <div *ngIf="!checking && checkin.length > 0">
                 <table class="table table-striped" *ngIf="bookings.length >= 1">
                         <thead>
                             <tr>
@@ -296,7 +297,7 @@
             </div>
           </div>
       </div>
-      <div *ngIf="currentPage == 3">
+      <div *ngIf="currentPage == 3 && !booking">
           <h5>Additional Passengers</h5>
           <hr>
           <div *ngIf="additionalPassengers.length == 0" class="alert-warning">No additional passengers were added</div>
@@ -352,7 +353,7 @@
         
         <button type="button" class="btn btn-success mr-1" (click) ="onAddPassenger()">Add Passenger</button>
       </div>
-      <div *ngIf="currentPage == 4">
+      <div *ngIf="currentPage == 4 && !booking">
         <div class="form-group">
               <label for="insert_bookingID">Booking Number:</label>
               <input type="text" class="form-control" id="insert_bookingID"  formControlName="bookingID" name="bookingID" [attr.disabled]="true">
@@ -382,6 +383,7 @@
           <span *ngIf="!insertForm.get('bookingCardSecurity').valid && insertForm.get('bookingCardSecurity').touched"
             class="help-block alert-warning">Please enter a valid Security Number!</span>
       </div>
+      <div *ngIf="booking" class="mx-auto d-block" style="position: relative; display: block; margin-left: auto; margin-right: auto;"><img width="300px" src="assets/loading.gif" alt="loading"></div>
     </div>
         <hr>
         <button *ngIf="currentPage > 1 && currentPage < 4" type="button" class="btn btn-primary mb-2 mr-2" (click) = "previous()">Previous</button>
@@ -411,9 +413,10 @@
             <div class="form-group mx-sm-3 mb-2">
                 <label for="search_bookingId">Booking Number: </label>
                 <input type="text" class="form-control" id="search_bookingId"  formControlName="bookingId" name="bookingId">
+                <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="getBookingByNumber()">Search</button>
+                <br>
                 <span *ngIf="!searchForm.get('bookingId').valid && searchForm.get('bookingId').touched"
                 class="help-block alert-warning">Please enter a valid Booking Number!</span>
-                <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="getBookingByNumber()">Search</button>
             </div>
         </form>
         <p *ngIf="bookings.length >= 1">Check-in, change your seat or manage your booking</p>

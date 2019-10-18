@@ -106,7 +106,7 @@ export class BookingTypesComponent implements OnInit {
         }
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -126,7 +126,7 @@ export class BookingTypesComponent implements OnInit {
         this.fetchbookingTypes();
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -139,7 +139,7 @@ export class BookingTypesComponent implements OnInit {
       this.fetchbookingTypes();
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
   }
@@ -160,7 +160,7 @@ export class BookingTypesComponent implements OnInit {
         }*/
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }

@@ -31,7 +31,7 @@ export class ClientTypesComponent implements OnInit {
 
     //using Reactive Forms
     this.insertForm = new FormGroup({
-      'clientTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù ]*[a-zà-ú ]*$")]),
       'clientTypeAnnualFee' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")]),
       'clientTypeMonthlyMiles' : new FormControl(null,[Validators.required,Validators.pattern("^[0-9]*[0-9]$")]),
       'clientTypeWelcomeBonus' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")]),
@@ -40,7 +40,7 @@ export class ClientTypesComponent implements OnInit {
 
     this.editForm = new FormGroup({
       'clientTypeId' : new FormControl(null),
-      'clientTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù][a-zà-ú]*$")]),
+      'clientTypeName' : new FormControl(null,[Validators.required, Validators.pattern("^[A-ZÀ-Ù ]*[a-zà-ú ]*$")]),
       'clientTypeAnnualFee' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*.[0-9][0-9]$")]),
       'clientTypeMonthlyMiles' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")]),
       'clientTypeWelcomeBonus' : new FormControl(null,[Validators.required, Validators.pattern("^[0-9]*[0-9]$")]),
@@ -90,7 +90,7 @@ export class ClientTypesComponent implements OnInit {
         }
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -105,11 +105,18 @@ export class ClientTypesComponent implements OnInit {
       this.editForm.value.clientTypeWelcomeBonus,
       this.editForm.value.clientTypeBonusMiles 
       ).subscribe(responseData => {
-        this.success = "ClientType updated!";
-        this.fetchclientTypes();
+        
+        if(responseData == 0){
+          this.fetchclientTypes();
+          this.success = "ClientType updated!";
+          this.error = "";
+        }else{
+          this.error = "Something went wrong";
+          this.success ="";
+        }
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -122,7 +129,7 @@ export class ClientTypesComponent implements OnInit {
       this.fetchclientTypes();
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
   }
@@ -141,7 +148,7 @@ export class ClientTypesComponent implements OnInit {
         }
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }

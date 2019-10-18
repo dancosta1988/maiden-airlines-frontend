@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
 
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 

@@ -72,7 +72,7 @@ export class BackofficeRolesComponent implements OnInit {
       },
       error =>{
           this.success = "";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -89,7 +89,7 @@ export class BackofficeRolesComponent implements OnInit {
       },
       error =>{
           this.success = "";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -106,7 +106,7 @@ export class BackofficeRolesComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
   }
@@ -128,7 +128,7 @@ export class BackofficeRolesComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }

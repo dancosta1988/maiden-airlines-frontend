@@ -33,6 +33,8 @@ export class BookingComponent implements OnInit {
   private fetchedAirplanes = false;
   private fetchedAirports = false;
   private fetchedClientTypes = false;
+  private checking = false;
+  private booking = false;
   
   public role = "";
   public error = "";
@@ -184,14 +186,14 @@ export class BookingComponent implements OnInit {
             this.checkin.push({"id" : responseData[i].id, "booking" : this.getBookingById(responseData[i].idBooking), "client" : client, "flight": flight, "checkin": responseData[i].checkIn, "seat" :responseData[i].seat});
           }
         }
-        
+        console.log(this.checkin);
         this.checkinError = "";
         this.checkinSuccess = "";
         //this.fetchFlights();
       },
       error =>{
           this.checkinSuccess ="";
-          this.checkinError = error.message;
+          this.checkinError = "Something went wrong";
       });
 
   }
@@ -256,7 +258,7 @@ export class BookingComponent implements OnInit {
       },
       error =>{
         this.checkinSuccess ="";
-        this.checkinError = error.message;
+        this.checkinError = "Something went wrong";
     });
     
   }
@@ -292,6 +294,8 @@ export class BookingComponent implements OnInit {
       selectedFlights.push({id : this.outboundFlights[0].id});
       if(this.returnFlights.length > 0 )
         selectedFlights.push({id:this.returnFlights[0].id});
+      
+        this.booking = true;
       this.bookingsService.createAndStoreBooking(
       new Booking(null, this.clients[this.insertForm.value.bookingClient].id,this.insertForm.value.bookingDate, this.types[this.insertForm.value.bookingType].id, this.additionalPassengers, selectedFlights)
       
@@ -304,11 +308,13 @@ export class BookingComponent implements OnInit {
         "bookingTypeCost" : responseData["BookingTypeCost"]+'€'
       });
       
+      this.booking = false;
        
   },
   error =>{
       this.success = "";
-      this.error = error.message;
+      this.error = "Something went wrong";
+      this.booking = false;
   });
   }
 
@@ -335,7 +341,7 @@ export class BookingComponent implements OnInit {
             },
             error =>{
                 this.success ="";
-                this.error = error.message;
+                this.error = "Something went wrong";
             });
 
           }else if(this.returnFlightId != null && responseData[i].idFlight == this.returnFlightId){
@@ -351,7 +357,7 @@ export class BookingComponent implements OnInit {
             },
             error =>{
                 this.success ="";
-                this.error = error.message;
+                this.error = "Something went wrong";
             });
           }
 
@@ -365,7 +371,7 @@ export class BookingComponent implements OnInit {
     },
     error =>{
         this.success ="";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
     
@@ -382,7 +388,7 @@ export class BookingComponent implements OnInit {
     },
   error =>{
       this.success ="";
-      this.error = error.message;
+      this.error = "Something went wrong";
   })
 
   }
@@ -444,7 +450,7 @@ export class BookingComponent implements OnInit {
     },
     error =>{
         this.checkinSuccess ="";
-        this.checkinError = error.message; 
+        this.checkinError = "Something went wrong"; 
     });
 
   }
@@ -504,14 +510,19 @@ export class BookingComponent implements OnInit {
   private checkingIn(booking: {id: number, booking: Booking, client: Client, flight: Flight, checkin: boolean, seat: string},clientbookingflightId: number, seat: string, idClient: number, idFlight: number){
     this.checkinError ="";
     this.checkinSuccess = "";
+    this.checking = true;
     this.bookingsService.checkin(clientbookingflightId, seat, idClient, idFlight).subscribe(responseData => {
       this.checkinError ="";
       this.checkinSuccess = "Checked In!";
+      this.checking = false;
+
       this.populateCheckinForm(this.getBookingIndex(this.getBookingById(booking.booking.id)));
     },
     error =>{
         this.checkinSuccess ="";
-        this.checkinError = error.message;
+        this.checkinError = "Something went wrong";
+        this.checking = false;
+
     });
 
   }
@@ -533,7 +544,7 @@ export class BookingComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -554,7 +565,7 @@ export class BookingComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
 
   }
@@ -578,7 +589,7 @@ export class BookingComponent implements OnInit {
       this.fetchAirports();
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }
@@ -598,7 +609,7 @@ export class BookingComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -613,7 +624,7 @@ export class BookingComponent implements OnInit {
         this.fetchedAirports = true;
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -628,7 +639,7 @@ export class BookingComponent implements OnInit {
 
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }
@@ -650,7 +661,7 @@ export class BookingComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -721,7 +732,7 @@ export class BookingComponent implements OnInit {
         }
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }
@@ -753,7 +764,7 @@ export class BookingComponent implements OnInit {
 
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
   }
 
@@ -775,11 +786,14 @@ export class BookingComponent implements OnInit {
 
   public onCancel(idBooking: number){
     this.bookingsService.deleteBooking(idBooking).subscribe(data =>{
-      
+    this.error ="";
+    this.success = "Booking canceled"
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
+
+    this.currentPage = 1;
   }
 
   public onConfirm(){

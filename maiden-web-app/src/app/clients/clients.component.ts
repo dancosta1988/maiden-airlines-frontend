@@ -120,7 +120,7 @@ export class ClientsComponent implements OnInit {
         
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -145,7 +145,7 @@ export class ClientsComponent implements OnInit {
         this.fetchclients();
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -158,7 +158,7 @@ export class ClientsComponent implements OnInit {
       this.fetchclients();
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
   }
@@ -177,7 +177,7 @@ export class ClientsComponent implements OnInit {
         }
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }
@@ -210,7 +210,7 @@ export class ClientsComponent implements OnInit {
       this.fetchclients();
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
   }
 }

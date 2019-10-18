@@ -149,7 +149,7 @@ export class FlightsComponent implements OnInit {
   },
   error =>{
       this.success = "";
-      this.error = error.message;
+      this.error = "Something went wrong";
   });
   }
 
@@ -175,7 +175,7 @@ export class FlightsComponent implements OnInit {
   },
   error =>{
       this.success ="";
-      this.error = error.message;
+      this.error = "Something went wrong";
   });
   }
 
@@ -190,7 +190,7 @@ export class FlightsComponent implements OnInit {
   },
   error =>{
       this.success ="";
-      this.error = error.message;
+      this.error = "Something went wrong";
   })
 
   }
@@ -214,7 +214,7 @@ export class FlightsComponent implements OnInit {
       error =>{
           this.isFetching = false;
           this.success ="";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -236,7 +236,7 @@ export class FlightsComponent implements OnInit {
       this.fetchedAirplanes = true;
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }
@@ -252,7 +252,7 @@ export class FlightsComponent implements OnInit {
         this.fetchedAirports = true;
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -304,7 +304,7 @@ export class FlightsComponent implements OnInit {
     },
     error =>{
         this.success ="";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
 

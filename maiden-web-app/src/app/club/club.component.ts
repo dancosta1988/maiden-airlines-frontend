@@ -35,11 +35,12 @@ export class ClubComponent implements OnInit {
       this.isFetching = false;
       this.clientTypes = [];
         for (var i = 0, len = clientTypes.length; i < len; i++) {
-          this.clientTypes.push(new ClientType(clientTypes[i].id, clientTypes[i].name, clientTypes[i].annualFee, clientTypes[i].monthlyMiles, clientTypes[i].welcomeBonus, clientTypes[i].bonusMiles));
+          if( clientTypes[i].name != "NOCLIENT")
+            this.clientTypes.push(new ClientType(clientTypes[i].id, clientTypes[i].name, clientTypes[i].annualFee, clientTypes[i].monthlyMiles, clientTypes[i].welcomeBonus, clientTypes[i].bonusMiles));
         }
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }

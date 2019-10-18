@@ -99,7 +99,7 @@ export class BackofficeOperatorsComponent implements OnInit {
       },
       error =>{
           this.error = "";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -119,7 +119,7 @@ export class BackofficeOperatorsComponent implements OnInit {
       },
       error =>{
           this.success = "";
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -135,7 +135,7 @@ export class BackofficeOperatorsComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
 
   }
@@ -157,7 +157,7 @@ export class BackofficeOperatorsComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }
@@ -173,7 +173,7 @@ export class BackofficeOperatorsComponent implements OnInit {
     },
     error =>{
         this.success = "";
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
     
   }

@@ -167,7 +167,7 @@ export class LoginBarComponent implements OnInit {
         
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
   }
 
@@ -191,7 +191,7 @@ export class LoginBarComponent implements OnInit {
         this.success = "Information updated!";
       },
       error =>{
-          this.error = error.message;
+          this.error = "Something went wrong";
       });
 
       this.getClientByUsername();
@@ -226,7 +226,7 @@ export class LoginBarComponent implements OnInit {
       
     },
     error =>{
-        this.error = error.message;
+        this.error = "Something went wrong";
     });
   }
 
