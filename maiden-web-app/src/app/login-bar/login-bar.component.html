@@ -54,6 +54,10 @@
             </ul>
         </div>
     </nav>
+    <div *ngIf="error" class="alert alert-danger">
+        <h3>Oops!</h3>
+        <strong>{{ error }}</strong><br>
+    </div>
 
 <!-- Modal Signup-->
 <div class="modal fade" id="signupModal" tabindex="3" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true" >

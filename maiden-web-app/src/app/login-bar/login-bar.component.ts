@@ -84,7 +84,7 @@ export class LoginBarComponent implements OnInit {
     });
 
     this.loginForm = new FormGroup({
-      'loginEmail' : new FormControl(null, Validators.required),
+      'loginEmail' : new FormControl(null, [Validators.required, Validators.email]),
       'loginPassword' : new FormControl(null, Validators.required)
     });
   }
@@ -102,9 +102,10 @@ export class LoginBarComponent implements OnInit {
           localStorage.setItem('username', this.loginForm.value.loginEmail);
           this.getClientByUsername();
           
+          
       },
       error =>{
-        this.error = "Wrong Credentials or the authentication server is not working. " + error.message;
+        this.error = "Wrong Credentials or the authentication server is not working";
         this.success = "";
         this.loggedIn= false;
       });
@@ -139,7 +140,7 @@ export class LoginBarComponent implements OnInit {
       },
       error =>{
         this.success = "";
-        this.error = "Wrong Credentials or the authentication server is not working. " + error.message;
+        this.error = "Wrong Credentials or the authentication server is not working";
         this.loggedIn = false;
       });
   }

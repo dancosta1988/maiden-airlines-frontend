@@ -17,6 +17,7 @@ import { ClientTypesService } from '../client-types/client-types.service';
 import { BookingsService } from '../booking/booking.service';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../common/services/data.service';
+import { ConstantsService } from '../common/services/constants.service';
 
 @Component({
   selector: 'app-client-booking',
@@ -82,7 +83,8 @@ export class ClientBookingComponent implements OnInit {
 
   constructor(
     private datepipe: DatePipe, 
-    private http: HttpClient, 
+    private http: HttpClient,
+    private constants: ConstantsService,
     private flightsService: FlightsService, 
     private airportsService: AirportsService, 
     private airplanesService: AirplanesService, 
