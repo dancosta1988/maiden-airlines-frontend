@@ -803,4 +803,21 @@ export class BookingComponent implements OnInit {
     this.onRefresh();
   }
 
+  public greaterThan(date1: string, date2: string){
+    let firstDate:Date;
+    let secondDate:Date;
+    
+    if(date1 == '')
+      firstDate = new Date();
+    else
+      firstDate = new Date(date1);
+
+    if(date2 == '')
+      secondDate = new Date();
+    else
+      secondDate = new Date(date2);
+      
+    return firstDate.getDay() <= secondDate.getDay();
+  }
+
 }
