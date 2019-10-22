@@ -99,8 +99,6 @@ export class FlightsComponent implements OnInit {
 
   onRefresh(){
     this.fetchAirports();
-    this.fetchAirplanes();
-    this.fetchFlights();
   }
 
   populateEditForm(index: number){
@@ -234,6 +232,7 @@ export class FlightsComponent implements OnInit {
         this.airplanes.push(new Airplane(airplanes[i].id, airplanes[i].model, airplanes[i].cargoHoldCapacity, airplanes[i].numberSeats));
       }
       this.fetchedAirplanes = true;
+      this.fetchFlights();
     },
     error =>{
         this.error = "Something went wrong";
@@ -250,6 +249,7 @@ export class FlightsComponent implements OnInit {
           this.airports.push(new Airport(data[i].id, data[i].name, data[i].shortName, data[i].city, data[i].country, data[i].imagePath));
         }
         this.fetchedAirports = true;
+        this.fetchAirplanes();
       },
       error =>{
           this.error = "Something went wrong";
