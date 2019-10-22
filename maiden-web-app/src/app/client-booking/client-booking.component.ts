@@ -7,7 +7,7 @@ import { Airport } from '../airports/airport.model';
 import { Airplane } from '../airplanes/airplane.model';
 import { Booking } from '../booking/booking.model';
 import { BookingType } from '../booking-types/booking-type.model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { FlightsService } from '../flights/flights.service';
 import { AirportsService } from '../airports/airports.service';
 import { AirplanesService } from '../airplanes/airplanes.service';
@@ -228,16 +228,17 @@ export class ClientBookingComponent implements OnInit {
     let secondDate:Date;
     
     if(date1 == '')
-      firstDate = new Date();
+      firstDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
     else
-      firstDate = new Date(date1);
+      firstDate = new Date(this.datepipe.transform(new Date(date1), 'yyyy-MM-dd'));
 
     if(date2 == '')
-      secondDate = new Date();
+      secondDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
     else
-      secondDate = new Date(date2);
+      secondDate = new Date(this.datepipe.transform(new Date(date2), 'yyyy-MM-dd'));
+    
       
-    return firstDate.getDay() <= secondDate.getDay();
+    return firstDate.getTime()<= secondDate.getTime();
   }
 
 
