@@ -291,9 +291,9 @@ export class BookingComponent implements OnInit {
   onCreateBooking(){
     //send http request
       let selectedFlights: {id: number}[] = [];
-      selectedFlights.push({id : this.outboundFlights[0].id});
+      selectedFlights.push({id : this.outboundFlights[this.insertForm.value.bookingOutboundFlight].id});
       if(this.returnFlights.length > 0 )
-        selectedFlights.push({id:this.returnFlights[0].id});
+        selectedFlights.push({id:this.returnFlights[this.insertForm.value.bookingReturnFlight].id});
       
         this.booking = true;
       this.bookingsService.createAndStoreBooking(
@@ -801,6 +801,7 @@ export class BookingComponent implements OnInit {
     this.error = "";
     this.currentPage = 1;
     this.onRefresh();
+    this.insertForm.reset();
   }
 
   public greaterThan(date1: string, date2: string){
@@ -819,6 +820,24 @@ export class BookingComponent implements OnInit {
     
       
     return firstDate.getTime()<= secondDate.getTime();
+  }
+
+  public lowerThan(date1: string, date2: string){
+    let firstDate:Date;
+    let secondDate:Date;
+    
+    if(date1 == '')
+      firstDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    else
+      firstDate = new Date(this.datepipe.transform(new Date(date1), 'yyyy-MM-dd'));
+
+    if(date2 == '')
+      secondDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    else
+      secondDate = new Date(this.datepipe.transform(new Date(date2), 'yyyy-MM-dd'));
+    
+      
+    return firstDate.getTime() > secondDate.getTime();
   }
 
 }

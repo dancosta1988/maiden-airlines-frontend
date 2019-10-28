@@ -322,7 +322,7 @@
         <div class="form-group">
           <label for="insert_bookingDateOfBirth">Date of Birth:</label>
           <input type="date" class="form-control" id="insert_bookingDateOfBirth"  formControlName="bookingDateOfBirth" name="bookingDateOfBirth">
-          <span *ngIf="!insertForm.get('bookingDateOfBirth').valid && insertForm.get('bookingDateOfBirth').touched"
+          <span *ngIf="!lowerThan('',insertForm.get('bookingDateOfBirth').value) || (!insertForm.get('bookingDateOfBirth').valid && insertForm.get('bookingDateOfBirth').touched)"
             class="help-block alert-warning">Please enter a date!</span>
         </div>
         <div class="form-group">
@@ -383,8 +383,8 @@
           <span *ngIf="!insertForm.get('bookingCardSecurity').valid && insertForm.get('bookingCardSecurity').touched"
             class="help-block alert-warning">Please enter a valid Security Number!</span>
       </div>
-      <div *ngIf="booking" class="mx-auto d-block" style="position: relative; display: block; margin-left: auto; margin-right: auto;"><img width="300px" src="assets/loading.gif" alt="loading"></div>
     </div>
+    <div *ngIf="booking" class="mx-auto d-block" style="position: relative; display: block; margin-left: auto; margin-right: auto;"><img width="300px" src="assets/loading.gif" alt="loading"></div>
         <hr>
         <button *ngIf="currentPage > 1 && currentPage < 4" type="button" class="btn btn-primary mb-2 mr-2" (click) = "previous()">Previous</button>
         <button *ngIf="currentPage < 3" type="button" class="btn btn-primary mb-2 mr-2" (click) = "next()">Next</button>

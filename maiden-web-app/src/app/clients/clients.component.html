@@ -31,7 +31,7 @@
         <div class="form-group">
           <label for="insert_clientDateOfBirth">Date of Birth:</label>
           <input type="date" class="form-control" id="insert_clientDateOfBirth"  formControlName="clientDateOfBirth" name="clientDateOfBirth">
-          <span *ngIf="!insertForm.get('clientDateOfBirth').valid && insertForm.get('clientDateOfBirth').touched"
+          <span *ngIf="!lowerThan('',insertForm.get('clientDateOfBirth').value) || (!insertForm.get('clientDateOfBirth').valid && insertForm.get('clientDateOfBirth').touched)"
             class="help-block alert-warning">Please enter a date!</span>
         </div>
         <div class="form-group">
@@ -120,7 +120,7 @@
           <div class="form-group">
             <label for="edit_clientDateOfBirth">Date of Birth:</label>
             <input type="date" class="form-control" id="edit_clientDateOfBirth"  formControlName="clientDateOfBirth" name="clientDateOfBirth">
-            <span *ngIf="!editForm.get('clientDateOfBirth').valid && editForm.get('clientDateOfBirth').touched"
+            <span *ngIf="!lowerThan('',editForm.get('clientDateOfBirth').value) || (!editForm.get('clientDateOfBirth').valid && editForm.get('clientDateOfBirth').touched)"
               class="help-block alert-warning">Please enter a date!</span>
           </div>
           <div class="form-group">

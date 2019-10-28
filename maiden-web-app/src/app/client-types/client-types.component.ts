@@ -87,6 +87,7 @@ export class ClientTypesComponent implements OnInit {
         }else{
           this.success = "Client Type inserted!";
           this.fetchclientTypes();
+          this.insertForm.reset();
         }
       },
       error =>{

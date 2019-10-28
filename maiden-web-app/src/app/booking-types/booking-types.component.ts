@@ -103,6 +103,7 @@ export class BookingTypesComponent implements OnInit {
         }else{
           this.success = "Booking Type inserted!";
           this.fetchbookingTypes();
+          this.insertForm.reset();
         }
       },
       error =>{

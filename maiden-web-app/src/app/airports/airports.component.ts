@@ -92,6 +92,7 @@ export class AirportsComponent implements OnInit {
         this.error ="";
         this.success = "New Airport Inserted.";
         this.fetchAirports();
+        this.insertForm.reset();
     },
     error =>{
       this.success ="";

@@ -69,6 +69,7 @@ export class BackofficeRolesComponent implements OnInit {
         this.error = "";
         this.success = "Role inserted!";
         this.fetchroles();
+        this.insertForm.reset();
       },
       error =>{
           this.success = "";

@@ -58,7 +58,7 @@ export class BackofficeOperatorsComponent implements OnInit {
   
   onRefresh() {
     this.fetchroles();
-    this.fetchemployees();
+    
   }
 
   populateEditForm(index: number){    
@@ -90,10 +90,12 @@ export class BackofficeOperatorsComponent implements OnInit {
         if(responseData === -1){
           this.success = "";
           this.error = "Something went wrong when inserting a employee..."
+          
         }else{
           this.error = "";
           this.success = "Employee inserted!";
           this.fetchemployees();
+          this.insertForm.reset();
         }
         
       },
@@ -170,6 +172,7 @@ export class BackofficeOperatorsComponent implements OnInit {
         this.roles.push(new Role(roles[i].id, roles[i].name));
       }
       this.fetchedRoles = true;
+      this.fetchemployees();
     },
     error =>{
         this.success = "";

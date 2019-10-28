@@ -86,6 +86,7 @@ export class AirplanesComponent implements OnInit {
         this.error = "";
         this.success = "Airplane inserted!";
         this.fetchairplanes();
+        this.insertForm.reset();
       },
       error =>{
           this.success ="";

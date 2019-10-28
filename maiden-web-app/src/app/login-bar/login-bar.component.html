@@ -58,6 +58,10 @@
         <h3>Oops!</h3>
         <strong>{{ error }}</strong><br>
     </div>
+    <div *ngIf="success" class="alert alert-success">
+        <h3>Success!</h3>
+        <strong>{{ success }}</strong><br>
+    </div>
 
 <!-- Modal Signup-->
 <div class="modal fade" id="signupModal" tabindex="3" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true" >
@@ -87,7 +91,7 @@
               <div class="form-group">
                 <label for="insert_signupDateOfBirth">Date of Birth:</label>
                 <input type="date" class="form-control" id="insert_signupDateOfBirth"  formControlName="signupDateOfBirth" name="signupDateOfBirth">
-                <span *ngIf="!signupForm.get('signupDateOfBirth').valid && signupForm.get('signupDateOfBirth').touched"
+                <span *ngIf="!lowerThan('',signupForm.get('signupDateOfBirth').value) || (!signupForm.get('signupDateOfBirth').valid && signupForm.get('signupDateOfBirth').touched)"
                   class="help-block alert-warning">Please enter a date!</span>
               </div>
               <div class="form-group">
@@ -176,7 +180,7 @@
               <div class="form-group">
                 <label for="edit_editDateOfBirth">Date of Birth:</label>
                 <input type="date" class="form-control" id="edit_editDateOfBirth"  formControlName="editDateOfBirth" name="editDateOfBirth">
-                <span *ngIf="!editForm.get('editDateOfBirth').valid && editForm.get('editDateOfBirth').touched"
+                <span *ngIf="!lowerThan('',editForm.get('editDateOfBirth').value) ||  (!editForm.get('editDateOfBirth').valid && editForm.get('editDateOfBirth').touched)"
                   class="help-block alert-warning">Please enter a date!</span>
               </div>
               <div class="form-group">

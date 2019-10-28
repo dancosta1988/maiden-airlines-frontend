@@ -116,6 +116,7 @@ export class ClientsComponent implements OnInit {
         }else{
           this.success = "Client inserted!";
           this.fetchclients();
+          this.insertForm.reset();
         }
         
       },
@@ -212,5 +213,23 @@ export class ClientsComponent implements OnInit {
     error =>{
         this.error = "Something went wrong";
     });
+  }
+
+  public lowerThan(date1: string, date2: string){
+    let firstDate:Date;
+    let secondDate:Date;
+    
+    if(date1 == '')
+      firstDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    else
+      firstDate = new Date(this.datepipe.transform(new Date(date1), 'yyyy-MM-dd'));
+
+    if(date2 == '')
+      secondDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    else
+      secondDate = new Date(this.datepipe.transform(new Date(date2), 'yyyy-MM-dd'));
+    
+      
+    return firstDate.getTime() > secondDate.getTime();
   }
 }

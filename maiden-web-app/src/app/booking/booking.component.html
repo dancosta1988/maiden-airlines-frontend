@@ -138,7 +138,7 @@
         <div class="form-group">
           <label for="insert_bookingDateOfBirth">Date of Birth:</label>
           <input type="date" class="form-control" id="insert_bookingDateOfBirth"  formControlName="bookingDateOfBirth" name="bookingDateOfBirth">
-          <span *ngIf="!insertForm.get('bookingDateOfBirth').valid && insertForm.get('bookingDateOfBirth').touched"
+          <span *ngIf="!lowerThan('',insertForm.get('bookingDateOfBirth').value) || (!insertForm.get('bookingDateOfBirth').valid && insertForm.get('bookingDateOfBirth').touched)"
             class="help-block alert-warning">Please enter a date!</span>
         </div>
         <div class="form-group">
@@ -310,13 +310,13 @@
             <div class="form-group">
                 <label for="bookingDepartureDate">Select Departure Date:</label>
                 <input class="form-control" type="date" id="Arrival_bookingDepartureDate" formControlName="bookingDepartureDate" name="bookingDepartureDate" (input)="onOutboundDateChange()" />
-                <span *ngIf="!editForm.get('bookingDepartureDate').valid && editForm.get('bookingDepartureDate').touched"
+                <span *ngIf="!greaterThan('', editForm.get('bookingDepartureDate').value) || (!editForm.get('bookingDepartureDate').valid && editForm.get('bookingDepartureDate').touched)"
                   class="help-block alert-warning">Please enter a valid date!</span>
             </div>
             <div class="form-group" *ngIf="returnFlightId != null">
                 <label for="bookingArrivalDate">Select Return Date:</label>
                 <input class="form-control" type="date" id="Arrival_bookingArrivalDate" formControlName="bookingArrivalDate" name="bookingArrivalDate" (input)="onReturnDateChange()" />
-                <span *ngIf="!editForm.get('bookingArrivalDate').valid && editForm.get('bookingArrivalDate').touched"
+                <span *ngIf="!greaterThan(editForm.get('bookingDepartureDate').value, editForm.get('bookingArrivalDate').value) || (!editForm.get('bookingArrivalDate').valid && editForm.get('bookingArrivalDate').touched)"
                   class="help-block alert-warning">Please enter a valid date!</span>
             </div>
 

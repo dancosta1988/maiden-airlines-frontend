@@ -142,6 +142,7 @@ export class FlightsComponent implements OnInit {
         this.error ="";
         this.success = "Flight added!";
         this.fetchFlights();
+        this.insertForm.reset();
       }
       
   },
@@ -306,11 +307,25 @@ export class FlightsComponent implements OnInit {
         this.success ="";
         this.error = "Something went wrong";
     });
+ 
+  }
 
-
-
+  public greaterThan(date1: string, date2: string){
+    let firstDate:Date;
+    let secondDate:Date;
     
+    if(date1 == '')
+      firstDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm'));
+    else
+      firstDate = new Date(this.datepipe.transform(new Date(date1), 'yyyy-MM-dd HH:mm'));
+
+    if(date2 == '')
+      secondDate = new Date(this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm'));
+    else
+      secondDate = new Date(this.datepipe.transform(new Date(date2), 'yyyy-MM-dd HH:mm'));
     
+      
+    return firstDate.getTime()<= secondDate.getTime();
   }
 
 }
